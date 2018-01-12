@@ -52,7 +52,7 @@
   export default {
     data: function(){
         var validateOld = (rule, value, callback) => {
-            console.log(value+' 666666')
+            //console.log(value+' 666666')
             if (value === '') {
               callback(new Error('请输入密码'));
             } else {
@@ -113,7 +113,7 @@
           newPass: this.form.new_password
         }
         var fn = function (data, obj) {
-          console.log(data.status + 'fn');
+          //console.log(data.status + 'fn');
           if (data.status == 0) {
             obj.dialogVisible = true;
           } else {
@@ -132,7 +132,7 @@
       }
     },
     created: function () {
-      console.log(pmObjStr + " pmInfo")
+      //console.log(pmObjStr + " pmInfo")
       this.form.pmId = pmObj.pmId;
       this.form.pmName = pmObj.pmName;
       this.form.time = pmObj.riseTime;

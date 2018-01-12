@@ -53,10 +53,10 @@
       },
     methods: {
           beginSearch(){
-              console.log("user beginSearch")
+              //console.log("user beginSearch")
             if (this.search.phone == '') {
                   this.$http.post(url_getUserList0, null, function (data, _self){
-                    console.log(data);
+                    //console.log(data);
                     data.forEach(function (e) {
                         if (e.regTime != null) {
                           e.regTime = _self.$sys.dateTimeFormat(e.regTime, true)
@@ -71,7 +71,7 @@
                   }, this)
             } else {
               this.$http.post(url_getUserList1, this.search, function (data, _self) {
-                console.log(data);
+                //console.log(data);
                 var e = data
                   if (e.regTime != null) {
                     e.regTime = _self.$sys.dateTimeFormat(e.regTime, true)

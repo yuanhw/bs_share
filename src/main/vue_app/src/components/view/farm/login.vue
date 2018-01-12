@@ -28,13 +28,13 @@
           if (this.farm.phone === '' || this.farm.password === '') {
             this.$message('账号或密码不能为空');
           } else {
-            console.log(this.farm.phone + ' ' + this.farm.password);
+            //console.log(this.farm.phone + ' ' + this.farm.password);
             var url = "/farmManager/loadObj.do"  // http://localhost:8080/demo
             var parameters = {
                 phone: this.farm.phone
             }
             var fn = function (data, _self) {
-              console.log(data.status + 'fn');
+              //console.log(data.status + 'fn');
               if (data.status != 0) {
                 _self.$message("账号或密码错误")
                 return;

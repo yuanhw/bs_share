@@ -17,7 +17,7 @@
   export default {
     data() {
       var v1 = (rule, value, callback) => {
-        console.log(value)
+        //console.log(value)
         if (!value) {
           return callback(new Error('账号不能为空'))
         } else {
@@ -26,7 +26,7 @@
             pmId: this.ruleForm.pmId.trim()
           }
           var fn = function (data, callback) {
-            console.log(data.status + 'fn');
+            //console.log(data.status + 'fn');
             if (data.status != 0) {
               return callback(new Error("账号不存在"))
             }
@@ -38,7 +38,7 @@
         }
       }
       var v2 = (rule, value, callback) => {
-        console.log(value)
+        //console.log(value)
           if (!value) {
               return callback(new Error('密码不能为空'))
           } else {
@@ -70,7 +70,7 @@
       submit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              console.log("success login")
+              //console.log("success login")
             sessionStorage.setItem("pmManager", JSON.stringify(pmObj))
             this.$router.push("/pm/home")
           }
