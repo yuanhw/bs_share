@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wyh.dao.PlatformManagerDao">
+    <select id="findById" resultType="PlatformManager" parameterType="String" >
+        SELECT pm_id AS pmId, password, pm_name AS pmName, rise_time AS riseTime FROM platform_manager
+        WHERE pm_id = #{pmId}
+    </select>
+    <update id="updatePass" >
+        UPDATE platform_manager SET password = #{newPass}, rise_time = #{upTime} WHERE pm_id = #{pmId}
+    </update>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wyh.dao.FarmManagerDao">
+    <select id="findByPhone" resultType="FarmManager" parameterType="String" >
+        SELECT fm_id AS fmId, phone, password, fm_name AS fmName, province, city, detailed_address AS detailedAddress ,
+        farm_type as farmType, farm_size AS farmSize, reg_time AS regTime,
+         check_status AS checkStatus FROM farm_manager
+        WHERE phone = #{phone}
+    </select>
+    <insert id="addObj" parameterType="FarmManager" >
+        insert into farm_manager(phone, password, fm_name, province, city, detailed_address,
+        farm_type, farm_size, reg_time, check_status) values (#{phone}, #{password}, #{fmName}, #{province},
+        #{city}, #{detailedAddress}, #{farmType}, #{farmSize}, #{regTime}, #{checkStatus})
+    </insert>
+    <update id="updateStatus">
+        update farm_manager set check_status = #{status} where phone = #{phone}
+    </update>
+    <select id="findList" resultType="FarmManager">
+        SELECT * FROM farm_manager
+        <where>
+            <if test="phone !=null and phone != ''">
+                phone = #{phone}
+            </if>
+            <if test="fmName != null and fmName != ''">
+                AND fm_name = #{fmName}
+            </if>
+            <if test="status != 4">
+                AND check_status = #{status}
+            </if>
+        </where>
+        LIMIT #{start}, 5
+    </select>
+    <select id="totalRowNumByConditions" resultType="int">
+        SELECT count(*) FROM farm_manager
+        <where>
+            <if test="phone !=null and phone != ''">
+                phone = #{phone}
+            </if>
+            <if test="fmName != null and fmName != ''">
+                AND fm_name = #{fmName}
+            </if>
+            <if test="status != 4">
+                AND check_status = #{status}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPhone">
+        DELETE FROM farm_manager WHERE phone = #{phone}
+    </delete>
+</mapper>

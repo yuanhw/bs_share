@@ -1,0 +1,5 @@
+*.bak
+target/
+src/main/main.zip
+src/main/vue_app/src.zip
+src/main/vue_app/node_modules/
