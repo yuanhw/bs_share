@@ -37,7 +37,7 @@ const router = new VueRouter({
   linkActiveClass: 'active'
 })
 router.beforeEach((to, from, next) => {
-  console.log("to:" + to.path + " * from" + from.path)
+  //console.log("to:" + to.path + " * from" + from.path)
   if (to.path === '/login' || to.path === '/fm/f_reg') {
     next()
     return;

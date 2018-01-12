@@ -3,7 +3,7 @@ import $ from 'jquery'
 const base = 'http://localhost:8080/demo'
 const ajax = {
   post: function (url, parameter, callback_fn, fn_para) {
-    console.log(" 1 " +url + ' ' + JSON.stringify(parameter))
+    //console.log(" 1 " +url + ' ' + JSON.stringify(parameter))
     $.ajax({
       method: 'post',
       url: base + url,
