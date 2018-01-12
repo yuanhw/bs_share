@@ -1,4 +1,5 @@
 *.bak
+.idea/workspace.xml 
 target/
 src/main/main.zip
 src/main/vue_app/src.zip
