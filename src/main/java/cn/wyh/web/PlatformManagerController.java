@@ -26,7 +26,7 @@ public class PlatformManagerController {
         int status = this.platformManagerService.login(pmId, password);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("status", status);
-        System.out.println(jsonObject.toJSONString());
+        //System.out.println(jsonObject.toJSONString());
         return jsonObject.toJSONString();
     }
 
@@ -41,7 +41,7 @@ public class PlatformManagerController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("status", status);
         jsonObject.put("rt", platformManager);
-        System.out.println(jsonObject.toJSONString());
+        //System.out.println(jsonObject.toJSONString());
         return jsonObject.toJSONString();
     }
 

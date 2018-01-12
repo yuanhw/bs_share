@@ -62,7 +62,7 @@ public class FarmManagerController {
         int rt_status = 1;
         //FarmManager farmManager = this.farmService.loadObjByPhone(phone);
         farmService.updateStatus(status, phone);
-        System.out.println("/sh , rt_status = " + rt_status);
+        //System.out.println("/sh , rt_status = " + rt_status);
         return "{\"status\":" + rt_status + " }";
     }
     @RequestMapping("/del")
