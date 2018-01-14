@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * Created by WYH on 2018/1/2.
  */
@@ -30,11 +32,21 @@ public class UserController {
 
     @RequestMapping("/reg")
     public String reg(@ModelAttribute User user) {
-        int  tag = 1;
-        if (!this.userService.reg(user)) {
-            tag = 0;
+        int status = 1;
+        String msg = "注册成功";
+        try {
+            user.setRegTime(new Date());
+            if (!this.userService.reg(user)) {
+                status = 0;
+                msg = "注册失败";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            status = 0;
+            msg = "服务器错误";
+        } finally {
+            return "{\"status\": " + status + ", \"msg\": \"" + msg + "\"}";
         }
-        return "{\"status\": 1, \"tag\": " + tag + "}";
     }
 
     @RequestMapping("/findByPhone")
