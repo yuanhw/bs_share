@@ -93,7 +93,7 @@ public class UserController {
         }
         jsonObject.put("status", status);
         jsonObject.put("msg", msg);
-        //System.out.println(jsonObject.toJSONString());
+        //System.out.println("UserController " + jsonObject.toJSONString());
         return jsonObject.toJSONString();
     }
 }
