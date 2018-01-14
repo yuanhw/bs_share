@@ -15,12 +15,17 @@
     </div>
     <div id="user_table">
       <el-table :data="userData" style="width: 100%; font-size: 14px" max-height="480">
-        <el-table-column prop="id" label="编号" width="50"></el-table-column>
-        <el-table-column prop="userPhone" label="手机号码" width="120"></el-table-column>
-        <el-table-column prop="userName" label="真实姓名" width="120"></el-table-column>
-        <el-table-column prop="gender" label="性别" width="50"></el-table-column>
-        <el-table-column prop="regTime" label="注册时间" width="150"></el-table-column>
-        <el-table-column prop="loginTime" label="最新登录时间" width="150"></el-table-column>
+        <el-table-column prop="id" label="编号" width="80" align="center"></el-table-column>
+        <el-table-column prop="userPhone" label="手机号码" width="160" align="center"></el-table-column>
+        <el-table-column prop="userName" label="真实姓名" width="160" align="center"></el-table-column>
+        <el-table-column prop="gender" label="性别" width="80" align="center"></el-table-column>
+        <el-table-column prop="regTime" label="注册时间" width="170" align="center"></el-table-column>
+        <el-table-column prop="loginTime" label="最新登录时间" width="170" align="center"></el-table-column>
+        <el-table-column label="操作" fixed="right" width="100px" align="center">
+          <template slot-scope="scope">
+            <el-button type="text" size="mini" @click="deleteRow(scope.$index)">删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <div class="block" style="width: 480px; margin: 0 auto; padding-top: 10px;">
         <el-pagination
@@ -38,6 +43,7 @@
 <script>
   var url_getUserList0 = "/user/findAll.do"
   var url_getUserList1 = "/user/findByPhone.do"
+  var url_del = "/user/delete.do"
   var dataTable = []
   export default {
       name: 'user',
@@ -85,11 +91,35 @@
               }, this)
             }
           },
-         handleCurrentChange(){
+         handleCurrentChange() {
               var start = (this.currentPage - 1) * 5;
             this.userData = dataTable.slice(start, start + 5)
-           //console.log(start + " _ " + JSON.stringify(this.userData))
-         }
+         },
+        deleteRow(index) {
+          var id = this.userData[index].id
+          var _self = this;
+          this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http.post(url_del, {id: id}, function(jsObj) {
+              //console.log("rt 1 " + jsObj.status)
+              if (jsObj.status == 1) {
+                  _self.totalRow --
+                  _self.userData.splice(index, 1)
+                _self.$message.success(jsObj.msg)
+              } else {
+                _self.$message.info(jsObj.msg)
+              }
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });
+          });
+        }
     }
   }
 </script>

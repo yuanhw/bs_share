@@ -15,4 +15,7 @@
     <update id="updateLoginTime">
         UPDATE  user SET login_time = #{loginTime} WHERE user_phone = #{userPhone}
     </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
 </mapper>

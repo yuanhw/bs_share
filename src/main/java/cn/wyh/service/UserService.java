@@ -13,4 +13,5 @@ public interface UserService {
     User findByPhone(String phone);
     List<User> loadAll();
     void updateLoginTime(Date date, String phone);
+    boolean deleteUser(int id);
 }

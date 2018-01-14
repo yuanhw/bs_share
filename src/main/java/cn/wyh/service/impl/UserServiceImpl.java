@@ -42,4 +42,16 @@ public class UserServiceImpl implements UserService {
     public void updateLoginTime(Date date, String phone) {
         this.userDao.updateLoginTime(date, phone);
     }
+
+    @Override
+    public boolean deleteUser(int id) {
+        boolean tag = true;
+        try {
+            this.userDao.delete(id);
+        } catch (Exception e) {
+            tag = false;
+            e.printStackTrace();
+        }
+        return tag;
+    }
 }

@@ -14,4 +14,5 @@ public interface UserDao {
     List<User> findAll();
     void addUser(User user);
     void updateLoginTime(@Param("loginTime") Date loginTime, @Param("userPhone") String userPhone);
+    void delete(int id);
 }

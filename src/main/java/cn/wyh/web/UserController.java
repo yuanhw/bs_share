@@ -3,6 +3,7 @@ package cn.wyh.web;
 import cn.wyh.entity.User;
 import cn.wyh.service.UserService;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,5 +59,19 @@ public class UserController {
     @RequestMapping("/findAll")
     public String findAll() {
         return JSON.toJSONString(this.userService.loadAll());
+    }
+
+    @RequestMapping("/delete")
+    public String delete(@RequestParam int id) {
+        int status = 1;
+        String msg = "删除成功";
+        if (!this.userService.deleteUser(id)) {
+            status = 0;
+            msg = "删除失败";
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("status", status);
+        jsonObject.put("msg", msg);
+        return jsonObject.toJSONString();
     }
 }
