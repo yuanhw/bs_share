@@ -24,7 +24,7 @@ public class UserController {
     @RequestMapping("/check")
     public String checkPhone(@RequestParam String phone) {
         int tag = 0;
-        User user = this.userService.findByPhone("phone");
+        User user = this.userService.findByPhone(phone);
         if (user != null) {
             tag = 1;
         }
@@ -72,6 +72,28 @@ public class UserController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("status", status);
         jsonObject.put("msg", msg);
+        return jsonObject.toJSONString();
+    }
+
+    @RequestMapping("/login")
+    public String login(@RequestParam String phone, @RequestParam String password) {
+        int status = 1;
+        String msg = "加载成功";
+        JSONObject jsonObject = new JSONObject();
+        User user = this.userService.findByPhone(phone);
+        if (user == null) {
+            status = 0;
+            msg = "账号不存在";
+        } else if (!user.getPassword().equals(password)) {
+            status = 0;
+            msg = "密码错误";
+        } else {
+            this.userService.updateLoginTime(new Date(), phone);
+            jsonObject.put("user", user);
+        }
+        jsonObject.put("status", status);
+        jsonObject.put("msg", msg);
+        //System.out.println(jsonObject.toJSONString());
         return jsonObject.toJSONString();
     }
 }
