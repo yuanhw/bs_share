@@ -5,7 +5,6 @@ import cn.wyh.service.UserService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,24 +29,19 @@ public class UserController {
         }
         return "{\"status\": 1, \"tag\": " + tag + "}";
     }
-
     @RequestMapping("/reg")
-    public String reg(@ModelAttribute User user) {
+    public String reg(@RequestParam String jsonStr) {
+        //System.out.println(jsonStr);
+        User user = JSON.parseObject(jsonStr, User.class);
+        //System.out.println(user);
         int status = 1;
         String msg = "注册成功";
-        try {
-            user.setRegTime(new Date());
-            if (!this.userService.reg(user)) {
-                status = 0;
-                msg = "注册失败";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        user.setRegTime(new Date());
+        if (!this.userService.reg(user)) {
             status = 0;
-            msg = "服务器错误";
-        } finally {
-            return "{\"status\": " + status + ", \"msg\": \"" + msg + "\"}";
+            msg = "注册失败";
         }
+        return "{\"status\": " + status + ", \"msg\": \"" + msg + "\"}";
     }
 
     @RequestMapping("/findByPhone")
@@ -76,24 +70,25 @@ public class UserController {
     }
 
     @RequestMapping("/login")
-    public String login(@RequestParam String phone, @RequestParam String password) {
+    public String login(@RequestParam String jsonStr) {
+        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
         int status = 1;
         String msg = "加载成功";
-        JSONObject jsonObject = new JSONObject();
-        User user = this.userService.findByPhone(phone);
+        JSONObject jsonObject2 = new JSONObject();
+        User user = this.userService.findByPhone(jsonObject.getString("phone"));
         if (user == null) {
             status = 0;
             msg = "账号不存在";
-        } else if (!user.getPassword().equals(password)) {
+        } else if (!user.getPassword().equals(jsonObject.getString("password"))) {
             status = 0;
             msg = "密码错误";
         } else {
-            this.userService.updateLoginTime(new Date(), phone);
-            jsonObject.put("user", user);
+            this.userService.updateLoginTime(new Date(), jsonObject.getString("phone"));
+            jsonObject2.put("user", user);
         }
-        jsonObject.put("status", status);
-        jsonObject.put("msg", msg);
-        //System.out.println("UserController " + jsonObject.toJSONString());
-        return jsonObject.toJSONString();
+        jsonObject2.put("status", status);
+        jsonObject2.put("msg", msg);
+        //System.out.println("UserController " + jsonObject2.toJSONString());
+        return jsonObject2.toJSONString();
     }
 }
