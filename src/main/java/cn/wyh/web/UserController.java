@@ -1,5 +1,6 @@
 package cn.wyh.web;
 
+import cn.wyh.common.Global;
 import cn.wyh.entity.User;
 import cn.wyh.service.UserService;
 import com.alibaba.fastjson.JSON;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.Date;
 
 /**
@@ -90,5 +93,27 @@ public class UserController {
         jsonObject2.put("msg", msg);
         //System.out.println("UserController " + jsonObject2.toJSONString());
         return jsonObject2.toJSONString();
+    }
+
+    @RequestMapping("/uploadImg")
+    public String uploadImg(@RequestParam("phone") String phone, @RequestParam("imgFile") MultipartFile imgFile) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (!imgFile.isEmpty()) {
+                System.out.println(Global.baseUri);
+                File baseUri = new File(Global.baseUri + "userImg");
+                if (!baseUri.exists()) {
+                    baseUri.mkdir();
+                }
+                imgFile.transferTo(new File(Global.baseUri + "userImg" + File.separator + "" + imgFile.getOriginalFilename()));
+                jsonObject.put("status", 1);
+                jsonObject.put("msg", "上传成功");
+            }
+        } catch (Exception e) {
+            jsonObject.put("status", 0);
+            jsonObject.put("msg", "上传失败");
+            e.printStackTrace();
+        }
+        return jsonObject.toJSONString();
     }
 }
