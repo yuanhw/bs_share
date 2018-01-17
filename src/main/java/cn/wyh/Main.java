@@ -1,6 +1,7 @@
 package cn.wyh;
 
 import cn.wyh.service.UserService;
+import com.alibaba.fastjson.JSONArray;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -11,6 +12,6 @@ public class Main {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         UserService service = context.getBean(UserService.class);
 
-        service.updatePayPass("45124", "13588746259");
+        System.out.println(JSONArray.toJSONString(service.loadAll()));
     }
 }

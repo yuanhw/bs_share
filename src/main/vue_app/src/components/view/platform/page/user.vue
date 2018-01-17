@@ -19,6 +19,12 @@
         <el-table-column prop="userPhone" label="手机号码" width="160" align="center"></el-table-column>
         <el-table-column prop="userName" label="真实姓名" width="160" align="center"></el-table-column>
         <el-table-column prop="gender" label="性别" width="80" align="center"></el-table-column>
+        <el-table-column prop="account" label="余额" width="80" align="center"></el-table-column>
+        <el-table-column label="用户头像" width="80" align="center">
+          <template slot-scope="scope">
+            <img  :src="'http://192.168.43.43:8080/demo' + scope.row.touImgPath" alt="" style="width: 50px;height: 50px">
+          </template>
+        </el-table-column>
         <el-table-column prop="regTime" label="注册时间" width="170" align="center"></el-table-column>
         <el-table-column prop="loginTime" label="最新登录时间" width="170" align="center"></el-table-column>
         <el-table-column label="操作" fixed="right" width="100px" align="center">
@@ -45,6 +51,7 @@
   var url_getUserList1 = "/user/findByPhone.do"
   var url_del = "/user/delete.do"
   var dataTable = []
+  var url_img = "http://192.168.43.43:8080/demo/"
   export default {
       name: 'user',
       data() {
@@ -62,7 +69,7 @@
               //console.log("user beginSearch")
             if (this.search.phone == '') {
                   this.$http.post(url_getUserList0, null, function (data, _self){
-                    //console.log(data);
+                    //console.log(JSON.stringify(data));
                     data.forEach(function (e) {
                         if (e.regTime != null) {
                           e.regTime = _self.$sys.dateTimeFormat(e.regTime, true)
