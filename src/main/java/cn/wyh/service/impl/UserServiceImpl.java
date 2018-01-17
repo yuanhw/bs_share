@@ -51,7 +51,47 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             tag = false;
             e.printStackTrace();
+        } finally {
+            return tag;
         }
-        return tag;
+    }
+
+    @Override
+    public boolean updateImg(String imgPath, String phone) {
+        boolean tag = true;
+        try {
+            this.userDao.updateImg(imgPath, phone);
+        } catch (Exception e) {
+            tag = false;
+            e.printStackTrace();
+        } finally {
+            return tag;
+        }
+    }
+
+    @Override
+    public boolean updateAccount(double account, String phone) {
+        boolean tag = true;
+        try {
+            this.userDao.updateAccount(account, phone);
+        } catch (Exception e) {
+            tag = false;
+            e.printStackTrace();
+        } finally {
+            return tag;
+        }
+    }
+
+    @Override
+    public boolean updatePayPass(String payPass, String phone) {
+        boolean tag = true;
+        try {
+            this.userDao.updatePayPass(payPass, phone);
+        } catch (Exception e) {
+            tag = false;
+            e.printStackTrace();
+        } finally {
+            return tag;
+        }
     }
 }

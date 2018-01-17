@@ -9,8 +9,8 @@
         SELECT * FROM user WHERE user_phone = #{userPhone}
     </select>
     <insert id="addUser" parameterType="User">
-        INSERT INTO user (user_phone, password, user_name, gender, reg_time)
-        VALUES (#{userPhone}, #{password}, #{userName}, #{gender}, #{regTime})
+        INSERT INTO user (user_phone, password, user_name, gender, reg_time, pay_password, account, tou_img_path)
+        VALUES (#{userPhone}, #{password}, #{userName}, #{gender}, #{regTime}, #{payPassword}, #{account}, #{touImgPath})
     </insert>
     <update id="updateLoginTime">
         UPDATE  user SET login_time = #{loginTime} WHERE user_phone = #{userPhone}
@@ -18,4 +18,13 @@
     <delete id="delete" parameterType="int">
         DELETE FROM user WHERE id = #{id}
     </delete>
+    <update id="updateImg">
+        UPDATE  user SET tou_img_path = #{imgPath} WHERE user_phone = #{userPhone}
+    </update>
+    <update id="updateAccount">
+        UPDATE  user SET account = #{account} WHERE user_phone = #{userPhone}
+    </update>
+    <update id="updatePayPass">
+        UPDATE  user SET pay_password = #{payPass} WHERE user_phone = #{userPhone}
+    </update>
 </mapper>

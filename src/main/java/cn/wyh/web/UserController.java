@@ -105,6 +105,10 @@ public class UserController {
                 if (!baseUri.exists()) {
                     baseUri.mkdir();
                 }
+                boolean tag = this.userService.updateImg("/userImg/" + imgFile.getOriginalFilename(), phone);
+                if (!tag) {
+                    throw new Exception("error");
+                }
                 imgFile.transferTo(new File(Global.baseUri + "userImg" + File.separator + "" + imgFile.getOriginalFilename()));
                 jsonObject.put("status", 1);
                 jsonObject.put("msg", "上传成功");

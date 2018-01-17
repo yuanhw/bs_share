@@ -15,4 +15,7 @@ public interface UserDao {
     void addUser(User user);
     void updateLoginTime(@Param("loginTime") Date loginTime, @Param("userPhone") String userPhone);
     void delete(int id);
+    void updateImg(@Param("imgPath") String imgPath, @Param("userPhone") String userPhone);
+    void updateAccount(@Param("account") double account, @Param("userPhone") String userPhone);
+    void updatePayPass(@Param("payPass") String payPass, @Param("userPhone") String userPhone);
 }

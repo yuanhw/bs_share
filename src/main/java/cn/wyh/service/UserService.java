@@ -14,4 +14,7 @@ public interface UserService {
     List<User> loadAll();
     void updateLoginTime(Date date, String phone);
     boolean deleteUser(int id);
+    boolean updateImg(String imgPath, String phone);
+    boolean updateAccount(double account, String phone);
+    boolean updatePayPass(String payPass, String phone);
 }

@@ -9,7 +9,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        UserService farm = context.getBean(UserService.class);
-        farm.deleteUser(42);
+        UserService service = context.getBean(UserService.class);
+
+        service.updatePayPass("45124", "13588746259");
     }
 }
