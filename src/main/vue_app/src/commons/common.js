@@ -30,6 +30,7 @@ const sys = {
       rt += "  " + hours + s2 + minutes + s2 +seconds
     }
     return rt
-  }
+  },
+  baseUri: 'http://192.168.43.43:8080/demo'
 }
 export default sys

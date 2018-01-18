@@ -14,15 +14,15 @@
       </p>
     </div>
     <div id="user_table">
-      <el-table :data="userData" style="width: 100%; font-size: 14px" max-height="480">
+      <el-table :data="userData" style="width: 100%; font-size: 14px" max-height="580">
         <el-table-column prop="id" label="编号" width="80" align="center"></el-table-column>
-        <el-table-column prop="userPhone" label="手机号码" width="160" align="center"></el-table-column>
-        <el-table-column prop="userName" label="真实姓名" width="160" align="center"></el-table-column>
+        <el-table-column prop="userPhone" label="手机号码" width="120" align="center"></el-table-column>
+        <el-table-column prop="userName" label="真实姓名" width="120" align="center"></el-table-column>
         <el-table-column prop="gender" label="性别" width="80" align="center"></el-table-column>
         <el-table-column prop="account" label="余额" width="80" align="center"></el-table-column>
         <el-table-column label="用户头像" width="80" align="center">
           <template slot-scope="scope">
-            <img  :src="'http://192.168.43.43:8080/demo' + scope.row.touImgPath" alt="" style="width: 50px;height: 50px">
+            <img  :src="$sys.baseUri + scope.row.touImgPath" alt="" style="width: 50px;height: 50px">
           </template>
         </el-table-column>
         <el-table-column prop="regTime" label="注册时间" width="170" align="center"></el-table-column>
