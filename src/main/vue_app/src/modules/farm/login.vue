@@ -51,11 +51,11 @@
                 break;
               }
             }
-            this.$http.post(url, parameters, fn, this);
+            this.$sys.ajax.post(url, parameters, fn, this);
           }
         },
       reg: function () {
-        this.$router.push("/fm/f_reg")
+        this.$router.push("/fm/reg")
       }
     }
   }

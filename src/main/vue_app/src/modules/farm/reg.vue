@@ -2,12 +2,12 @@
   <div id="root">
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item><i class="el-icon-date"></i> 商家信息</el-breadcrumb-item>
+        <el-breadcrumb-item><i class="el-icon-menu"></i> 商家信息</el-breadcrumb-item>
         <el-breadcrumb-item>注册</el-breadcrumb-item>
-        <el-button  @click="back" type="text">返回</el-button>
+        <el-breadcrumb-item><a @click="close">返回</a></el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div  class="form-box">
+    <div  class="form-box" style="margin-top: 20px">
       <el-form :model="farm" :label-position="'left'" label-width="100px" >
         <el-form-item label="电话">
           <el-input type="text" v-model="farm.phone" class="input_width"></el-input>
@@ -43,7 +43,7 @@
         </el-form-item>
         <el-form-item>
           <el-button @click="submit">确定</el-button>
-          <el-button @click="cancel">取消</el-button>
+          <el-button @click="close">取消</el-button>
         </el-form-item>
       </el-form>
       <el-dialog
@@ -123,16 +123,14 @@
                 _self.dialogVisible = true
             }
           }
-          this.$http.post(url, this.farm, fn, this);
+          this.$sys.ajax.post(url, this.farm, fn, this);
         },
         cancel: function () {
           this.farm = tmp;
         },
       close: function () {
+            //console.log("6666")
         this.$router.push("/");
-      },
-      back: function () {
-        this.$router.push("/")
       }
     }
   }

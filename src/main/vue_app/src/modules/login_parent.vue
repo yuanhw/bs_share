@@ -17,8 +17,9 @@
 </template>
 
 <script>
-  import LoginA from '@/components/view/platform/login'
-  import LoginB from '@/components/view/farm/login'
+  import LoginA from '@/modules/platform/login.vue'
+  import LoginB from '@/modules/farm/login.vue'
+
   export default {
     data() {
       return {

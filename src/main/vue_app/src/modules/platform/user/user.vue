@@ -2,7 +2,7 @@
   <div id="user_root">
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item><i class="el-icon-date"></i> 用户管理</el-breadcrumb-item>
+        <el-breadcrumb-item><i class="el-icon-menu"></i> 用户管理</el-breadcrumb-item>
         <el-breadcrumb-item>基本信息</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -18,9 +18,9 @@
         <el-table-column prop="id" label="编号" width="80" align="center"></el-table-column>
         <el-table-column prop="userPhone" label="手机号码" width="120" align="center"></el-table-column>
         <el-table-column prop="userName" label="真实姓名" width="120" align="center"></el-table-column>
-        <el-table-column prop="gender" label="性别" width="80" align="center"></el-table-column>
-        <el-table-column prop="account" label="余额" width="80" align="center"></el-table-column>
-        <el-table-column label="用户头像" width="80" align="center">
+        <el-table-column prop="gender" label="性别" width="90" align="center"></el-table-column>
+        <el-table-column prop="account" label="余额" width="90" align="center"></el-table-column>
+        <el-table-column label="用户头像" width="90" align="center">
           <template slot-scope="scope">
             <img  :src="$sys.baseUri + scope.row.touImgPath" alt="" style="width: 50px;height: 50px">
           </template>
@@ -51,7 +51,7 @@
   var url_getUserList1 = "/user/findByPhone.do"
   var url_del = "/user/delete.do"
   var dataTable = []
-  var url_img = "http://192.168.43.43:8080/demo/"
+
   export default {
       name: 'user',
       data() {
@@ -68,7 +68,7 @@
           beginSearch(){
               //console.log("user beginSearch")
             if (this.search.phone == '') {
-                  this.$http.post(url_getUserList0, null, function (data, _self){
+                  this.$sys.ajax.post(url_getUserList0, null, function (data, _self){
                     //console.log(JSON.stringify(data));
                     data.forEach(function (e) {
                         if (e.regTime != null) {
@@ -83,7 +83,7 @@
                     _self.userData = dataTable.slice(0, 3)
                   }, this)
             } else {
-              this.$http.post(url_getUserList1, this.search, function (data, _self) {
+              this.$sys.ajax.post(url_getUserList1, this.search, function (data, _self) {
                 //console.log(data);
                 var e = data
                   if (e.regTime != null) {
@@ -110,7 +110,7 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.$http.post(url_del, {id: id}, function(jsObj) {
+            this.$sys.ajax.post(url_del, {id: id}, function(jsObj) {
               //console.log("rt 1 " + jsObj.status)
               if (jsObj.status == 1) {
                   _self.totalRow --
@@ -130,3 +130,8 @@
     }
   }
 </script>
+<style>
+  #user_search {
+    margin-top: 20px;
+  }
+</style>

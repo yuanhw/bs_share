@@ -2,11 +2,11 @@
   <div>
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item><i class="el-icon-date"></i> 个人信息</el-breadcrumb-item>
+        <el-breadcrumb-item><i class="el-icon-menu"></i> 个人信息</el-breadcrumb-item>
         <el-breadcrumb-item>修改密码</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="form-box">
+    <div class="form-box" id="pmInfo_form">
       <el-form ref="form" :model="form" label-width="80px" :label-position="'left'" :rules="rules" status-icon>
         <el-form-item label="账号" >
           <el-input v-model="form.pmId"  class="input_width" :disabled="true"></el-input>
@@ -48,6 +48,7 @@
 <script>
   var pmObjStr = sessionStorage.getItem("pmManager");
   var pmObj = JSON.parse(pmObjStr);
+  const url = "/platformManager/updatePass.do"  // http://localhost:8080/demo
 
   export default {
     data: function(){
@@ -107,7 +108,6 @@
     methods: {
       onSubmit() {
         //this.$message.success('提交成功！');
-        var url = "/platformManager/updatePass.do"  // http://localhost:8080/demo
         var parameters = {
           pmId: this.form.pmId.trim(),
           newPass: this.form.new_password
@@ -120,7 +120,7 @@
             this.$message.success('修改失败！');
           }
         }
-        this.$http.post(url, parameters, fn, this);
+        this.$sys.ajax.post(url, parameters, fn, this);
       },
       close() {
         this.dialogVisible = false;
@@ -144,5 +144,9 @@
 <style>
   .input_width {
     width: 200px;
+  }
+
+  #pmInfo_form {
+    margin-top: 20px ;
   }
 </style>

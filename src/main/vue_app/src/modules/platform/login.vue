@@ -13,6 +13,9 @@
       </el-form>
 </template>
 <script>
+
+  const url = "/platformManager/loadObj.do"
+
   var pmObj = {}
   export default {
     data() {
@@ -21,7 +24,6 @@
         if (!value) {
           return callback(new Error('账号不能为空'))
         } else {
-          var url = "/platformManager/loadObj.do"  // http://localhost:8080/demo
           var parameters = {
             pmId: this.ruleForm.pmId.trim()
           }
@@ -34,7 +36,7 @@
             callback()
           }
           //this.getDataByHttpPost(url, parameters, fn, callback);
-          this.$http.post(url, parameters, fn, callback)
+          this.$sys.ajax.post(url, parameters, fn, callback)
         }
       }
       var v2 = (rule, value, callback) => {
@@ -72,7 +74,7 @@
           if (valid) {
               //console.log("success login")
             sessionStorage.setItem("pmManager", JSON.stringify(pmObj))
-            this.$router.push("/pm/home")
+            this.$router.push("/pm/index")
           }
         });
       },

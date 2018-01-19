@@ -2,7 +2,7 @@
   <div>
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item><i class="el-icon-date"></i> 商家管理</el-breadcrumb-item>
+        <el-breadcrumb-item><i class="el-icon-menu"></i> 商家管理</el-breadcrumb-item>
         <el-breadcrumb-item>账号管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -73,6 +73,7 @@
   const urlLoadDate = "/farmManager/loadData.do"
   const urlSh = "/farmManager/sh.do"
   const urlDel ="/farmManager/del.do"
+
   const status = [
     {value: 0, label: '待审核'},
     {value: 1, label: '正常'},
@@ -80,6 +81,7 @@
     {value: 3, label: '禁用中'},
     {value: 4, label: '全部'}
   ]
+
   function dateFormat(times) {
     var date = new Date(parseInt(times))
     var dateStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
@@ -107,7 +109,7 @@
     methods: {
         shOk() {
             var _self = this
-          this.$http.post(urlSh, {phone: this.fmData[this.indexRow].phone, status: this.shTag}, function(jsObj) {
+          this.$sys.ajax.post(urlSh, {phone: this.fmData[this.indexRow].phone, status: this.shTag}, function(jsObj) {
             console.log("rt 1 " + jsObj.status)
             if (jsObj.status == 1) {
                 _self.loadDate()
@@ -139,7 +141,7 @@
                 cancelButtonText: '取消',
                 type: 'warning'
               }).then(() => {
-                this.$http.post(urlDel, {phone: tableData[index].phone}, function(jsObj) {
+                this.$sys.ajax.post(urlDel, {phone: tableData[index].phone}, function(jsObj) {
                   console.log("rt 1 " + jsObj.status)
                   if (jsObj.status == 1) {
                     _self.loadDate()
@@ -168,7 +170,7 @@
       },
       loadDate() {
             //console.log("loadDate() exec");
-        this.$http.post(urlLoadDate, this.search, function(jsObj, _self) {
+        this.$sys.ajax.post(urlLoadDate, this.search, function(jsObj, _self) {
           if (jsObj.list.length <= 0) {
             _self.fmData = []
             _self.$message("暂无数据")
@@ -195,6 +197,9 @@
   }
 </script>
 <style>
+  #search {
+    margin-top:20px;
+  }
   .input {
     width: 150px;
     margin-right: 39px;

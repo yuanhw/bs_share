@@ -1,44 +1,74 @@
 import Vue from 'vue'
+
 import VueRouter from 'vue-router'
-
-import Login from '@/components/view/login_parent'
-import FarmReg from '@/components/view/farm/page/reg'
-
 Vue.use(VueRouter)
 
-const router = new VueRouter({
+/* 后台系统登录页 */
+const login = resolve =>require(['@/modules/login_parent.vue'], resolve)
+//const farm_reg = require(['@/modules/platform/login_parent.vue], resolve)
 
+/* 管理员后台首页 */
+const pm_index = resolve =>require(['@/modules/platform/index.vue'], resolve)
+//管理员信息
+const pm_info = resolve =>require(['@/modules/platform/person/pmInfo.vue'], resolve)
+//商家账号管理
+const pm_seller_examine = resolve => require(['@/modules/platform/seller/seller_examine.vue'], resolve)
+//用户信息
+const pm_user = resolve => require(['@/modules/platform/user/user.vue'], resolve)
+
+/* 商家后台首页*/
+const fm_index = resolve =>require(['@/modules/farm/index.vue'], resolve)
+const fm_login = resolve =>require(['@/modules/farm/login.vue'], resolve)
+const fm_reg = resolve =>require(['@/modules/farm/reg.vue'], resolve)
+
+const router = new VueRouter({
   routes: [
     {
       path: '/',
       redirect: '/login'
     },
-    {path: '/login', component: Login},
-    {path: '/pm/home',
-      component: resolve => require(['../components/view/platform/common/Home.vue'], resolve),
-      children:[
-        {path: '/pm/pmInfo',
-          component: resolve => require(['../components/view/platform/page/pmInfo.vue'], resolve)
-        },
-        {path: '/pm/seller_examine',
-          component: resolve => require(['../components/view/platform/page/seller_examine.vue'], resolve)
-        },
-        {path: '/pm/seller_operate',
-          component: resolve => require(['../components/view/platform/page/seller_operate.vue'], resolve)
-        },
-        {path: '/pm/user',
-          component: resolve => require(['../components/view/platform/page/user.vue'], resolve)
-        }
-        ]
+    {
+      path: '/login',
+      component: login
     },
-    {path: '/fm/f_reg', component: FarmReg},
-    {path: '/fm/index', component: resolve => require(['../components/view/farm/index.vue'], resolve) }
+    {
+      path: '/pm/index',
+      component: pm_index,
+      children:
+        [{
+          path: '/pm/person_pmInfo',
+          name: 'pmInfo',
+          component: pm_info
+        },
+        {
+          path: '/pm/seller_seller_examine',
+          name: 'seller_examine',
+          component: pm_seller_examine
+        },
+        {
+          path: '/pm/pm_user',
+          name: 'pm_user',
+          component: pm_user
+        }]
+    },
+    {
+      path: '/fm/reg',
+      component: fm_reg
+    },
+    {
+      path: '/fm/index',
+      component: fm_index
+    }
   ],
   linkActiveClass: 'active'
 })
+
+/**
+ *  路由拦截  未登录跳转到登录界面
+ */
 router.beforeEach((to, from, next) => {
   //console.log("to:" + to.path + " * from" + from.path)
-  if (to.path === '/login' || to.path === '/fm/f_reg') {
+  if (to.path === '/login' || to.path === '/fm/reg') {
     next()
     return;
   }
