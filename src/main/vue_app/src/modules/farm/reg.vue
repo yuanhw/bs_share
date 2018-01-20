@@ -113,7 +113,9 @@
         submit: function () {
             this.farm.province = this.farm.value[0];
             this.farm.city = this.farm.value[1];
-            console.log(JSON.stringify(this.farm))
+            var farm_cope = JSON.parse(JSON.stringify(this.farm))
+            //console.log(JSON.stringify(this.farm))
+          farm_cope.password = this.$sys.getMd5(this.farm.passwored)
           var url = "/farmManager/reg.do"  // http://localhost:8080/demo
           var fn = function (data, _self) {
             console.log(data.status + 'fn');
@@ -123,7 +125,7 @@
                 _self.dialogVisible = true
             }
           }
-          this.$sys.ajax.post(url, this.farm, fn, this);
+          this.$sys.ajax.post(url, farm_cope, fn, this);
         },
         cancel: function () {
           this.farm = tmp;

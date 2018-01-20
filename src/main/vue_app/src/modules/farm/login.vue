@@ -1,6 +1,6 @@
 <template>
   <el-form :model="farm" label-width="100px" >
-    <el-form-item label="电话">
+    <el-form-item label="手机">
       <el-input type="text" v-model="farm.phone" class="input_width"></el-input>
     </el-form-item>
     <el-form-item label="密码">
@@ -29,14 +29,19 @@
             this.$message('账号或密码不能为空');
           } else {
             //console.log(this.farm.phone + ' ' + this.farm.password);
-            var url = "/farmManager/loadObj.do"  // http://localhost:8080/demo
+            var url = "/farmManager/loadObj.do"
             var parameters = {
                 phone: this.farm.phone
             }
             var fn = function (data, _self) {
               //console.log(data.status + 'fn');
               if (data.status != 0) {
-                _self.$message("账号或密码错误")
+                _self.$message("账号不存在")
+                return;
+              }
+              //console.log(_self.$sys.getMd5(_self.farm.password))
+              if (data.rt.password != _self.$sys.getMd5(_self.farm.password)) {
+                  _self.$message("密码错误")
                 return;
               }
               switch (data.rt.checkStatus) {

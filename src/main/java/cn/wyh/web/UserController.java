@@ -40,6 +40,7 @@ public class UserController {
         int status = 1;
         String msg = "注册成功";
         user.setRegTime(new Date());
+        user.setTouImgPath(Global.DEFAULT_IMGPATH);
         if (!this.userService.reg(user)) {
             status = 0;
             msg = "注册失败";

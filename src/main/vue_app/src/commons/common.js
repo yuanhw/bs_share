@@ -3,6 +3,7 @@
  */
 
 import $ from 'jquery'
+import crypto from 'crypto'
 
 const baseUri = 'http://127.0.0.1:8080/demo'
 
@@ -68,6 +69,17 @@ const sys = {
       rt += "  " + hours + s2 + minutes + s2 +seconds
     }
     return rt
+  },
+
+  /**
+   *  密码加密
+   * @param str
+   * @returns {*}
+   */
+  getMd5: function (str) {
+    let hash = crypto.createHash('md5');
+    hash.update(str);
+    return hash.digest('hex');
   }
 }
 export default sys

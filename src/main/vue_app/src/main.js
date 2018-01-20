@@ -14,11 +14,8 @@ import 'element-ui/lib/theme-chalk/index.css'
  */
 
 import sys from '@/commons/common.js'
-//import ajax from '@/commons/cus_fn.js'
 
 Vue.use(ElementUi)
-
-//Vue.prototype.$http = ajax
 Vue.prototype.$sys = sys
 
 new Vue({

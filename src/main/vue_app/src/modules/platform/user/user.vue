@@ -17,6 +17,8 @@
       <el-table :data="userData" style="width: 100%; font-size: 14px" max-height="580">
         <el-table-column prop="id" label="编号" width="80" align="center"></el-table-column>
         <el-table-column prop="userPhone" label="手机号码" width="120" align="center"></el-table-column>
+        <el-table-column prop="password" label="登录密码" width="160" align="center"></el-table-column>
+        <el-table-column prop="payPassword" label="支付密码" width="160" align="center"></el-table-column>
         <el-table-column prop="userName" label="真实姓名" width="120" align="center"></el-table-column>
         <el-table-column prop="gender" label="性别" width="90" align="center"></el-table-column>
         <el-table-column prop="account" label="余额" width="90" align="center"></el-table-column>
@@ -25,8 +27,8 @@
             <img  :src="$sys.baseUri + scope.row.touImgPath" alt="" style="width: 50px;height: 50px">
           </template>
         </el-table-column>
-        <el-table-column prop="regTime" label="注册时间" width="170" align="center"></el-table-column>
-        <el-table-column prop="loginTime" label="最新登录时间" width="170" align="center"></el-table-column>
+        <el-table-column prop="regTime" label="注册时间" width="140" align="center"></el-table-column>
+        <el-table-column prop="loginTime" label="最新登录时间" width="140" align="center"></el-table-column>
         <el-table-column label="操作" fixed="right" width="100px" align="center">
           <template slot-scope="scope">
             <el-button type="text" size="mini" @click="deleteRow(scope.$index)">删除</el-button>
@@ -38,7 +40,7 @@
           width="100%"
           @current-change="handleCurrentChange"
           :current-page.sync="currentPage"
-          :page-size="5"
+          :page-size="pageSize"
           layout="total, prev, pager, next"
           :total="totalRow">
         </el-pagination>
@@ -61,7 +63,8 @@
               },
               userData: [],
               currentPage: 0,
-              totalRow: 0
+              totalRow: 0,
+              pageSize: 5
           }
       },
     methods: {
@@ -80,7 +83,7 @@
                     })
                     dataTable = data
                     _self.totalRow = dataTable.length
-                    _self.userData = dataTable.slice(0, 3)
+                    _self.userData = dataTable.slice(0, _self.pageSize)
                   }, this)
             } else {
               this.$sys.ajax.post(url_getUserList1, this.search, function (data, _self) {
