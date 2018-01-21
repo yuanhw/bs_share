@@ -135,7 +135,7 @@
       //console.log(pmObjStr + " pmInfo")
       this.form.pmId = pmObj.pmId;
       this.form.pmName = pmObj.pmName;
-      this.form.time = pmObj.riseTime;
+      this.form.time = this.$sys.dateTimeFormat(pmObj.riseTime);
       pmObjStr = sessionStorage.getItem("pmManager");
       pmObj = JSON.parse(pmObjStr);
     }
