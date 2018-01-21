@@ -16,12 +16,17 @@ public class FarmManager implements Serializable {
     private Date regTime;
     private int checkStatus;
 
+    private double account;
+    private String company;
+
     public FarmManager() {
     }
 
-    public FarmManager(int fmId, String phone, String password, String fmName, String province,
-                       String city, String detailedAddress, int farmType, int farmSize, Date regTime, int checkStatus) {
-        this.fmId = fmId;
+    /**
+     *  个人用户必填字段
+     */
+    public FarmManager(String phone, String password, String fmName, String province, String city,
+                       String detailedAddress, int farmType, int farmSize, Date regTime, int checkStatus, double account) {
         this.phone = phone;
         this.password = password;
         this.fmName = fmName;
@@ -32,6 +37,42 @@ public class FarmManager implements Serializable {
         this.farmSize = farmSize;
         this.regTime = regTime;
         this.checkStatus = checkStatus;
+        this.account = account;
+    }
+
+    /**
+     *  企业用户必填字段
+     */
+    public FarmManager(String phone, String password, String fmName, String province, String city,
+                       String detailedAddress, int farmType, int farmSize, Date regTime, int checkStatus, double account, String company) {
+        this.phone = phone;
+        this.password = password;
+        this.fmName = fmName;
+        this.province = province;
+        this.city = city;
+        this.detailedAddress = detailedAddress;
+        this.farmType = farmType;
+        this.farmSize = farmSize;
+        this.regTime = regTime;
+        this.checkStatus = checkStatus;
+        this.account = account;
+        this.company = company;
+    }
+
+    public double getAccount() {
+        return account;
+    }
+
+    public void setAccount(double account) {
+        this.account = account;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public int getFmId() {
@@ -136,6 +177,8 @@ public class FarmManager implements Serializable {
                 ", farmSize=" + farmSize +
                 ", regTime=" + regTime +
                 ", checkStatus=" + checkStatus +
+                ", account=" + account +
+                ", company='" + company + '\'' +
                 '}';
     }
 }

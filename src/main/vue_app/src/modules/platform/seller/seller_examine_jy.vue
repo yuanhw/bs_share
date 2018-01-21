@@ -18,7 +18,7 @@
       name: 'edit',
     data() {
           return {
-            status: '禁用',
+            status: '',
             show2: false,
             checked: false,
             phone: '',
@@ -26,15 +26,15 @@
     },
     methods: {
       jyOk() {
-          console.log("jyOk 确定")
+          //console.log("jyOk 确定")
         var status = 1;
-        if (this.status != '禁用') {
+        if (this.status != '禁用中') {
               status = 3;
         }
-        console.log("status d " + status)
+        //console.log("status d " + status)
           var _self = this
-          this.$http.post(urlSh, {phone: this.phone, status: status}, function(jsObj) {
-            console.log("rt 1 " + jsObj.status)
+          this.$sys.ajax.post(urlSh, {phone: this.phone, status: status}, function(jsObj) {
+            //console.log("rt 1 " + jsObj.status)
             if (jsObj.status == 1) {
               _self.show2 = false
               _self.$emit('refresh')
@@ -49,16 +49,16 @@
       open: function(phone, status) {
           this.status = status
           this.show2 = true
-        this.phone = phone
-          console.log("phone = " + phone +" , status = " + status)
+          this.phone = phone
+          //console.log("phone = " + phone +" , status = " + status)
       }
     },
     computed: {
           showText: function () {
-            return this.status == '禁用' ? '您即将解除禁用？': '你将要禁用该账户？'
+            return this.status == '禁用中' ? '您即将解除禁用？': '你将要禁用该账户？'
           },
           showTitle: function () {
-            return this.status == '禁用'? '解除禁用：' : '禁用：'
+            return this.status == '禁用中'? '解除禁用：' : '禁用：'
           }
     }
   }

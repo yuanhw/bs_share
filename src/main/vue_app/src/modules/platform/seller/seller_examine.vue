@@ -23,16 +23,16 @@
     </div>
     <div id="tableData">
       <el-table :data="fmData" style="width: 100%; font-size: 14px" max-height="480">
-        <el-table-column prop="fmId" label="编号" width="50"></el-table-column>
-        <el-table-column prop="regTime" label="申请日期" width="120"></el-table-column>
-        <el-table-column prop="fmName" label="真实姓名" width="80"></el-table-column>
-        <el-table-column prop="phone" label="手机号码" width="110"></el-table-column>
-        <el-table-column prop="province" label="省份" width="80"></el-table-column>
-        <el-table-column prop="city" label="城市" width="80"></el-table-column>
-        <el-table-column prop="detailedAddress" label="详细地址" width="120"></el-table-column>
-        <el-table-column prop="farmType" label="农场类型" width="80"></el-table-column>
-        <el-table-column prop="farmSize" label="农场大小" width="80"></el-table-column>
-        <el-table-column prop="checkStatus" label="状态" width="80"></el-table-column>
+        <el-table-column prop="fmId" label="编号" width="80" align="center"></el-table-column>
+        <el-table-column prop="regTime" label="申请时间" width="130" align="center"></el-table-column>
+        <el-table-column prop="fmName" label="真实姓名" width="110" align="center"></el-table-column>
+        <el-table-column prop="phone" label="手机号码" width="120" align="center"></el-table-column>
+        <el-table-column prop="province" label="省份" width="80" align="center"></el-table-column>
+        <el-table-column prop="city" label="城市" width="80" align="center"></el-table-column>
+        <el-table-column prop="detailedAddress" label="详细地址" width="150" align="center"></el-table-column>
+        <el-table-column prop="farmType" label="农场类型" width="80" align="center"></el-table-column>
+        <el-table-column prop="farmSize" label="农场大小" width="80" align="center"></el-table-column>
+        <el-table-column prop="checkStatus" label="状态" width="80" align="center"></el-table-column>
         <el-table-column label="操作" fixed="right" width="170px" align="center">
           <template slot-scope="scope">
             <el-button type="text" size="mini" @click="sh(scope.$index, fmData)">审核</el-button>
@@ -74,6 +74,9 @@
   const urlSh = "/farmManager/sh.do"
   const urlDel ="/farmManager/del.do"
 
+  import status_map from '@/modules/status_map.vue'
+
+  /*
   const status = [
     {value: 0, label: '待审核'},
     {value: 1, label: '正常'},
@@ -81,12 +84,10 @@
     {value: 3, label: '禁用中'},
     {value: 4, label: '全部'}
   ]
+  */
 
-  function dateFormat(times) {
-    var date = new Date(parseInt(times))
-    var dateStr = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-    return dateStr;
-  }
+  const status = status_map.vFmStatus
+
   import Edit from './seller_examine_jy.vue'
   export default {
       components: { Edit },
@@ -162,7 +163,8 @@
       },
       jy(index, tableData) {
         var obj = tableData[index];
-        if (obj.checkStatus != '禁用中' && obj.checkStatus != '审核通过') {
+        //console.log("jy " + obj.checkStatus)
+        if (obj.checkStatus != '禁用中' && obj.checkStatus != '正常') {
             this.$message.warning("此状态下不能进行该操作")
         } else {
             this.$refs.exit.open(obj.phone, obj.checkStatus)
@@ -177,7 +179,7 @@
           } else {
             jsObj.list.forEach(function (e) {
               e.checkStatus = status[e.checkStatus].label
-              e.regTime = dateFormat(e.regTime)
+              e.regTime =  _self.$sys.dateTimeFormat(e.regTime)
             });
             _self.totalRow = jsObj.total
             _self.fmData = jsObj.list

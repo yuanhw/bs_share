@@ -1,6 +1,7 @@
 package cn.wyh.service.impl;
 
 import cn.wyh.dao.FarmManagerDao;
+import cn.wyh.dto.UpdateFarmManager;
 import cn.wyh.entity.FarmManager;
 import cn.wyh.service.FarmManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,10 @@ public class FarmManagerServiceImpl implements FarmManagerService {
     @Override
     public void deleteByPhone(String phone) {
         this.farmManagerDao.deleteByPhone(phone);
+    }
+
+    @Override
+    public void updateFM(UpdateFarmManager farmManager) {
+        this.farmManagerDao.updateFM(farmManager);
     }
 }

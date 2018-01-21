@@ -1,7 +1,9 @@
 package cn.wyh.web;
 
+import cn.wyh.dto.UpdateFarmManager;
 import cn.wyh.entity.FarmManager;
 import cn.wyh.service.FarmManagerService;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -69,5 +71,30 @@ public class FarmManagerController {
     public String delete(@RequestParam String phone) {
         this.farmService.deleteByPhone(phone);
         return "{\"status\": 1}";
+    }
+
+    @RequestMapping("/loadPerson")
+    public String loadPerson(@RequestParam String phone) {
+        FarmManager farmManager = this.farmService.loadObjByPhone(phone);
+        return "{\"status\": 1, \"data\": "+ JSON.toJSONString(farmManager) + "}";
+    }
+
+    @RequestMapping("/updateFM")
+    public String updateFM(@ModelAttribute UpdateFarmManager farmManager) {
+        JSONObject jsonObject = new JSONObject();
+        int status = 1;
+        String msg = "success";
+        try {
+            this.farmService.updateFM(farmManager);
+            FarmManager farmManager1 = this.farmService.loadObjByPhone(farmManager.getPhone());
+            jsonObject.put("data", farmManager1);
+        } catch (Exception e) {
+            status = 0;
+            msg = "更改失败";
+            e.printStackTrace();
+        }
+        jsonObject.put("status", status);
+        jsonObject.put("msg", msg);
+        return jsonObject.toJSONString();
     }
 }

@@ -1,5 +1,6 @@
 package cn.wyh.dao;
 
+import cn.wyh.dto.UpdateFarmManager;
 import cn.wyh.entity.FarmManager;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,5 @@ public interface FarmManagerDao {
             @Param("status") int status,
             @Param("start") int start);
     void deleteByPhone(@Param("phone") String phone);
+    void updateFM(UpdateFarmManager farmManager);
 }

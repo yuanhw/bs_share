@@ -20,6 +20,9 @@
   import LoginA from '@/modules/platform/login.vue'
   import LoginB from '@/modules/farm/login.vue'
 
+  /**
+   *  系统首页
+   */
   export default {
     data() {
       return {

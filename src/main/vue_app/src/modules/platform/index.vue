@@ -64,6 +64,7 @@
 
       //let clock = document.getElementById("clock")
      this.showTime()
+      //this.$router.push('pm_welcome')
     },
     methods:{
       handleCommand() {

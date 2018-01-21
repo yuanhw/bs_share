@@ -112,10 +112,10 @@
           pmId: this.form.pmId.trim(),
           newPass: this.form.new_password
         }
-        var fn = function (data, obj) {
+        var fn = function (data, _self) {
           //console.log(data.status + 'fn');
           if (data.status == 0) {
-            obj.dialogVisible = true;
+            _self.dialogVisible = true;
           } else {
             this.$message.success('修改失败！');
           }

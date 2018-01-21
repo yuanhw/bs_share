@@ -1,5 +1,6 @@
 package cn.wyh.service;
 
+import cn.wyh.dto.UpdateFarmManager;
 import cn.wyh.entity.FarmManager;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface FarmManagerService {
     List<FarmManager> loadData(String phone, String fmName, int status, int start);
     int totalNums(String phone, String fmName, int status);
     void deleteByPhone(String phone);
+    void updateFM(UpdateFarmManager farmManager);
 }

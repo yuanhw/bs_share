@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 /* 后台系统登录页 */
 const login = resolve =>require(['@/modules/login_parent.vue'], resolve)
-//const farm_reg = require(['@/modules/platform/login_parent.vue], resolve)
+const welcome = resolve => require(['@/modules/welcome.vue'], resolve)
 
 /* 管理员后台首页 */
 const pm_index = resolve =>require(['@/modules/platform/index.vue'], resolve)
@@ -18,8 +18,8 @@ const pm_user = resolve => require(['@/modules/platform/user/user.vue'], resolve
 
 /* 商家后台首页*/
 const fm_index = resolve =>require(['@/modules/farm/index.vue'], resolve)
-const fm_login = resolve =>require(['@/modules/farm/login.vue'], resolve)
 const fm_reg = resolve =>require(['@/modules/farm/reg.vue'], resolve)
+const fm_info = resolve =>require(['@/modules/farm/person/fmInfo.vue'], resolve)
 
 const router = new VueRouter({
   routes: [
@@ -34,8 +34,13 @@ const router = new VueRouter({
     {
       path: '/pm/index',
       component: pm_index,
+      redirect: '/pm/pm_welcome',
       children:
         [{
+            path: '/pm/pm_welcome',
+            name: 'pm_welcome',
+            component: welcome
+          },{
           path: '/pm/person_pmInfo',
           name: 'pmInfo',
           component: pm_info
@@ -56,8 +61,23 @@ const router = new VueRouter({
       component: fm_reg
     },
     {
+      path: '/fm/',
+      redirect: '/fm/index'
+    },
+    {
       path: '/fm/index',
-      component: fm_index
+      component: fm_index,
+      redirect: '/fm/fm_welcome',
+      children: [
+        {
+          path: '/fm/fm_welcome',
+          component: welcome
+        },
+        {
+          path: '/fm/person_fmInfo',
+          component: fm_info
+        }
+      ]
     }
   ],
   linkActiveClass: 'active'

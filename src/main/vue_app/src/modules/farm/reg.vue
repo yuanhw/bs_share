@@ -8,7 +8,7 @@
       </el-breadcrumb>
     </div>
     <div  class="form-box" style="margin-top: 20px">
-      <el-form :model="farm" :label-position="'left'" label-width="100px" >
+      <el-form :model="farm" :label-position="'left'" label-width="100px">
         <el-form-item label="电话">
           <el-input type="text" v-model="farm.phone" class="input_width"></el-input>
         </el-form-item>
@@ -37,9 +37,12 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="企业名称" v-if="isShow">
+          <el-input type="text" v-model="farm.company" class="input_width"></el-input>
+        </el-form-item>
         <el-form-item label="农场面积">
           <el-input-number v-model="farm.farmSize" controls-position="right"
-                           :min="1" :max="1000" style="width:100px;"></el-input-number>
+                           :min="1" :max="1000" style="width:100px;"></el-input-number><span style="margin-left:2px;">亩</span>
         </el-form-item>
         <el-form-item>
           <el-button @click="submit">确定</el-button>
@@ -50,7 +53,7 @@
         title="提示"
         :visible.sync="dialogVisible"
         width="30%">
-        <span>注册成功</span>
+        <span>注册成功，请登录</span>
         <span slot="footer" class="dialog-footer">
            <el-button type="primary" @click="close">确 定</el-button>
         </span>
@@ -60,17 +63,8 @@
 </template>
 
 <script>
-  var tmp = {
-    phone: '',
-    password: '',
-    fmName: '',
-    province: '',
-    city: '',
-    detailedAddress: '',
-    farmType: '',
-    farmSize: '',
-    value: []
-  };
+  var url = "/farmManager/reg.do"
+
   export default {
     data() {
       return {
@@ -84,6 +78,7 @@
             detailedAddress: '',
             farmType: '',
             farmSize: '',
+            company: '',
             value: []
           },
         options: [{
@@ -110,30 +105,37 @@
       };
     },
     methods: {
-        submit: function () {
-            this.farm.province = this.farm.value[0];
-            this.farm.city = this.farm.value[1];
-            var farm_cope = JSON.parse(JSON.stringify(this.farm))
-            //console.log(JSON.stringify(this.farm))
-          farm_cope.password = this.$sys.getMd5(this.farm.passwored)
-          var url = "/farmManager/reg.do"  // http://localhost:8080/demo
-          var fn = function (data, _self) {
-            console.log(data.status + 'fn');
-            if (data.status != 0) {
-              _self.$message("注册失败！")
-            } else {
-                _self.dialogVisible = true
-            }
-          }
-          this.$sys.ajax.post(url, farm_cope, fn, this);
+        validate: function () {
+          return true
         },
-        cancel: function () {
-          this.farm = tmp;
+        submit: function () {
+            if (this.validate()) {
+              this.farm.province = this.farm.value[0];
+              this.farm.city = this.farm.value[1];
+              var farm_cope = JSON.parse(JSON.stringify(this.farm))
+              farm_cope.password = this.$sys.getMd5(this.farm.password)
+
+              var fn = function (data, _self) {
+                //console.log(data.status + 'fn');
+                if (data.status != 0) {
+                  _self.$message("注册失败！")
+                } else {
+                  _self.dialogVisible = true
+                }
+              }
+
+              this.$sys.ajax.post(url, farm_cope, fn, this);
+            }
         },
       close: function () {
             //console.log("6666")
         this.$router.push("/");
       }
+    },
+    computed: {
+        isShow() {
+            return this.farm.farmType == '2' ? true : false
+        }
     }
   }
 </script>

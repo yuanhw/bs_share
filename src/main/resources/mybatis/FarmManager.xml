@@ -3,15 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.wyh.dao.FarmManagerDao">
     <select id="findByPhone" resultType="FarmManager" parameterType="String" >
-        SELECT fm_id AS fmId, phone, password, fm_name AS fmName, province, city, detailed_address AS detailedAddress ,
-        farm_type as farmType, farm_size AS farmSize, reg_time AS regTime,
-         check_status AS checkStatus FROM farm_manager
+        SELECT * FROM farm_manager
         WHERE phone = #{phone}
     </select>
     <insert id="addObj" parameterType="FarmManager" >
         insert into farm_manager(phone, password, fm_name, province, city, detailed_address,
-        farm_type, farm_size, reg_time, check_status) values (#{phone}, #{password}, #{fmName}, #{province},
-        #{city}, #{detailedAddress}, #{farmType}, #{farmSize}, #{regTime}, #{checkStatus})
+        farm_type, farm_size, reg_time, check_status, account, company) values (#{phone}, #{password}, #{fmName}, #{province},
+        #{city}, #{detailedAddress}, #{farmType}, #{farmSize}, #{regTime}, #{checkStatus}, #{account}, #{company})
     </insert>
     <update id="updateStatus">
         update farm_manager set check_status = #{status} where phone = #{phone}
@@ -48,4 +46,14 @@
     <delete id="deleteByPhone">
         DELETE FROM farm_manager WHERE phone = #{phone}
     </delete>
+
+    <update id="updateFM" parameterType="cn.wyh.dto.UpdateFarmManager">
+        UPDATE farm_manager SET
+        fm_name = #{fmName},
+        province = #{province},
+        city = #{city},
+        detailed_address = #{detailedAddress},
+        farm_size = #{farmSize}
+        WHERE phone = #{phone}
+    </update>
 </mapper>
