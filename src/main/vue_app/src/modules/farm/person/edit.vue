@@ -10,24 +10,11 @@
       <p>
         <label>真实姓名</label>
         <el-input type="text" v-model="fm.fmName" class="input_mid" size="small"></el-input>
-        <label>省份</label>
-        <el-select v-model="fm.province" placeholder="请选择" size="small" class="input_mid">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <label>城市</label>
-        <el-select v-model="fm.city" placeholder="请选择" size="small" class="input_mid">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <label>所在地</label>
+        <el-cascader
+          :options="options"
+          change-on-select
+          style="width: 160px;" v-model="value" size="small"></el-cascader>
       </p>
       <p>
         <label>详细地址</label>
@@ -49,19 +36,14 @@
 <script>
 const url = '/farmManager/updateFM.do'
 
-  const options = [
-    {
-        value: '杭州',
-        label: '杭州'
-    }
-  ]
   export default {
     name: 'edit',
     data() {
       return {
         fm: {},
         show: false,
-        options: options
+        options: [],
+        value: []
       }
     },
     methods: {
@@ -70,13 +52,14 @@ const url = '/farmManager/updateFM.do'
       },
       onSubmit() {
         if (this.validate()) {
+            this.fm.province = this.value[0]
+            this.fm.city = this.value[1]
             this.$sys.ajax.post(url, this.fm, function (rt, _self) {
               if (rt.status != 1) {
                   _self.$message.warning(rt.msg)
               } else {
                   _self.fm = {}
                   _self.show = false
-                rt.data
                 sessionStorage.setItem("fmManager", JSON.stringify(rt.data))
                 _self.$emit('refresh')
               }
@@ -90,7 +73,16 @@ const url = '/farmManager/updateFM.do'
       open(row){
         this.fm = row
         this.show = true;
+        this.value[0] = row.province
+        this.value[1] = row.city
+        //console.log(this.value)
       }
+    },
+    created() {
+      let url = '/const/loadProvince.do'
+      this.$sys.ajax.post(url, null, function (data, _self) {
+        _self.options = data
+      }, this)
     }
   }
 </script>

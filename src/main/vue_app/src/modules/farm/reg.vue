@@ -81,20 +81,7 @@
             company: '',
             value: []
           },
-        options: [{
-          value: '浙江省',
-          label: '浙江省',
-          children: [
-            {value: '杭州市', label: '杭州市'},
-            {value: '宁波市', label: '某某市'}
-          ]
-        }, {
-          value: '陕西省',
-          label: '陕西省'
-        }, {
-          value: '湖北省',
-          label: '湖北省'
-        }],
+        options: [],
         options1: [{
           value: 1,
           label: '个人'
@@ -136,6 +123,12 @@
         isShow() {
             return this.farm.farmType == '2' ? true : false
         }
+    },
+    created() {
+        let url = '/const/loadProvince.do'
+        this.$sys.ajax.post(url, null, function (data, _self) {
+          _self.options = data
+        }, this)
     }
   }
 </script>

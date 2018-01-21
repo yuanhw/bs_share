@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wyh.dao.ProvinceDao">
+    <select id="loadProvince" resultMap="province">
+        SELECT a.code AS code, a.value AS value, b.code AS city_code, b.value AS city_value
+        FROM province a LEFT JOIN city b ON a.code = b.pre_code ORDER BY value
+    </select>
+    <resultMap id="province" type="Province">
+        <id column="code" property="code"/>
+        <result column="value" property="value"/>
+        <association property="children" javaType="City">
+            <id column="city_code" property="code"/>
+            <result column="city_value" property="value"/>
+        </association>
+    </resultMap>
+</mapper>
