@@ -19,4 +19,9 @@ public class ConstController {
     public String loadProvinceList() {
         return JSON.toJSONString(this.provinceService.loadListProvince());
     }
+
+    @RequestMapping("/loadCityList")
+    public String loadCityList() {
+        return JSON.toJSONString(provinceService.loadCityList());
+    }
 }

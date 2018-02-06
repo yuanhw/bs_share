@@ -1,6 +1,7 @@
 package cn.wyh.service;
 
 import cn.wyh.dao.ProvinceDao;
+import cn.wyh.entity.City;
 
 import java.util.List;
 
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface ProvinceService {
     List<ProvinceDao> loadListProvince();
+    List<City> loadCityList();
 }

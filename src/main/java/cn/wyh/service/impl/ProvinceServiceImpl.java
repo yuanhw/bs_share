@@ -1,6 +1,7 @@
 package cn.wyh.service.impl;
 
 import cn.wyh.dao.ProvinceDao;
+import cn.wyh.entity.City;
 import cn.wyh.service.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,10 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Override
     public List<ProvinceDao> loadListProvince() {
         return this.provinceDao.loadProvince();
+    }
+
+    @Override
+    public List<City> loadCityList() {
+        return provinceDao.loadCityList();
     }
 }

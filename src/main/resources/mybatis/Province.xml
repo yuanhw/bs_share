@@ -14,4 +14,8 @@
             <result column="city_value" property="value"/>
         </association>
     </resultMap>
+
+    <select id="loadCityList" resultType="City">
+        select code, value from city order by pre_code
+    </select>
 </mapper>
