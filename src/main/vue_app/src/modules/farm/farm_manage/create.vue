@@ -10,6 +10,7 @@
       <p>
         <el-button type="primary" icon="el-icon-plus" size="mini" @click="add">新建</el-button>
         <el-button type="primary" icon="el-icon-edit" size="mini" @click="update">修改</el-button>
+        <el-button type="primary" icon="el-icon-edit" size="mini" @click="cancel">取消</el-button>
         <el-button type="primary" icon="el-icon-edit" size="mini" @click="save">保存</el-button>
         <el-button type="primary" icon="el-icon-edit" size="mini" @click="publish">发布</el-button>
         <el-button type="primary" icon="el-icon-edit" size="mini" @click="unPublish">取消发布</el-button>
@@ -73,8 +74,8 @@
               <label>农场展示图</label>
               <img :src="$sys.baseUri + farmInfo.fmImg" style="width: 300px; height: 300px">
               <div style="margin-left: 80px;">
-            <input type="file" name="imgFile" id="imgFile">
-            <button type="button" @click="submit()">上传</button>
+            <input type="file" name="imgFile" id="imgFile" :disabled="updateTag">
+            <button type="button" @click="submit()" :disabled="updateTag">上传</button>
               </div>
             </p>
             <br>
@@ -275,6 +276,9 @@
         } else {
           this.$message.warning("此状态下不能取消发布")
         }
+      },
+      cancel() {
+        this.reLoad()
       }
     },
     created() {
