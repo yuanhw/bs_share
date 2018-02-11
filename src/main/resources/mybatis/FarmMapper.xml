@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.wyh.dao.FarmDao" >
-
-
+    <select id="selectFarmById" parameterType="String" resultType="Farm">
+        select * from farm where fm_id = #{fmId}
+    </select>
+    <insert id="addFarmBaseInfo">
+        insert into farm (
+        fm_id,
+        fm_title,
+        size,
+        province,
+        city,
+        detailed_address,
+        pos_lng,
+        pos_lat,
+        contact_name,
+        contact_phone,
+        key_vegetable,
+        fm_introduce,
+        business_begin,
+        create_time
+        ) values (
+        #{farm.fmId},
+        #{farm.fmTitle},
+        #{farm.size},
+        #{farm.province},
+        #{farm.city},
+        #{farm.detailedAddress},
+        #{farm.posLng},
+        #{farm.posLat},
+        #{farm.contactName},
+        #{farm.contactPhone},
+        #{farm.keyVegetable},
+        #{farm.fmIntroduce},
+        #{farm.businessBegin},
+        #{farm.createTime}
+        )
+    </insert>
+    <update id="updateFarmInfo">
+        update farm set
+        fm_title = #{farm.fmTitle},
+        size = #{farm.size},
+        contact_name = #{farm.contactName},
+        contact_phone = #{farm.contactPhone},
+        key_vegetable = #{farm.keyVegetable},
+        fm_introduce = #{farm.fmIntroduce},
+        business_begin = #{farm.businessBegin}
+        where id = #{farm.id}
+    </update>
+    <update id="updateStatus">
+        update farm set check_status = #{code} where id = #{id}
+    </update>
+    <update id="updateImg">
+         update farm set fm_img = #{fmImg} where id = #{id}
+    </update>
 </mapper>

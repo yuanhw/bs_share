@@ -15,7 +15,7 @@
           </el-submenu>
           <el-submenu index="2">
             <template slot="title"><i class="el-icon-news"></i><span style="font-weight: bold">农场管理</span></template>
-            <el-menu-item index="red_packet_create" class="subItem">农场生成</el-menu-item>
+            <el-menu-item index="fm_create" class="subItem">农场生成</el-menu-item>
             <el-menu-item index="red_packet_create" class="subItem">地块生成</el-menu-item>
             <el-menu-item index="red_packet_create" class="subItem">地块详情</el-menu-item>
           </el-submenu>
