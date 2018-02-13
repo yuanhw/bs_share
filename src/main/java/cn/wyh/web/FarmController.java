@@ -9,6 +9,7 @@ import cn.wyh.common.response.ResponseSuccess;
 import cn.wyh.dto.LateLySimplyFarm;
 import cn.wyh.entity.Farm;
 import cn.wyh.service.FarmService;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -101,7 +102,10 @@ public class FarmController {
     }
 
     @RequestMapping("/loadLateLyFarm")
-    public String loadLateLySimplyFarm(@RequestParam("lat") Double lat, @RequestParam("lng") Double lng) {
+    public String loadLateLySimplyFarm(@RequestParam String jsonStr) {
+        JSONObject request = JSONObject.parseObject(jsonStr);
+        double lat = request.getDouble("lat");
+        double lng = request.getDouble("lng");
         List<LateLySimplyFarm> resp = this.farmService.selectFarmByPos(lat, lng);
         ResponseSuccess response = new ResponseSuccess(resp);
         return response.toString();

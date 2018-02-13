@@ -21,7 +21,7 @@ public class BaiDuDistanceUtil {
          */
         double R = 6371000;
         double d =  Math.acos(Math.sin(_lat1) * Math.sin(_lat2) + Math.cos(_lat1) * Math.cos(_lat2) * Math.cos(_lon2-_lon1)) * R;
-        if (d > 999999) {
+        if (d > 999) {
             return (int)(d / 1000) + "km";
         }
         return (int)d + "m";
@@ -33,7 +33,7 @@ public class BaiDuDistanceUtil {
      * @return
      */
     public static String distanceFormat(double d) {
-        if (d > 999999) {
+        if (d > 999) {
             return (int)(d / 1000) + "km";
         }
         return (int)d + "m";
