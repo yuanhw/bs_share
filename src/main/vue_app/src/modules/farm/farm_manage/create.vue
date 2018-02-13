@@ -74,8 +74,8 @@
               <label>农场展示图</label>
               <img :src="$sys.baseUri + farmInfo.fmImg" style="width: 300px; height: 300px">
               <div style="margin-left: 80px;">
-            <input type="file" name="imgFile" id="imgFile" :disabled="updateTag">
-            <button type="button" @click="submit()" :disabled="updateTag">上传</button>
+            <input type="file" name="imgFile" id="imgFile">
+            <button type="button" @click="submit()">上传</button>
               </div>
             </p>
             <br>
@@ -102,6 +102,7 @@
     <div>
       <CusAdd ref="add" v-on:refresh="reLoad"></CusAdd>
     </div>
+    <div id="container"></div>
   </div>
 </template>
 <script>
@@ -278,6 +279,7 @@
         }
       },
       cancel() {
+            this.updateTag = true
         this.reLoad()
       }
     },
@@ -296,6 +298,13 @@
               _self.farmInfo.checkStatus = status_map[rt.data.checkStatus].value
           }
         }, this)
+
+      /*
+      var map = new BMap.Map("container");
+      var pointA = new BMap.Point(109.483932700,34.502357980);
+      var pointB = new BMap.Point(113.395469000,22.520579000);
+      console.log('distance: ' + map.getDistance(pointA,pointB))
+      */
     }
   }
 </script>

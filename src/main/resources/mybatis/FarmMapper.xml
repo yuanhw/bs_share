@@ -54,4 +54,14 @@
     <update id="updateImg">
          update farm set fm_img = #{fmImg} where id = #{id}
     </update>
+    <select id="selectFarmByPos" resultType="cn.wyh.dto.LateLySimplyFarm">
+        select id, fm_id, fm_title, consumer_num,
+        cus_distance_baidu(pos_lat, pos_lng, #{lat}, #{lng}) as distance,
+        fm_img,
+        spec
+        from farm
+        where check_status = 1
+        order by distance asc
+        limit 15
+    </select>
 </mapper>

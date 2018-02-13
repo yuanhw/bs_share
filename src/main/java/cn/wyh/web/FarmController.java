@@ -6,6 +6,7 @@ import cn.wyh.common.Global;
 import cn.wyh.common.response.Response;
 import cn.wyh.common.response.ResponseFail;
 import cn.wyh.common.response.ResponseSuccess;
+import cn.wyh.dto.LateLySimplyFarm;
 import cn.wyh.entity.Farm;
 import cn.wyh.service.FarmService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by WYH on 2018/2/7.
@@ -96,5 +98,12 @@ public class FarmController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping("/loadLateLyFarm")
+    public String loadLateLySimplyFarm(@RequestParam("lat") Double lat, @RequestParam("lng") Double lng) {
+        List<LateLySimplyFarm> resp = this.farmService.selectFarmByPos(lat, lng);
+        ResponseSuccess response = new ResponseSuccess(resp);
+        return response.toString();
     }
 }

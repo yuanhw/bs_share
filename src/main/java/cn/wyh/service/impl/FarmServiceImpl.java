@@ -1,10 +1,14 @@
 package cn.wyh.service.impl;
 
 import cn.wyh.dao.FarmDao;
+import cn.wyh.dto.LateLySimplyFarm;
 import cn.wyh.entity.Farm;
 import cn.wyh.service.FarmService;
+import cn.wyh.utils.BaiDuDistanceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by WYH on 2018/2/7.
@@ -46,5 +50,14 @@ public class FarmServiceImpl implements FarmService {
     @Override
     public int updateImg(String imgFile, Integer id) {
         return this.farmDao.updateImg(imgFile, id);
+    }
+
+    @Override
+    public List<LateLySimplyFarm> selectFarmByPos(Double lat, Double lng) {
+        List<LateLySimplyFarm> resp = this.farmDao.selectFarmByPos(lat, lng);
+        for (LateLySimplyFarm farm : resp) {
+            farm.setDistance(BaiDuDistanceUtil.distanceFormat(Double.parseDouble(farm.getDistance())));
+        }
+        return resp;
     }
 }
