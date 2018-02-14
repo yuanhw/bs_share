@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface FarmService {
     Farm loadFarmByFmId(String fmId);
+
+    Farm loadFarmById(String id);
     int isHaveFarmById(String fmId);
     int addFarmBaseInfo(Farm farm);
     int updateFarmBaseInfo(Farm farm);

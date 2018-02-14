@@ -24,6 +24,11 @@ public class FarmServiceImpl implements FarmService {
     }
 
     @Override
+    public Farm loadFarmById(String id) {
+        return this.farmDao.selectFarmForAppById(id);
+    }
+
+    @Override
     public int isHaveFarmById(String fmId) {
         Farm farm = this.farmDao.selectFarmById(fmId);
         if (farm == null) {

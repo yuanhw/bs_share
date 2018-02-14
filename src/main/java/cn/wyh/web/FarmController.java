@@ -63,6 +63,7 @@ public class FarmController {
 
     @RequestMapping("/updateBase")
     public String updateFarmBase(@ModelAttribute Farm farm) {
+        //System.out.println(farm.toString());
         int i = this.farmService.updateFarmBaseInfo(farm);
         if (i >= 1) {
             return (new ResponseSuccess(null)).toString();
@@ -108,6 +109,15 @@ public class FarmController {
         double lng = request.getDouble("lng");
         List<LateLySimplyFarm> resp = this.farmService.selectFarmByPos(lat, lng);
         ResponseSuccess response = new ResponseSuccess(resp);
+        return response.toString();
+    }
+
+    @RequestMapping("/loadFarmAppById")
+    public String loadFarmById(@RequestParam String jsonStr) {
+        JSONObject request = JSONObject.parseObject(jsonStr);
+        String id = request.getString("id");
+        Farm fm = this.farmService.loadFarmById(id);
+        ResponseSuccess response = new ResponseSuccess(fm);
         return response.toString();
     }
 }

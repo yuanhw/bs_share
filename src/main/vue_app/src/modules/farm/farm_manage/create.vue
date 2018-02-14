@@ -89,11 +89,22 @@
           <div>
             <p>
               <span style="margin-right: 20px;">农场介绍短视频</span>
-              <a href="http://www.baidu.com">点击观看</a>
+              <a href="http://www.baidu.com" target="_blank">点击观看</a>
             </p>
             <p>
               <label>营业时间说明</label>
               <el-input type="textarea" v-model="farmInfo.businessBegin" style="width: 390px;" :disabled="updateTag"/>
+            </p>
+            <p>
+              <label>规格列表</label>
+              <el-select v-model="specValue" multiple placeholder="请选择" :disabled="updateTag">
+                <el-option
+                  v-for="item in spec_options"
+                  :key="item.value"
+                  :label="item.value"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </p>
           </div>
         </el-tab-pane>
@@ -118,6 +129,12 @@
     {key: 'isHave', value: 0},
     {key: 'isUpdate', value: 0}
   ]
+  const spec_options = [
+    {value: "20㎡"},
+    {value: "30㎡"},
+    {value: "1亩"}
+  ]
+
   import CusAdd from './add.vue'
 
   export default {
@@ -130,6 +147,8 @@
             updateTag: true,
             activeName: 'first',
           statusCode: null,
+          spec_options: spec_options,
+          specValue: [],
             farmInfo: {
                 id: null,
                 fmId: null,
@@ -149,7 +168,8 @@
               fmImg: '/farmImg/default.jpg',
               fmIntroduce: '',
               fmVideo: '',
-              businessBegin: ''
+              businessBegin: '',
+              spec: ''
             }
         }
     },
@@ -208,6 +228,7 @@
             _self.farmInfo = rt.data
             _self.statusCode = rt.data.checkStatus
             _self.farmInfo.checkStatus = status_map[rt.data.checkStatus].value
+            _self.specValue = rt.data.spec.split("、")
           }
         }, this)
       },
@@ -227,7 +248,8 @@
                   contactPhone: this.farmInfo.contactPhone,
                   keyVegetable: this.farmInfo.keyVegetable,
                   fmIntroduce: this.farmInfo.fmIntroduce,
-                  businessBegin: this.farmInfo.businessBegin
+                  businessBegin: this.farmInfo.businessBegin,
+                  spec: this.specValue.join("、")
                 }
               this.$sys.ajax.post('/farm/updateBase.do', param, function (rt, _self) {
                 if (rt.status == 1) {
@@ -296,6 +318,7 @@
               _self.farmInfo = rt.data
             _self.statusCode = rt.data.checkStatus
               _self.farmInfo.checkStatus = status_map[rt.data.checkStatus].value
+            _self.specValue = rt.data.spec.split("、")
           }
         }, this)
 

@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface FarmDao {
     Farm selectFarmById(String id);
+
+    Farm selectFarmForAppById(String id);
     int addFarmBaseInfo(@Param("farm") Farm farm);
     int updateFarmInfo(@Param("farm") Farm farm);
     int updateStatus(@Param("code") int code, @Param("id") Integer id);

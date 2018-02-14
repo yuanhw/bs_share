@@ -4,6 +4,9 @@
     <select id="selectFarmById" parameterType="String" resultType="Farm">
         select * from farm where fm_id = #{fmId}
     </select>
+    <select id="selectFarmForAppById" parameterType="String" resultType="Farm">
+        select * from farm where id = #{id}
+    </select>
     <insert id="addFarmBaseInfo">
         insert into farm (
         fm_id,
@@ -45,7 +48,8 @@
         contact_phone = #{farm.contactPhone},
         key_vegetable = #{farm.keyVegetable},
         fm_introduce = #{farm.fmIntroduce},
-        business_begin = #{farm.businessBegin}
+        business_begin = #{farm.businessBegin},
+        spec = #{farm.spec}
         where id = #{farm.id}
     </update>
     <update id="updateStatus">

@@ -31,6 +31,7 @@
          <el-input v-model="farmInfo.posLng" size="small"/>
          <label>百度纬度</label>
          <el-input v-model="farmInfo.posLat" size="small"/>
+         <a href="http://api.map.baidu.com/lbsapi/getpoint/index.html" target="_blank">经纬度查询</a>
        </p>
        <p>
          <label>联系人姓名</label>
@@ -50,6 +51,17 @@
          <label>营业时间说明</label>
          <el-input type="textarea" v-model="farmInfo.businessBegin" style="width: 390px;"/>
        </p>
+       <p>
+         <label>规格列表</label>
+         <el-select v-model="specValue" multiple placeholder="请选择">
+           <el-option
+             v-for="item in spec_options"
+             :key="item.value"
+             :label="item.value"
+             :value="item.value">
+           </el-option>
+         </el-select>
+       </p>
      </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -65,6 +77,12 @@
           return {
             dialogVisible: false,
             options: null,
+            spec_options: [
+              {value: "20㎡"},
+              {value: "30㎡"},
+              {value: "1亩"}
+            ],
+            specValue: [],
             farmInfo: {
               fmId: null,
               fmTitle: null,
@@ -79,6 +97,7 @@
               keyVegetable: null,
               fmIntroduce: '',
               businessBegin: '',
+              spec: '',
               value: []
             }
           }
@@ -103,6 +122,7 @@
           if (this.validate() == 1) {
             this.farmInfo.province = this.farmInfo.value[0];
             this.farmInfo.city = this.farmInfo.value[1];
+            this.farmInfo.spec = this.specValue.join("、")
             let url = '/farm/addFarmBase.do'
             this.$sys.ajax.post(url, this.farmInfo, function (data, _self) {
               if (data.status == 1) {
