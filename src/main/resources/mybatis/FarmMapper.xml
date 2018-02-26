@@ -64,8 +64,15 @@
         fm_img,
         spec
         from farm
-        where check_status = 1
+        where check_status = 3
         order by distance asc
         limit 15
+    </select>
+
+    <select id="selectFarmListByCond" resultType="Farm">
+        select * from farm where check_status = #{status}
+        <if test="sid != null and sid != ''">
+            and fm_id = #{sid}
+        </if>
     </select>
 </mapper>

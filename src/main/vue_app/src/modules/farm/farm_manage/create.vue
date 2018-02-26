@@ -121,9 +121,10 @@
   const isHaveUrl = "/farm/isHaveFarm.do"
   const status_map = [
     {key: 0, value: "刚创建"},
-    {key: 1, value: "正常发布"},
-    {key: 2, value: "下架"},
-    {key: 3, value: "管理员下架"}
+    {key: 1, value: "正在审核"},
+    {key: 2, value: "已下架"},
+    {key: 3, value: "审核通过"},
+    {key: 4, value: "审核未通过"}
   ]
   const bt_status = [
     {key: 'isHave', value: 0},
@@ -263,26 +264,26 @@
             }
       },
       publish() {
-        if (this.statusCode == 0 || this.statusCode ==2) {
+        if (this.statusCode == 0 || this.statusCode == 2 || this.statusCode == 4) {
             let param = {
                 id: this.farmInfo.id,
                 code: 1
             }
           this.$sys.ajax.post('/farm/updateStatus.do', param, function (rt, _self) {
             if (rt.status == 1) {
-              _self.$message.warning("发布成功")
+              _self.$message.warning("已发布申请")
               _self.statusCode = 1
               _self.farmInfo.checkStatus = status_map[1].value
             } else {
-              _self.$message.warning("发布失败")
+              _self.$message.warning("发布申请失败")
             }
           }, this)
         } else {
-            this.$message.warning("此状态下不能操作发布")
+          this.$message.warning("此状态下不能操作发布申请")
         }
       },
       unPublish() {
-        if (this.statusCode == 1) {
+        if (this.statusCode == 3) {
           let param = {
             id: this.farmInfo.id,
             code: 2

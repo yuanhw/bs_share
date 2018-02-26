@@ -17,7 +17,7 @@ const sys = {
    */
   ajax: {
     post: function (url, parameter, callback_fn, fn_para) {
-      //console.log("ajax" + baseUri + '_' + url + '_' + JSON.stringify(parameter))
+      console.log("ajax" + baseUri + '_' + url + '_' + JSON.stringify(parameter))
       $.ajax({
         method: 'post',
         url: baseUri + url,

@@ -120,4 +120,14 @@ public class FarmController {
         ResponseSuccess response = new ResponseSuccess(fm);
         return response.toString();
     }
+
+    @RequestMapping("/loadFarmListByCondition")
+    public String loadFarmListByCondition(
+            @RequestParam String sid,
+            @RequestParam Integer status) {
+
+        List<Farm> list = this.farmService.selectFarmListByCond(sid, status);
+        ResponseSuccess response = new ResponseSuccess(list);
+        return response.toString();
+    }
 }

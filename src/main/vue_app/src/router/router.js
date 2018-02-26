@@ -13,10 +13,12 @@ const pm_index = resolve =>require(['@/modules/platform/index.vue'], resolve)
 const pm_info = resolve =>require(['@/modules/platform/person/pmInfo.vue'], resolve)
 //商家账号管理
 const pm_seller_examine = resolve => require(['@/modules/platform/seller/seller_examine.vue'], resolve)
+const pm_seller_farm = resolve => require(['@/modules/platform/seller/seller_farm.vue'], resolve)
 //用户信息
 const pm_user = resolve => require(['@/modules/platform/user/user.vue'], resolve)
 //农场生成
 const fm_create = resolve => require(['@/modules/farm/farm_manage/create.vue'], resolve)
+
 
 /* 商家后台首页*/
 const fm_index = resolve =>require(['@/modules/farm/index.vue'], resolve)
@@ -56,7 +58,11 @@ const router = new VueRouter({
           path: '/pm/pm_user',
           name: 'pm_user',
           component: pm_user
-        }]
+        },
+          {
+            path: '/pm/seller_farm',
+            component: pm_seller_farm
+          }]
     },
     {
       path: '/fm/reg',

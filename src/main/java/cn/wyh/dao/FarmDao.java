@@ -15,4 +15,6 @@ public interface FarmDao {
     int updateStatus(@Param("code") int code, @Param("id") Integer id);
     int updateImg(@Param("fmImg") String imgFile, @Param("id") Integer id);
     List<LateLySimplyFarm> selectFarmByPos(@Param("lat") Double lat, @Param("lng") Double lng);
+
+    List<Farm> selectFarmListByCond(@Param("sid") String sid, @Param("status") Integer status);
 }

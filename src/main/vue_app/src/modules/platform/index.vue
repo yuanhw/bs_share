@@ -20,6 +20,7 @@
             <el-submenu index="3">
               <template slot="title"><i class="el-icon-news"></i><span style="font-weight: bold">商家管理</span></template>
               <el-menu-item index="seller_seller_examine" class="subItem">账号管理</el-menu-item>
+              <el-menu-item index="seller_farm" class="subItem">农场管理</el-menu-item>
             </el-submenu>
             <el-submenu index="4">
               <template slot="title"><i class="el-icon-tickets"></i><span style="font-weight: bold">订单信息</span></template>
