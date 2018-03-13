@@ -10,10 +10,65 @@ Target Server Type    : MYSQL
 Target Server Version : 50552
 File Encoding         : 65001
 
-Date: 2018-02-20 12:55:01
+Date: 2018-03-08 10:35:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for block_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `block_detail`;
+CREATE TABLE `block_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '地块详情编号',
+  `name` varchar(255) DEFAULT NULL COMMENT '地块名称',
+  `rule_id` int(11) NOT NULL COMMENT '地块规则编号',
+  `user_id` int(11) DEFAULT NULL COMMENT '认购用户编号',
+  `till_id` int(11) DEFAULT NULL COMMENT '地块耕种状态id，当用户选择为代种时，此id必填',
+  `type` int(11) DEFAULT '0' COMMENT '地块种植类型：0代表自种，1代表代种',
+  `update_mark` int(11) DEFAULT NULL COMMENT '当地块为代种时，地块耕种是否有更新。0代表无或者已读，1代表有并且未读',
+  `lease` varchar(255) DEFAULT NULL COMMENT '用户租期',
+  `crate_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `block_detail_fk1` (`rule_id`),
+  KEY `block_detail_fk2` (`user_id`),
+  CONSTRAINT `block_detail_fk1` FOREIGN KEY (`rule_id`) REFERENCES `block_rule` (`id`),
+  CONSTRAINT `block_detail_fk2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='地块详情表';
+
+-- ----------------------------
+-- Records of block_detail
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for block_rule
+-- ----------------------------
+DROP TABLE IF EXISTS `block_rule`;
+CREATE TABLE `block_rule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '地块编号',
+  `farm_id` int(11) NOT NULL COMMENT '农场编号',
+  `batch_no` varchar(255) NOT NULL COMMENT '批号',
+  `area` varchar(255) NOT NULL COMMENT '面积',
+  `spec` varchar(255) NOT NULL COMMENT '规格',
+  `unit_price` double NOT NULL COMMENT '租期单价',
+  `number` varchar(255) NOT NULL COMMENT '数量',
+  `type` int(11) NOT NULL COMMENT '0代表只能自种,1代表可代种',
+  `description` varchar(255) DEFAULT NULL COMMENT '说明信息',
+  `lease_unit` varchar(255) NOT NULL COMMENT '租期单位',
+  `max_lease` varchar(255) NOT NULL COMMENT '最长租期',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `validity_begin` date NOT NULL COMMENT 'app信息展示有效开始日期',
+  `validity_end` date NOT NULL COMMENT 'app展示信息有效期结束日期',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `block_rule_fk` (`farm_id`),
+  CONSTRAINT `block_rule_fk` FOREIGN KEY (`farm_id`) REFERENCES `farm` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='地块规则表';
+
+-- ----------------------------
+-- Records of block_rule
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for city
@@ -70,7 +125,7 @@ CREATE TABLE `farm` (
   `business_begin` varchar(30) DEFAULT NULL COMMENT '营业时间说明',
   `contact_name` varchar(255) NOT NULL COMMENT '联系人',
   `contact_phone` varchar(255) NOT NULL COMMENT '联系人电话',
-  `check_status` int(11) DEFAULT '0' COMMENT '农场生成状态，0代表刚创建，1代表发布到APP展示，2代表自己下架，3代表被平台管理员下架',
+  `check_status` int(11) DEFAULT '0' COMMENT '农场生成状态，0代表刚创建，1代表发布申请，2代表自己下架，3代表审核通过，4代表审核未通过',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `spec` varchar(255) DEFAULT '30㎡' COMMENT '规格说明',
   PRIMARY KEY (`id`),
@@ -81,13 +136,13 @@ CREATE TABLE `farm` (
 -- ----------------------------
 -- Records of farm
 -- ----------------------------
-INSERT INTO `farm` VALUES ('6', '15', '15号私家农场', '50', '陕西省', '渭南市', '合阳县', '109.4839327000000000', '34.5023579800000000', '0', '0', '辣椒、黄瓜、西红柿、苹果', '/farmImg/6lbxx005.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '王远航', '13588740001', '1', '2018-02-13 12:24:27', '30㎡、20㎡、1亩');
-INSERT INTO `farm` VALUES ('7', '16', '16号共享农场', '100', '广东省', '中山市', '暂无', '113.3954690000000000', '22.5205790000000000', '0', '0', '黄瓜、西红柿', '/farmImg/7lbxx004.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '张三', '13588740002', '1', '2018-02-13 12:33:28', '30㎡、20㎡、1亩');
-INSERT INTO `farm` VALUES ('8', '17', '17号私家农场', '50', '浙江省', '宁波市', '暂无', '121.6259850000000000', '29.8665340000000000', '0', '0', '辣椒、黄瓜、西红柿、苹果', '/farmImg/default.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '李四', '13588740003', '1', '2018-02-13 12:39:18', '30㎡');
-INSERT INTO `farm` VALUES ('9', '18', '18号私家农场', '50', '陕西省', '渭南市', '合阳县', '169.4839327000000000', '34.5023579800000000', '0', '0', '辣椒、黄瓜、西红柿、苹果', '/farmImg/6lbxx005.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '王远航', '13588740001', '1', '2018-02-13 12:24:27', '30㎡');
-INSERT INTO `farm` VALUES ('10', '19', '19号共享农场', '100', '广东省', '中山市', '暂无', '123.3954690000000000', '22.5205790000000000', '0', '0', '黄瓜、西红柿', '/farmImg/7lbxx004.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '张三', '13588740002', '1', '2018-02-13 12:33:28', '30㎡');
-INSERT INTO `farm` VALUES ('11', '20', '20号私家农场', '50', '浙江省', '宁波市', '暂无', '121.6259850000000000', '26.8665340000000000', '0', '0', '辣椒、黄瓜、西红柿、苹果', '/farmImg/default.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '李四', '13588740003', '1', '2018-02-13 12:39:18', '30㎡、1亩');
-INSERT INTO `farm` VALUES ('12', '21', '21号私家农场', '50', '陕西省', '西安市', '雁塔区', '108.9562400000000000', '34.3184130000000000', '0', '0', '黄瓜、辣椒', '/farmImg/12ba2.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '张飞', '13588740007', '1', '2018-02-14 20:43:54', '30㎡');
+INSERT INTO `farm` VALUES ('6', '15', '15号私家农场', '50', '陕西省', '渭南市', '合阳县', '109.4839327000000000', '34.5023579800000000', '0', '0', '辣椒、黄瓜、西红柿、苹果', '/farmImg/6lbxx005.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '王远航', '13588740001', '3', '2018-02-13 12:24:27', '30㎡、20㎡、1亩');
+INSERT INTO `farm` VALUES ('7', '16', '16号共享农场', '100', '广东省', '中山市', '暂无', '113.3954690000000000', '22.5205790000000000', '0', '0', '黄瓜、西红柿', '/farmImg/7lbxx004.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '张三', '13588740002', '3', '2018-02-13 12:33:28', '30㎡、20㎡、1亩');
+INSERT INTO `farm` VALUES ('8', '17', '17号私家农场', '50', '浙江省', '宁波市', '暂无', '121.6259850000000000', '29.8665340000000000', '0', '0', '辣椒、黄瓜、西红柿、苹果', '/farmImg/default.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '李四', '13588740003', '3', '2018-02-13 12:39:18', '30㎡');
+INSERT INTO `farm` VALUES ('9', '18', '18号私家农场', '50', '陕西省', '渭南市', '合阳县', '169.4839327000000000', '34.5023579800000000', '0', '0', '辣椒、黄瓜、西红柿、苹果', '/farmImg/6lbxx005.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '王远航', '13588740001', '3', '2018-02-13 12:24:27', '30㎡');
+INSERT INTO `farm` VALUES ('10', '19', '19号共享农场', '100', '广东省', '中山市', '暂无', '123.3954690000000000', '22.5205790000000000', '0', '0', '黄瓜、西红柿', '/farmImg/7lbxx004.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '张三', '13588740002', '3', '2018-02-13 12:33:28', '30㎡');
+INSERT INTO `farm` VALUES ('11', '20', '20号私家农场', '50', '浙江省', '宁波市', '暂无', '121.6259850000000000', '26.8665340000000000', '0', '0', '辣椒、黄瓜、西红柿、苹果', '/farmImg/default.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '李四', '13588740003', '4', '2018-02-13 12:39:18', '30㎡、1亩');
+INSERT INTO `farm` VALUES ('12', '21', '21号私家农场', '50', '陕西省', '西安市', '雁塔区', '108.9562400000000000', '34.3184130000000000', '0', '0', '黄瓜、辣椒', '/farmImg/12ba2.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '张飞', '13588740007', '4', '2018-02-14 20:43:54', '30㎡');
 INSERT INTO `farm` VALUES ('13', '22', '22号集团农场', '100', '广东省', '清远市', '暂无', '113.0705170000000000', '23.6789640000000000', '0', '0', '黄瓜、辣椒', '/farmImg/13ba3.jpg', null, '暂无', '上午9点到下午6点，周末正常营业', '貂蝉', '13588740008', '0', '2018-02-14 21:04:22', '30㎡');
 
 -- ----------------------------
@@ -180,7 +235,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('64', '13588746259', 'E10ADC3949BA59ABBE56E057F20F883E', null, null, '2018-01-20 18:26:59', '2018-02-20 12:45:35', null, '0.00', '/userImg/13588746259_tou.jpg');
+INSERT INTO `user` VALUES ('64', '13588746259', 'E10ADC3949BA59ABBE56E057F20F883E', null, null, '2018-01-20 18:26:59', '2018-03-07 13:27:29', null, '0.00', '/userImg/13588746259_tou.jpg');
 INSERT INTO `user` VALUES ('65', '18791372822', 'C4CA4238A0B923820DCC509A6F75849B', null, null, '2018-01-20 18:29:12', '2018-01-20 18:36:38', null, '0.00', '/userImg/18791372822_tou.jpg');
 
 -- ----------------------------

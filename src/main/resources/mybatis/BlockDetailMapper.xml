@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wyh.dao.BlockDetailDao">
+    <insert id="createBlockDetail" parameterType="cn.wyh.entity.BlockDetail">
+        insert into block_detail (branch_no, `type`, crate_time) values (#{branchNo}, #{type}, #{crateTime})
+    </insert>
+    <select id="canDel" parameterType="String" resultType="int">
+        select count(*) from block_detail where branch_no = #{branchNo} and `status` = 1
+    </select>
+    <delete id="deleteBlockDetail" parameterType="String">
+        delete from block_detail where branch_no = #{branchNo}
+    </delete>
+    <select id="selectDetailList" parameterType="cn.wyh.dto.BlockDetailSearch" resultType="cn.wyh.entity.BlockDetail">
+        select * from block_detail
+        <where>
+            <if test="batchNo != null and batchNo != ''">
+                branch_no = #{batchNo}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="status != 3">
+                and status = #{status}
+            </if>
+            <if test="tillId != null">
+                and tillId = #{tillId}
+            </if>
+            <if test="type != 2">
+                and type = #{type}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+        order by update_time desc
+        limit #{startIndex}, 5
+    </select>
+    <select id="getDetailTotal" parameterType="cn.wyh.dto.BlockDetailSearch" resultType="int">
+        select count(*) from block_detail
+        <where>
+            <if test="batchNo != null and batchNo != ''">
+                branch_no = #{batchNo}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="status != 3">
+                and status = #{status}
+            </if>
+            <if test="tillId != null">
+                and tillId = #{tillId}
+            </if>
+            <if test="type != 2">
+                and type = #{type}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+</mapper>

@@ -40,6 +40,6 @@ public class BaiDuDistanceUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(distanceOfTwoPoints(34.502357980, 109.483932700, 22.520579000, 113.395469000));
+        //System.out.println(distanceOfTwoPoints(34.502357980, 109.483932700, 22.520579000, 113.395469000));
     }
 }

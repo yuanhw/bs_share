@@ -4,6 +4,7 @@
 	<settings>
 		<setting name="lazyLoadingEnabled" value="false" />
 		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="logImpl" value="LOG4J"/>
 	</settings>
 	<typeAliases>
 		<package name="cn.wyh.entity"/>

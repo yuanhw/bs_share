@@ -10,9 +10,17 @@ import java.io.IOException;
 public class CrossDomainProcessFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
+    /**
+     * vue跨域请求处理
+     *
+     * @param servletRequest
+     * @param servletResponse
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         System.out.println("log - cross domain process ------------------------- uri = " + servletRequest.getRemoteAddr());
@@ -24,7 +32,5 @@ public class CrossDomainProcessFilter implements Filter {
     }
 
     @Override
-    public void destroy() {
-
-    }
+    public void destroy() {}
 }

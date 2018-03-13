@@ -18,7 +18,10 @@ const pm_seller_farm = resolve => require(['@/modules/platform/seller/seller_far
 const pm_user = resolve => require(['@/modules/platform/user/user.vue'], resolve)
 //农场生成
 const fm_create = resolve => require(['@/modules/farm/farm_manage/create.vue'], resolve)
-
+//地块生成
+const block_create = resolve => require(['@/modules/farm/farm_manage/block/block_create.vue'], resolve)
+//地块详情
+const block_detail = resolve => require(['@/modules/farm/farm_manage/block/block_detail.vue'], resolve)
 
 /* 商家后台首页*/
 const fm_index = resolve =>require(['@/modules/farm/index.vue'], resolve)
@@ -88,6 +91,14 @@ const router = new VueRouter({
         {
           path: '/fm/fm_create',
           component: fm_create
+        },
+        {
+          path: '/fm/block_create',
+          component: block_create
+        },
+        {
+          path: '/fm/block_detail',
+          component: block_detail
         }
       ]
     }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wyh.dao.BlockRuleDao">
+    <select id="selectBlockRuleList" parameterType="cn.wyh.dto.BlockSearch" resultType="cn.wyh.entity.BlockRule">
+        select * from block_rule where farm_id = #{farmId}
+        <if test="batchNo != null">
+            and batch_no = #{batchNo}
+        </if>
+        <if test="type != 2">
+            and type = #{type}
+        </if>
+        <if test="validityBegin != null">
+            and validity_begin >= #{validityBegin}
+        </if>
+        <if test="validityEnd != null">
+            and #{validityEnd} >= validity_end
+        </if>
+        limit #{startIndex}, 5
+    </select>
+
+    <select id="selectTotal" parameterType="cn.wyh.dto.BlockSearch" resultType="int">
+        select count(*) as total from block_rule where farm_id = #{farmId}
+        <if test="batchNo != null">
+            and batch_no = #{batchNo}
+        </if>
+        <if test="type != 2">
+            and type = #{type}
+        </if>
+        <if test="validityBegin != null">
+            and validity_begin >= #{validityBegin}
+        </if>
+        <if test="validityEnd != null">
+            and #{validityEnd} >= validity_end
+        </if>
+    </select>
+
+    <insert id="createBlockRule" parameterType="cn.wyh.entity.BlockRule">
+        insert into block_rule
+        (
+        farm_id, batch_no, area, spec, unit_price,
+        `number`, `type`, description, lease_unit, max_lease,
+        create_time, validity_begin, validity_end, update_time
+        )
+        values
+        (
+        #{farmId}, #{batchNo}, #{area}, #{spec}, #{unitPrice}, #{number},
+        #{type}, #{description}, #{leaseUnit}, #{maxLease},
+        #{createTime}, #{validityBegin}, #{validityEnd}, #{updateTime}
+        )
+    </insert>
+    <delete id="deleteBlockRule" parameterType="String">
+        delete from block_rule where branch_no = #{branchNo}
+    </delete>
+</mapper>

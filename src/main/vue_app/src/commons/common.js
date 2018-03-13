@@ -17,7 +17,7 @@ const sys = {
    */
   ajax: {
     post: function (url, parameter, callback_fn, fn_para) {
-      console.log("ajax" + baseUri + '_' + url + '_' + JSON.stringify(parameter))
+      console.log("ajax@：" + baseUri + ' @：' + url + ' @：' + JSON.stringify(parameter))
       $.ajax({
         method: 'post',
         url: baseUri + url,
@@ -25,8 +25,8 @@ const sys = {
         async:false,
         cache:false,
         success: function (data) {
-          //console.log("ajax success text : " + data)
-          console.log("ajax success exec num ")
+          //console.log("ajax success text@：" + data)
+          console.log("ajax success exec num")
           var rt = eval("("+data+")")
           callback_fn.call(this, rt, fn_para)
         }

@@ -180,7 +180,7 @@
           oMyForm.append("id", this.farmInfo.id);
           var file = document.getElementById("imgFile").files[0]
           if (file) {
-            console.log(file)
+            //console.log(file)
             const isJPG = file.type === 'image/jpeg';
             const isLt2M = file.size / 1024 / 1024 < 2;
             if (!isJPG) {
