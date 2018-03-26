@@ -106,6 +106,10 @@
                 </el-option>
               </el-select>
             </p>
+            <p>
+              <label>每亩年价格（元）</label>
+              <el-input v-model="farmInfo.unitPrice" size="small" :disabled="updateTag"/>
+            </p>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -170,7 +174,8 @@
               fmIntroduce: '',
               fmVideo: '',
               businessBegin: '',
-              spec: ''
+              spec: '',
+              unitPrice: ''
             }
         }
     },
@@ -222,6 +227,7 @@
         let fm = sessionStorage.getItem("fmManager");
         let fmObj = JSON.parse(fm);
         this.farmInfo.fmId = fmObj.fmId
+        bt_status[0].value = 1
         this.$sys.ajax.post(loadUrl, {fmId: fmObj.fmId}, function (rt, _self) {
           //console.log(rt.status + " status");
           if (rt.status == 1) {
@@ -250,7 +256,8 @@
                   keyVegetable: this.farmInfo.keyVegetable,
                   fmIntroduce: this.farmInfo.fmIntroduce,
                   businessBegin: this.farmInfo.businessBegin,
-                  spec: this.specValue.join("、")
+                  spec: this.specValue.join("、"),
+                  unitPrice: this.farmInfo.unitPrice
                 }
               this.$sys.ajax.post('/farm/updateBase.do', param, function (rt, _self) {
                 if (rt.status == 1) {

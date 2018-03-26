@@ -22,7 +22,8 @@
         key_vegetable,
         fm_introduce,
         business_begin,
-        create_time
+        create_time,
+        unit_price
         ) values (
         #{farm.fmId},
         #{farm.fmTitle},
@@ -37,7 +38,8 @@
         #{farm.keyVegetable},
         #{farm.fmIntroduce},
         #{farm.businessBegin},
-        #{farm.createTime}
+        #{farm.createTime},
+        #{farm.unitPrice}
         )
     </insert>
     <update id="updateFarmInfo">
@@ -49,7 +51,8 @@
         key_vegetable = #{farm.keyVegetable},
         fm_introduce = #{farm.fmIntroduce},
         business_begin = #{farm.businessBegin},
-        spec = #{farm.spec}
+        spec = #{farm.spec},
+        unit_price = #{farm.unitPrice}
         where id = #{farm.id}
     </update>
     <update id="updateStatus">
