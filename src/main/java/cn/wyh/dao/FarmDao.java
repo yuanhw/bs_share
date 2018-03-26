@@ -17,4 +17,8 @@ public interface FarmDao {
     List<LateLySimplyFarm> selectFarmByPos(@Param("lat") Double lat, @Param("lng") Double lng);
 
     List<Farm> selectFarmListByCond(@Param("sid") String sid, @Param("status") Integer status);
+
+    List<LateLySimplyFarm> selectSFarmListByCity(@Param("city") String city);
+
+    List<LateLySimplyFarm> selectSFarmList2(@Param("city") String city, @Param("query") String query);
 }

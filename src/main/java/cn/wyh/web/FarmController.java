@@ -130,4 +130,16 @@ public class FarmController {
         ResponseSuccess response = new ResponseSuccess(list);
         return response.toString();
     }
+
+    @RequestMapping("/loadSFarmByCity")
+    public String loadSimpleFarmByCity(@RequestParam String city) {
+        ResponseSuccess res = new ResponseSuccess(this.farmService.selectFarmByCity(city));
+        return res.toString();
+    }
+
+    @RequestMapping("/loadSFarm2")
+    public String loadSimpleFarm2(@RequestParam String city, @RequestParam String query) {
+        ResponseSuccess res = new ResponseSuccess(this.farmService.selectFarm2(city, query));
+        return res.toString();
+    }
 }

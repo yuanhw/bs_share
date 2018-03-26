@@ -75,4 +75,28 @@
             and fm_id = #{sid}
         </if>
     </select>
+
+    <select id="selectSFarmListByCity" resultType="cn.wyh.dto.LateLySimplyFarm" parameterType="String">
+        select id, fm_id, fm_title, consumer_num,
+        '0' as distance,
+        fm_img,
+        spec
+        from farm
+        where check_status = 3
+        <if test="city != '不限'">
+            and city = #{city}
+        </if>
+    </select>
+    <select id="selectSFarmList2" resultType="cn.wyh.dto.LateLySimplyFarm" parameterType="String">
+        select id, fm_id, fm_title, consumer_num,
+        '0' as distance,
+        fm_img,
+        spec
+        from farm
+        where check_status = 3
+        and fm_title like concat('%', #{query}, '%')
+        <if test="city != '不限'">
+            and city = #{city}
+        </if>
+    </select>
 </mapper>

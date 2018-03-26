@@ -18,6 +18,9 @@ public interface FarmService {
     int updateStatus(int code, Integer id);
     int updateImg(String imgFile, Integer id);
     List<LateLySimplyFarm> selectFarmByPos(Double lat, Double lng);
-
     List<Farm> selectFarmListByCond(String sid, Integer status);
+
+    List<LateLySimplyFarm> selectFarmByCity(String city);
+
+    List<LateLySimplyFarm> selectFarm2(String city, String query);
 }
