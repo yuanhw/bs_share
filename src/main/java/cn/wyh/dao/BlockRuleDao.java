@@ -1,5 +1,6 @@
 package cn.wyh.dao;
 
+import cn.wyh.dto.BlockRuleShowList;
 import cn.wyh.dto.BlockSearch;
 import cn.wyh.entity.BlockRule;
 
@@ -16,4 +17,10 @@ public interface BlockRuleDao {
     int createBlockRule(BlockRule blockRule);
 
     int deleteBlockRule(String branchNo);
+
+    List<BlockRuleShowList> selectRuleListById(String id);
+
+    List<String> getMaxLease(String id);
+
+    List<String> getSpec(String id);
 }

@@ -52,4 +52,20 @@
     <delete id="deleteBlockRule" parameterType="String">
         delete from block_rule where branch_no = #{branchNo}
     </delete>
+    <select id="selectRuleListById" parameterType="String"
+            resultType="cn.wyh.dto.BlockRuleShowList">
+        select farm_id, batch_no, spec, unit_price,
+        `number`, `type`, description, lease_unit, max_lease,
+        create_time, validity_begin, validity_end, update_time,
+        (select count(*) from block_detail where `status` = 1) as has_lease
+        from block_rule
+        where farm_id = #{id} and NOW() BETWEEN validity_begin and validity_end
+    </select>
+    <select id="getMaxLease" parameterType="String" resultType="String">
+        select DISTINCT (max_lease) from block_rule where farm_id = #{id}
+    </select>
+
+    <select id="getSpec" parameterType="String" resultType="String">
+        select DISTINCT (spec) from block_rule where farm_id = #{id}
+    </select>
 </mapper>
