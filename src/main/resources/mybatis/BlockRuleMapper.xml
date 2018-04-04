@@ -50,7 +50,7 @@
         )
     </insert>
     <delete id="deleteBlockRule" parameterType="String">
-        delete from block_rule where branch_no = #{branchNo}
+        delete from block_rule where batch_no = #{branchNo}
     </delete>
     <select id="selectRuleListById" parameterType="String"
             resultType="cn.wyh.dto.BlockRuleShowList">
@@ -62,7 +62,7 @@
         where farm_id = #{id} and NOW() BETWEEN validity_begin and validity_end
     </select>
     <select id="getMaxLease" parameterType="String" resultType="String">
-        select DISTINCT (max_lease) from block_rule where farm_id = #{id}
+        select distinct CONCAT(max_lease,'年') from block_rule where farm_id = #{id}
     </select>
 
     <select id="getSpec" parameterType="String" resultType="String">

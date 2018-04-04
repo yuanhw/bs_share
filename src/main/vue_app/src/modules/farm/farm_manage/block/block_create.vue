@@ -154,10 +154,10 @@
           if (rt.data == 0) {
             alert('del')
             var url = '/block/deleteBlack.do'
-            this.$sys.ajax.post(url, {batchNo: _self.block_list[index].batchNo}, function (rt, _self) {
+            _self.$sys.ajax.post(url, {batchNo: _self.block_list[index].batchNo}, function (rt, _self) {
               _self.addRefresh()
               _self.$message.info('已删除')
-            })
+            }, _self)
           } else {
             _self.$message.warning('此信息不能删除，已有人认购')
           }

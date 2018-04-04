@@ -90,6 +90,8 @@
     {key: 3, value: '所有'}
   ]
 
+  var farmManagerId = null
+
   export default {
     name: 'detail',
     data() {
@@ -103,11 +105,18 @@
           tillId: null,
           type: 2,
           status: 3,
+          farmManagerId: null,
           currentPage: null
         },
         detail_list0: [],
         totalRow: null
       }
+    },
+    created: function () {
+      let fm = sessionStorage.getItem("fmManager");
+      let fmObj = JSON.parse(fm);
+      farmManagerId = fmObj.fmId
+      this.search.farmManagerId = fmObj.fmId
     },
     methods: {
       other: function (index) {

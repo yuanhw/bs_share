@@ -32,6 +32,9 @@
             <if test="userId != null">
                 and user_id = #{userId}
             </if>
+            and
+            branch_no in (select branch_no from block_rule where farm_id = (select id from farm where fm_id =
+            #{farmManagerId}))
         </where>
         order by update_time desc
         limit #{startIndex}, 5
@@ -57,6 +60,9 @@
             <if test="userId != null">
                 and user_id = #{userId}
             </if>
+            and
+            branch_no in (select branch_no from block_rule
+            where farm_id = (select id from farm where fm_id = #{farmManagerId}))
         </where>
         order by update_time desc
     </select>

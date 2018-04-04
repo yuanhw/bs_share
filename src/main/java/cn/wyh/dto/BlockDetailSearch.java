@@ -14,6 +14,15 @@ public class BlockDetailSearch implements Serializable {
     private Integer type;
     private Integer userId;
     private Integer startIndex;
+    private Integer farmManagerId;
+
+    public Integer getFarmManagerId() {
+        return farmManagerId;
+    }
+
+    public void setFarmManagerId(Integer farmManagerId) {
+        this.farmManagerId = farmManagerId;
+    }
 
     public String getBatchNo() {
         return batchNo;

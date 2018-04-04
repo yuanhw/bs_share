@@ -13,9 +13,17 @@
         <label>面积（亩）</label>
         <el-input-number v-model="block.area" controls-position="right"
                          :min="1" :max="100" size="small" style="width: 150px; margin-right: 20px"></el-input-number>
-        <label>规格（平米）</label>
-        <el-input-number v-model="block.spec" controls-position="right"
-                         :min="20" :max="1000" size="small" style="width: 150px"></el-input-number>
+        <label>规格</label>
+        <el-input-number v-model="spec_f" controls-position="right"
+                         :min="1" :max="100" size="small" style="width: 150px"></el-input-number>
+        <el-select v-model="spec_w" placeholder="请选择" size="small" style="width: 150px; margin-right: 20px">
+          <el-option
+            v-for="item in options_4"
+            :key="item.key"
+            :label="item.key"
+            :value="item.key">
+          </el-option>
+        </el-select>
       </p>
       <p>
         <label>租期单价（元）</label>
@@ -33,7 +41,7 @@
       <p>
         <label>数量（个）</label>
         <el-input-number v-model="block.number" controls-position="right"
-                         :min="1" :max="1000" size="small" style="width: 150px; margin-right: 20px"></el-input-number>
+                         :min="1" :max="100" size="small" style="width: 150px; margin-right: 20px"></el-input-number>
         <label>类型</label>
         <el-select v-model="block.type" placeholder="请选择" size="small" style="width: 150px">
           <el-option
@@ -46,7 +54,9 @@
       </p>
       <p>
         <label>最大租期</label>
-        <el-input v-model="block.maxLease" size="small" style="width: 150px; margin-right: 20px"></el-input>
+        <el-input-number v-model="block.maxLease" controls-position="right"
+                         :min="1" :max="10" size="small" style="width: 150px; margin-right: 20px"></el-input-number>
+        <span>年</span>
       </p>
       <p>
         <span>app有效期开始日期</span>
@@ -82,6 +92,9 @@
     {key: 0, value: "仅自种"},
     {key: 1, value: "可代种"}
   ]
+  const options_4 = [
+    {key: "平米"}, {key: "亩"}
+  ]
   export default {
     name: 'blockAdd',
     data() {
@@ -90,17 +103,20 @@
         show: false,
         options_2: options_2,
         options_3: options_3,
+        options_4: options_4,
+        spec_f: null,
+        spec_w: '平米',
         block: {
           farmId: null,
           batchNo: null,
-          area: null,
+          area: 1,
           spec: null,
           unitPrice: null,
           number: null,
           type: null,
           description: null,
           leaseUnit: null,
-          maxLease: null,
+          maxLease: 1,
           validityBegin: null,
           validityEnd: null
         }
@@ -117,7 +133,7 @@
       },
       validate: function () {
         for (let item in this.block) {
-          if (item != 'description') {
+          if (item != 'description' && item != 'spec') {
             if (this.block[item] == null) {
               this.$message.warning('说明可以为空，其余均不能为空！')
               return false
@@ -130,6 +146,7 @@
         if (this.validate()) {
           //alert('创建中。。。')
           //this.loadShow = true
+          this.block.spec = this.spec_f + '' + this.spec_w
           this.$sys.ajax.post('/block/createBranchBlock.do', this.block, function (rt, _self) {
             if (rt.status == 1) {
               _self.loadShow = false
