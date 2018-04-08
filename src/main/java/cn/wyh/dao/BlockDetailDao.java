@@ -1,7 +1,9 @@
 package cn.wyh.dao;
 
 import cn.wyh.dto.BlockDetailSearch;
+import cn.wyh.dto.UpdateUserOrder;
 import cn.wyh.entity.BlockDetail;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +20,8 @@ public interface BlockDetailDao {
     List<BlockDetail> selectDetailList(BlockDetailSearch search);
 
     int getDetailTotal(BlockDetailSearch search);
+
+    int updateUserOrder(UpdateUserOrder blockDetail);
+
+    List<Integer> getNullBlockDetail(@Param("branchNo") String branchNo, @Param("limit") int limit);
 }

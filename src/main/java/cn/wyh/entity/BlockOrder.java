@@ -1,0 +1,183 @@
+package cn.wyh.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * Created by WYH on 2018/4/7.
+ */
+public class BlockOrder implements Serializable {
+    private String orderId;
+    private Date createDate;
+    private Date validDate;
+    private Date noValidDate;
+    private int number;
+    private String spec;
+    private String amount;
+    private int time;
+    private int userId;
+    private int farmManagerId;
+    private String batchNo;
+    private int status;
+    private int type;
+
+    public BlockOrder() {
+    }
+
+    public BlockOrder(String orderId, Date createDate, Date validDate, Date noValidDate,
+                      int number, String spec, String amount, int time, int userId,
+                      int farmManagerId, String batchNo, int status, int type) {
+        this.orderId = orderId;
+        this.createDate = createDate;
+        this.validDate = validDate;
+        this.noValidDate = noValidDate;
+        this.number = number;
+        this.spec = spec;
+        this.amount = amount;
+        this.time = time;
+        this.userId = userId;
+        this.farmManagerId = farmManagerId;
+        this.batchNo = batchNo;
+        this.status = status;
+        this.type = type;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getValidDate() {
+        return validDate;
+    }
+
+    public void setValidDate(Date validDate) {
+        this.validDate = validDate;
+    }
+
+    public Date getNoValidDate() {
+        return noValidDate;
+    }
+
+    public void setNoValidDate(Date noValidDate) {
+        this.noValidDate = noValidDate;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getSpec() {
+        return spec;
+    }
+
+    public void setSpec(String spec) {
+        this.spec = spec;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getFarmManagerId() {
+        return farmManagerId;
+    }
+
+    public void setFarmManagerId(int farmManagerId) {
+        this.farmManagerId = farmManagerId;
+    }
+
+    public String getBatchNo() {
+        return batchNo;
+    }
+
+    public void setBatchNo(String batchNo) {
+        this.batchNo = batchNo;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String convertStatus() {
+        if (this.status == 0) {
+            return "否";
+        } else {
+            return "是";
+        }
+    }
+
+    public String convertType() {
+        if (this.status == 0) {
+            return "仅自种";
+        } else {
+            return "可代种";
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "BlockOrder{" +
+                "orderId='" + orderId + '\'' +
+                ", createDate=" + createDate +
+                ", validDate=" + validDate +
+                ", noValidDate=" + noValidDate +
+                ", number=" + number +
+                ", spec='" + spec + '\'' +
+                ", amount='" + amount + '\'' +
+                ", time=" + time +
+                ", userId=" + userId +
+                ", farmManagerId=" + farmManagerId +
+                ", batchNo='" + batchNo + '\'' +
+                ", status=" + status +
+                ", type=" + type +
+                '}';
+    }
+}

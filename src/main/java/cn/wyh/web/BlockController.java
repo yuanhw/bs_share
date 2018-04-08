@@ -88,4 +88,9 @@ public class BlockController {
         ResponseSuccess resp = new ResponseSuccess(data);
         return resp.toString();
     }
+
+    @RequestMapping("/getNumCan")
+    public String getNumCan(@RequestParam String batchNo) {
+        return (new ResponseSuccess(this.blockRuleService.getNumCan(batchNo))).toString();
+    }
 }

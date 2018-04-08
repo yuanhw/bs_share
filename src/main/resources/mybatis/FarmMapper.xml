@@ -106,4 +106,12 @@
         </if>
         order by unit_price desc
     </select>
+    <select id="selectFarmByBatch" parameterType="String" resultType="cn.wyh.dto.ShareOrderDto">
+        select fm_title as farm_name, CONCAT(province,city,detailed_address) as farm_address from farm
+        where id = (select farm_id from block_rule where batch_no = #{batchNo})
+    </select>
+    <update id="updateConsumerNum">
+        update farm set consumer_num = consumer_num + 1
+        where fm_id = #{fmId}
+    </update>
 </mapper>

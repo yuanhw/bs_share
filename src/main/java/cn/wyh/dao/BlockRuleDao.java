@@ -3,6 +3,7 @@ package cn.wyh.dao;
 import cn.wyh.dto.BlockRuleShowList;
 import cn.wyh.dto.BlockSearch;
 import cn.wyh.entity.BlockRule;
+import cn.wyh.entity.FarmManager;
 
 import java.util.List;
 
@@ -23,4 +24,10 @@ public interface BlockRuleDao {
     List<String> getMaxLease(String id);
 
     List<String> getSpec(String id);
+
+    int getNumCan(String batchNo);
+
+    BlockRule selectBlockRuleByBatch(String batchNo);
+
+    FarmManager selectFarmManagerByBatchNo(String batchNo);
 }

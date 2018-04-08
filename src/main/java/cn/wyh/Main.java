@@ -1,8 +1,6 @@
 package cn.wyh;
 
-import cn.wyh.service.ProvinceService;
-import com.alibaba.fastjson.JSONArray;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import java.util.Date;
 
 /**
  * Created by WYH on 2017/12/13.
@@ -10,12 +8,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
+        /*
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
         ProvinceService service = context.getBean(ProvinceService.class);
 
         System.out.println(JSONArray.toJSONString(service.loadListProvince()));
-
+        */
+        System.out.println(new Date().getTime());
         //
         /*
         Province province = new Province();

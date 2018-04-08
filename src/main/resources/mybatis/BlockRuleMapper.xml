@@ -54,11 +54,11 @@
     </delete>
     <select id="selectRuleListById" parameterType="String"
             resultType="cn.wyh.dto.BlockRuleShowList">
-        select farm_id, batch_no, spec, unit_price,
+        select id, farm_id, batch_no, spec, unit_price,
         `number`, `type`, description, lease_unit, max_lease,
         create_time, validity_begin, validity_end, update_time,
-        (select count(*) from block_detail where `status` = 1) as has_lease
-        from block_rule
+        (select count(*) from block_detail as a where `status` = 1 and a.branch_no = b.batch_no) as has_lease
+        from block_rule as b
         where farm_id = #{id} and NOW() BETWEEN validity_begin and validity_end
     </select>
     <select id="getMaxLease" parameterType="String" resultType="String">
@@ -67,5 +67,21 @@
 
     <select id="getSpec" parameterType="String" resultType="String">
         select DISTINCT (spec) from block_rule where farm_id = #{id}
+    </select>
+
+    <select id="getNumCan" parameterType="String" resultType="int">
+        select count(id) from block_detail where branch_no = #{batchNo} and status = 0
+    </select>
+
+    <select id="selectBlockRuleByBatch" parameterType="String" resultType="cn.wyh.entity.BlockRule">
+        select * from block_rule where batch_no = #{batchNo}
+    </select>
+
+    <select id="selectFarmManagerByBatchNo" parameterType="String" resultType="cn.wyh.entity.FarmManager">
+        select a.* from farm_manager a
+        join farm b on a.fm_id = b.fm_id
+        join block_rule c on b.id = c.farm_id
+        where c.batch_no = #{batchNo}
+        limit 1
     </select>
 </mapper>

@@ -66,4 +66,13 @@
         </where>
         order by update_time desc
     </select>
+    <update id="updateUserOrder" parameterType="cn.wyh.dto.UpdateUserOrder">
+        update block_detail set user_id = #{userId}, `type` = #{type}, lease = #{lease},
+        update_time = #{updateTime}, `status` = #{status}
+        where id = #{id}
+    </update>
+
+    <select id="getNullBlockDetail" resultType="int">
+        select id from block_detail where `status` = 0 and branch_no = #{branchNo} limit #{limit}
+    </select>
 </mapper>

@@ -24,4 +24,6 @@ public interface BlockRuleService {
     List<BlockRuleShowList> loadRuleList(String id);
 
     Map<String, List<String>> getSpinnerP(String id);
+
+    int getNumCan(String batch);
 }

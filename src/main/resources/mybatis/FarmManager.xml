@@ -56,4 +56,8 @@
         farm_size = #{farmSize}
         WHERE phone = #{phone}
     </update>
+
+    <update id="updateFMAccount">
+        update farm_manager set account = #{account} where phone = #{phone}
+    </update>
 </mapper>

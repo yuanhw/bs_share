@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wyh.dao.BlockOrderItemDao">
+    <insert id="addOrderItem" parameterType="cn.wyh.entity.BlockOrderItem">
+      insert into block_order_item values (
+        #{bOrderId},
+        #{bDetailId},
+        #{createTime}
+      )
+    </insert>
+</mapper>

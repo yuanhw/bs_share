@@ -1,6 +1,7 @@
 package cn.wyh.dao;
 
 import cn.wyh.dto.LateLySimplyFarm;
+import cn.wyh.dto.ShareOrderDto;
 import cn.wyh.entity.Farm;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,8 @@ public interface FarmDao {
     List<LateLySimplyFarm> selectSFarmListByCity(@Param("city") String city);
 
     List<LateLySimplyFarm> selectSFarmList2(@Param("city") String city, @Param("query") String query);
+
+    ShareOrderDto selectFarmByBatch(String batchNo);
+
+    int updateConsumerNum(@Param("fmId") int fmId);
 }

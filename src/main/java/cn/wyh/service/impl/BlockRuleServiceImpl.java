@@ -76,4 +76,9 @@ public class BlockRuleServiceImpl implements BlockRuleService {
         map.put("s2", this.blockRuleDao.getSpec(id));
         return map;
     }
+
+    @Override
+    public int getNumCan(String batch) {
+        return this.blockRuleDao.getNumCan(batch);
+    }
 }
