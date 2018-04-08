@@ -37,4 +37,9 @@ public class BlockOrderController {
         }
         return new ResponseSuccess(code).toString();
     }
+
+    @RequestMapping("/getAllOrderSInfo")
+    public String getAllOrderSInfoByUserId(@RequestParam String userId) {
+        return new ResponseSuccess(this.blockOrderService.loadTabOrderList1(userId)).toString();
+    }
 }

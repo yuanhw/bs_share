@@ -21,6 +21,9 @@ public class BlockOrder implements Serializable {
     private int status;
     private int type;
 
+    private int grade;
+    private String comment;
+
     public BlockOrder() {
     }
 
@@ -147,10 +150,17 @@ public class BlockOrder implements Serializable {
     }
 
     public String convertStatus() {
-        if (this.status == 0) {
-            return "否";
-        } else {
-            return "是";
+        switch (this.status) {
+            case 0:
+                return "正常";
+            case 1:
+                return "已核销";
+            case 2:
+                return "已评论";
+            case 3:
+                return "已删除";
+            default:
+                return "正常";
         }
     }
 
@@ -160,6 +170,22 @@ public class BlockOrder implements Serializable {
         } else {
             return "可代种";
         }
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @Override

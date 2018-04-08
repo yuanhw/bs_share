@@ -2,6 +2,7 @@ package cn.wyh.service.impl;
 
 import cn.wyh.dao.*;
 import cn.wyh.dto.ShareOrderDto;
+import cn.wyh.dto.TabAllOrder;
 import cn.wyh.dto.UpdateUserOrder;
 import cn.wyh.entity.*;
 import cn.wyh.service.BlockOrderService;
@@ -101,6 +102,35 @@ public class BlockOrderServiceImpl implements BlockOrderService {
         return status;
     }
 
+    @Override
+    public List<TabAllOrder> loadTabOrderList1(String userId) {
+        List<TabAllOrder> data = this.blockOrderDao.loadOrderTabList(userId);
+        for (TabAllOrder item : data) {
+            item.setSpec("地块规格：" + item.getSpec());
+            item.setNum("数量：" + item.getNum());
+            item.setTime("时间：" + item.getTime());
+            item.setCreateTime("生效时间：" + item.getCreateTime());
+            item.setStatus(convertStatus(item.getStatus()));
+            item.setPrice("￥" + item.getPrice());
+        }
+        return data;
+    }
+
+    private String convertStatus(String status) {
+
+        switch (Integer.parseInt(status)) {
+            case 0:
+                return "交易完成";
+            case 1:
+                return "已核销";
+            case 2:
+                return "已评论";
+            case 3:
+                return "已删除";
+            default:
+                return "交易完成";
+        }
+    }
     private Date computDate(Date now, int leaseTime, String unitLease) {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(now);

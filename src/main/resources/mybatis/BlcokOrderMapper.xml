@@ -9,7 +9,7 @@
         #{validDate},
         #{noValidDate},
         #{number},
-         #{spec},
+        #{spec},
         #{amount},
         #{time},
         #{userId},
@@ -19,4 +19,15 @@
         #{type}
         )
     </insert>
+
+    <select id="loadOrderTabList" resultType="cn.wyh.dto.TabAllOrder">
+        select order_id, `status`, a.spec, CONCAT(a.time,d.lease_unit) as time, a.number as num, amount as price, create_date as createTime,
+        c.fm_title as farmName, c.fm_img as farmImg
+        from block_order as a
+        join farm_manager as b on a.farm_manager_id = b.fm_id
+        join farm as c on b.fm_id = c.fm_id
+        join block_rule d on a.batch_no = d.batch_no
+        where user_id = #{userId}
+        ORDER BY createTime desc
+    </select>
 </mapper>
