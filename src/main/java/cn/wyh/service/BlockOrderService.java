@@ -33,4 +33,6 @@ public interface BlockOrderService {
     int delRefund(String orderId);
 
     int delOrder(String orderId);
+
+    int orderComment(String orderId, int rating, String comment);
 }

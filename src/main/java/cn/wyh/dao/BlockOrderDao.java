@@ -23,4 +23,8 @@ public interface BlockOrderDao {
     BlockOrder selectOrderByOrderId(@Param("orderId") String orderId);
 
     int undateStatus(@Param("orderId") String orderId, @Param("status") int status);
+
+    int undateComment(@Param("orderId") String orderId,
+                      @Param("rating") int rating,
+                      @Param("comment") String comment);
 }

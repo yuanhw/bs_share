@@ -80,4 +80,10 @@ public class BlockOrderController {
     public String delOrder(@RequestParam String orderId) {
         return new ResponseSuccess(blockOrderService.delOrder(orderId)).toString();
     }
+
+    @RequestMapping("/orderComment")
+    public String orderComment(@RequestParam String orderId,
+                               @RequestParam int rating, @RequestParam String comment) {
+        return new ResponseSuccess(blockOrderService.orderComment(orderId, rating, comment)).toString();
+    }
 }

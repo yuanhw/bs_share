@@ -193,6 +193,19 @@ public class BlockOrderServiceImpl implements BlockOrderService {
         return 1;
     }
 
+    @Transactional
+    @Override
+    public int orderComment(String orderId, int rating, String comment) {
+        try {
+            this.blockOrderDao.undateComment(orderId, rating, comment);
+            this.blockOrderDao.undateStatus(orderId, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        return 1;
+    }
+
     private String convertStatus(String status) {
         switch (status.charAt(0)) {
             case '0':

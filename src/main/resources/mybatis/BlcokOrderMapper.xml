@@ -100,4 +100,9 @@
         update block_order set status = #{status}
         where order_id = #{orderId}
     </update>
+
+    <update id="undateComment">
+        update block_order set grade = #{rating}, `comment` = #{comment}
+        where order_id = #{orderId}
+    </update>
 </mapper>
