@@ -1,7 +1,5 @@
 package cn.wyh;
 
-import java.util.Date;
-
 /**
  * Created by WYH on 2017/12/13.
  */
@@ -15,7 +13,7 @@ public class Main {
 
         System.out.println(JSONArray.toJSONString(service.loadListProvince()));
         */
-        System.out.println(new Date().getTime());
+        System.out.println("ddd：111".split("：")[0]);
         //
         /*
         Province province = new Province();

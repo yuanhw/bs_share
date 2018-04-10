@@ -1,11 +1,10 @@
 package cn.wyh.service.impl;
 
 import cn.wyh.dao.*;
-import cn.wyh.dto.ShareOrderDto;
-import cn.wyh.dto.TabAllOrder;
-import cn.wyh.dto.UpdateUserOrder;
+import cn.wyh.dto.*;
 import cn.wyh.entity.*;
 import cn.wyh.service.BlockOrderService;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +33,8 @@ public class BlockOrderServiceImpl implements BlockOrderService {
     private FarmManagerDao farmManagerDao;
     @Autowired
     private BlockOrderItemDao blockOrderItemDao;
+    @Autowired
+    private RefundDao refundDao;
 
     @Override
     public ShareOrderDto getShareOrderByBatchNo(String batchNo) {
@@ -63,7 +64,6 @@ public class BlockOrderServiceImpl implements BlockOrderService {
     @Transactional
     @Override
     public int createBlockOrder(User user, ShareOrderDto obj) {
-        int status = 1;
         try {
             double account = user.getAccount() - obj.getAmount();
             this.userDao.updateAccount(account, user.getUserPhone());
@@ -80,7 +80,7 @@ public class BlockOrderServiceImpl implements BlockOrderService {
                     user.getId(),
                     fm.getFmId(),
                     obj.getBatchNo(),
-                    0,
+                    1,
                     obj.getBlockType());
             this.blockOrderDao.createOrder(order);
             UpdateUserOrder uo = new UpdateUserOrder(order.getUserId(), order.getType(), obj.getLeaseTime() + obj.getUnitLease(), now,
@@ -99,33 +99,113 @@ public class BlockOrderServiceImpl implements BlockOrderService {
             e.printStackTrace();
             throw new RuntimeException();
         }
-        return status;
+        return 1;
     }
 
     @Override
-    public List<TabAllOrder> loadTabOrderList1(String userId) {
-        List<TabAllOrder> data = this.blockOrderDao.loadOrderTabList(userId);
+    public List<TabAllOrder> loadTabOrderList1(String userId, int status) {
+        List<TabAllOrder> data = this.blockOrderDao.loadOrderTabList(userId, status);
         for (TabAllOrder item : data) {
             item.setSpec("地块规格：" + item.getSpec());
             item.setNum("数量：" + item.getNum());
             item.setTime("时间：" + item.getTime());
-            item.setCreateTime("生效时间：" + item.getCreateTime());
-            item.setStatus(convertStatus(item.getStatus()));
+            item.setCreateTime("生效时间：" + item.getCreateTime().split("[.]")[0]);
+            if ((item.getEndTime().getTime() - new Date().getTime() < 0) && item.getStatus().equals("1")) {
+                item.setStatus("待核销");
+            } else {
+                item.setStatus(convertStatus(item.getStatus()));
+            }
             item.setPrice("￥" + item.getPrice());
         }
         return data;
     }
 
-    private String convertStatus(String status) {
+    @Override
+    public JSONObject loadOrderWeb(BlockOrderWebDto param) {
+        param.setStartIndex(5 * (param.getCurrentPage() - 1));
+        JSONObject obj = new JSONObject();
+        obj.put("total", this.blockOrderDao.getTotalWeb(param));
+        obj.put("list", this.blockOrderDao.loadOrderWeb(param));
+        return obj;
+    }
 
-        switch (Integer.parseInt(status)) {
-            case 0:
+    @Transactional
+    @Override
+    public int applyRefund(Refund refund) {
+        try {
+            BlockOrder order = this.blockOrderDao.selectOrderByOrderId(refund.getOrderId());
+            refund.setUserId(order.getUserId());
+            refund.setFarmManagerId(order.getFarmManagerId());
+            refund.setStatus(0);
+            refund.setCreateTime(new Date());
+            this.blockOrderDao.undateStatus(order.getOrderId(), 3);
+            this.refundDao.insertSelective(refund);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        return 1;
+    }
+
+    @Override
+    public List<RefundListDto> loadRefundList(int userId) {
+        return this.refundDao.selectRefundListDtoByUserId(userId);
+    }
+
+    @Transactional
+    @Override
+    public int cancelRefund(String orderId) {
+        try {
+            this.refundDao.updateStatusByOrderId(1, orderId);
+            this.blockOrderDao.undateStatus(orderId, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        return 1;
+    }
+
+    @Transactional
+    @Override
+    public int heXiao(String orderId) {
+        try {
+            this.blockOrderDao.undateStatus(orderId, 2);
+            List<Integer> list = this.blockDetailDao.getIdList(orderId);
+            for (int id : list) {
+                this.blockDetailDao.updateStatusById(2, id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        return 1;
+    }
+
+    @Override
+    public int delRefund(String orderId) {
+        this.refundDao.updateStatusByOrderId(4, orderId);
+        return 1;
+    }
+
+    @Override
+    public int delOrder(String orderId) {
+        this.blockOrderDao.undateStatus(orderId, 5);
+        return 1;
+    }
+
+    private String convertStatus(String status) {
+        switch (status.charAt(0)) {
+            case '0':
                 return "交易完成";
-            case 1:
-                return "已核销";
-            case 2:
-                return "已评论";
-            case 3:
+            case '1':
+                return "正常";
+            case '2':
+                return "待评价";
+            case '3':
+                return "退款中";
+            case '4':
+                return "已退款";
+            case '5':
                 return "已删除";
             default:
                 return "交易完成";

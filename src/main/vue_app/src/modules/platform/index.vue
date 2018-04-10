@@ -3,7 +3,7 @@
       <el-header style="" class="el-header">
         <div>
           <span style="font-size: 24px;margin-left: 200px;margin-right: 760px;">共享农田App后台管理系统</span>
-          <el-button type="text" style="font-weight: bold" @click="handleCommand">退出</el-button>
+          <el-button type="text" style="font-weight: bold; color: #333333" @click="handleCommand">退出</el-button>
         </div>
       </el-header>
       <el-container style="height: 550px;">

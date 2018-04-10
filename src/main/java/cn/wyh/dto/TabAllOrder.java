@@ -1,6 +1,7 @@
 package cn.wyh.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by WYH on 2018/4/8.
@@ -16,6 +17,8 @@ public class TabAllOrder implements Serializable {
     private String farmName;
     private String createTime;
     private String farmImg;
+    private Date beginTime;
+    private Date endTime;
 
     public TabAllOrder() {
     }
@@ -103,5 +106,21 @@ public class TabAllOrder implements Serializable {
 
     public void setFarmImg(String farmImg) {
         this.farmImg = farmImg;
+    }
+
+    public Date getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 }

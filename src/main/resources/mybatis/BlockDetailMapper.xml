@@ -75,4 +75,16 @@
     <select id="getNullBlockDetail" resultType="int">
         select id from block_detail where `status` = 0 and branch_no = #{branchNo} limit #{limit}
     </select>
+
+    <update id="updateStatusById">
+        update block_detail set `status` = #{status}, update_time = now()
+        where id = #{id}
+    </update>
+
+    <select id="getIdList" resultType="Integer">
+        select id from block_detail a
+        join block_order_item b on a.id = b.b_detail_id
+        join block_order c on b.b_order_id = c.order_id
+        where c.order_id = #{orderId}
+    </select>
 </mapper>

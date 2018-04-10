@@ -24,4 +24,8 @@ public interface BlockDetailDao {
     int updateUserOrder(UpdateUserOrder blockDetail);
 
     List<Integer> getNullBlockDetail(@Param("branchNo") String branchNo, @Param("limit") int limit);
+
+    int updateStatusById(@Param("status") int status, @Param("id") int id);
+
+    List<Integer> getIdList(@Param("orderId") String orderId);
 }
