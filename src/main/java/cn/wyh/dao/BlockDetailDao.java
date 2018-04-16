@@ -1,6 +1,7 @@
 package cn.wyh.dao;
 
 import cn.wyh.dto.BlockDetailSearch;
+import cn.wyh.dto.SelfBDetail;
 import cn.wyh.dto.UpdateUserOrder;
 import cn.wyh.entity.BlockDetail;
 import org.apache.ibatis.annotations.Param;
@@ -28,4 +29,10 @@ public interface BlockDetailDao {
     int updateStatusById(@Param("status") int status, @Param("id") int id);
 
     List<Integer> getIdList(@Param("orderId") String orderId);
+
+    List<SelfBDetail> selectBdetailForApp(@Param("userId") int userId, @Param("status") int status);
+
+    BlockDetail getDetailById(@Param("id") int id);
+
+    int updateTillCodeById(@Param("id") int id, @Param("till") int till);
 }

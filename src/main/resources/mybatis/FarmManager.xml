@@ -60,4 +60,9 @@
     <update id="updateFMAccount">
         update farm_manager set account = #{account} where phone = #{phone}
     </update>
+
+    <select id="findById" parameterType="int" resultType="FarmManager">
+        SELECT * FROM farm_manager
+        WHERE fm_id = #{id}
+    </select>
 </mapper>

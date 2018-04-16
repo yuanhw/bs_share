@@ -33,7 +33,7 @@
                 and user_id = #{userId}
             </if>
             and
-            branch_no in (select branch_no from block_rule where farm_id = (select id from farm where fm_id =
+            branch_no in (select batch_no from block_rule where farm_id = (select id from farm where fm_id =
             #{farmManagerId}))
         </where>
         order by update_time desc
@@ -61,7 +61,7 @@
                 and user_id = #{userId}
             </if>
             and
-            branch_no in (select branch_no from block_rule
+            branch_no in (select batch_no from block_rule
             where farm_id = (select id from farm where fm_id = #{farmManagerId}))
         </where>
         order by update_time desc
@@ -87,4 +87,22 @@
         join block_order c on b.b_order_id = c.order_id
         where c.order_id = #{orderId}
     </select>
+
+    <select id="selectBdetailForApp" resultType="cn.wyh.dto.SelfBDetail">
+        select a.id, c.spec, c.no_valid_date as noValid, c.order_id, a.till_id as `type`,
+        concat(e.province, e.city, e.detailed_address) as address
+        from block_detail as a
+        join block_order_item as b on a.id = b.b_detail_id
+        join block_order as c on b.b_order_id = c.order_id
+        join farm_manager as d on c.farm_manager_id = d.fm_id
+        join farm as e on d.fm_id = e.fm_id
+        where a.user_id = #{userId} and a.status in (1, 2) and a.type = #{status}
+    </select>
+
+    <select id="getDetailById" resultType="BlockDetail">
+        select * from block_detail where id = #{id}
+    </select>
+    <update id="updateTillCodeById">
+        update block_detail set till_id = #{till} where id = #{id}
+    </update>
 </mapper>

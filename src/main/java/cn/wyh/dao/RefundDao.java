@@ -22,4 +22,8 @@ public interface RefundDao {
     List<RefundListDto> selectRefundListDtoByUserId(@Param("userId") int userId);
 
     int updateStatusByOrderId(@Param("status") int status, @Param("orderId") String orderId);
+
+    int countRefundByOrderId(@Param("orderId") String orderId);
+
+    Refund selectRefundByOrderId(@Param("orderId") String orderId);
 }

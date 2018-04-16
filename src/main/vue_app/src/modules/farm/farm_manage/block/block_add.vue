@@ -37,6 +37,8 @@
             :value="item.key">
           </el-option>
         </el-select>
+        <label>代种单价</label>
+        <el-input v-model="block.proxy" size="small" style="width: 150px; margin-right: 20px"></el-input>
       </p>
       <p>
         <label>数量（个）</label>
@@ -117,6 +119,7 @@
           description: null,
           leaseUnit: null,
           maxLease: 1,
+          proxy: 0,
           validityBegin: null,
           validityEnd: null
         }

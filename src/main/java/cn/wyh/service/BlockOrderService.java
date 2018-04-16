@@ -4,6 +4,7 @@ import cn.wyh.dto.BlockOrderWebDto;
 import cn.wyh.dto.RefundListDto;
 import cn.wyh.dto.ShareOrderDto;
 import cn.wyh.dto.TabAllOrder;
+import cn.wyh.entity.BlockOrderItem;
 import cn.wyh.entity.Refund;
 import cn.wyh.entity.User;
 import com.alibaba.fastjson.JSONObject;
@@ -35,4 +36,14 @@ public interface BlockOrderService {
     int delOrder(String orderId);
 
     int orderComment(String orderId, int rating, String comment);
+
+    int delOrderWeb(String orderId);
+
+    int isCanRefund(String orderId);
+
+    List<BlockOrderItem> loadSimpleDetail(String orderId);
+
+    Refund getRefund(String orderId);
+
+    int processRefund(String orderId, int status);
 }

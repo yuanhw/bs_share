@@ -50,11 +50,14 @@
         join user b on a.user_id = b.id
         join block_rule c on a.batch_no = c.batch_no
         where a.farm_manager_id = #{farmManagerId}
+        <if test="status == -1">
+            and a.status != 6
+        </if>
         <if test="status >= 0">
             and a.status = #{status}
         </if>
         <if test="status == -2">
-            and a.no_valid_date &lt; NOW()
+            and a.no_valid_date &lt; NOW() and a.status = 1
         </if>
         <if test="userPhone != null and userPhone != '' ">
             and b.user_phone = #{userPhone}
@@ -74,11 +77,14 @@
         join user b on a.user_id = b.id
         join block_rule c on a.batch_no = c.batch_no
         where a.farm_manager_id = #{farmManagerId}
+        <if test="status == -1">
+            and a.status != 6
+        </if>
         <if test="status >= 0">
             and a.status = #{status}
         </if>
         <if test="status == -2">
-            and a.no_valid_date &lt; NOW()
+            and a.no_valid_date &lt; NOW() and a.status = 1
         </if>
         <if test="userPhone != null and userPhone != '' ">
             and b.user_phone = #{userPhone}

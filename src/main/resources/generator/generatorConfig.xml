@@ -28,7 +28,7 @@
                              targetPackage="cn.wyh.dao" targetProject="src/main/java"></javaClientGenerator>
 
         <!-- 要生成哪些表 -->
-        <table tableName="refund"
+        <table tableName="block_plant"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

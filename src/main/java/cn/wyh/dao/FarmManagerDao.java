@@ -27,4 +27,6 @@ public interface FarmManagerDao {
     void updateFM(UpdateFarmManager farmManager);
 
     void updateFMAccount(@Param("account") double account, @Param("phone") String phone);
+
+    FarmManager findById(int id);
 }

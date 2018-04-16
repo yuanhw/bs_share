@@ -7,35 +7,33 @@ import java.util.Date;
  * Created by WYH on 2018/4/7.
  */
 public class BlockOrderItem implements Serializable {
-    /**
-     * `b_order_id` varchar(255) NOT NULL COMMENT '订单编号',
-     * `b_detail_id` int(11) NOT NULL COMMENT '地块编号',
-     * `create_time` datetime NOT NULL COMMENT '创建时间',
-     */
-    private String bOrderId;
-    private String bDetailId;
+    private String borderId;
+    private String bdetailId;
     private Date createTime;
 
     public BlockOrderItem(String bOrderId, String bDetailId, Date createTime) {
-        this.bOrderId = bOrderId;
-        this.bDetailId = bDetailId;
+        this.borderId = bOrderId;
+        this.bdetailId = bDetailId;
         this.createTime = createTime;
     }
 
-    public String getbOrderId() {
-        return bOrderId;
+    public BlockOrderItem() {
     }
 
-    public void setbOrderId(String bOrderId) {
-        this.bOrderId = bOrderId;
+    public String getBorderId() {
+        return borderId;
     }
 
-    public String getbDetailId() {
-        return bDetailId;
+    public void setBorderId(String borderId) {
+        this.borderId = borderId;
     }
 
-    public void setbDetailId(String bDetailId) {
-        this.bDetailId = bDetailId;
+    public String getBdetailId() {
+        return bdetailId;
+    }
+
+    public void setBdetailId(String bdetailId) {
+        this.bdetailId = bdetailId;
     }
 
     public Date getCreateTime() {

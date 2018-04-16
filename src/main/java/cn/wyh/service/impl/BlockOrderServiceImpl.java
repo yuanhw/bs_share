@@ -84,7 +84,7 @@ public class BlockOrderServiceImpl implements BlockOrderService {
                     obj.getBlockType());
             this.blockOrderDao.createOrder(order);
             UpdateUserOrder uo = new UpdateUserOrder(order.getUserId(), order.getType(), obj.getLeaseTime() + obj.getUnitLease(), now,
-                    1, obj.getBatchNo(), 0);
+                    1, obj.getBatchNo());
             List<Integer> bId = this.blockDetailDao.getNullBlockDetail(obj.getBatchNo(), obj.getNum());
             if (bId.size() != obj.getNum()) {
                 throw new Exception("地块数量不足");
@@ -206,6 +206,60 @@ public class BlockOrderServiceImpl implements BlockOrderService {
         return 1;
     }
 
+    @Override
+    public int delOrderWeb(String orderId) {
+        this.blockOrderDao.undateStatus(orderId, 6);
+        return 1;
+    }
+
+    @Override
+    public int isCanRefund(String orderId) {
+        int tag = this.refundDao.countRefundByOrderId(orderId);
+        if (tag >= 2) {
+            return 0;
+        }
+        return 1;
+    }
+
+    @Override
+    public List<BlockOrderItem> loadSimpleDetail(String orderId) {
+        return this.blockOrderItemDao.selectList(orderId);
+    }
+
+    @Override
+    public Refund getRefund(String orderId) {
+        return this.refundDao.selectRefundByOrderId(orderId);
+    }
+
+    @Transactional
+    @Override
+    public int processRefund(String orderId, int status) {
+        try {
+            Refund refund = this.refundDao.selectRefundByOrderId(orderId);
+            if (status == 1) {
+                FarmManager fm = this.farmManagerDao.findById(refund.getFarmManagerId());
+                User user = this.userDao.findByUserId(refund.getUserId());
+                this.farmManagerDao.updateFMAccount(fm.getAccount() - refund.getRefundAmt(), fm.getPhone());
+                this.userDao.updateAccount(user.getAccount() + refund.getRefundAmt(), user.getUserPhone());
+                this.blockOrderDao.undateStatus(orderId, 4);
+                refund.setStatus(2);
+                this.refundDao.updateByPrimaryKeySelective(refund);
+                List<Integer> list = this.blockDetailDao.getIdList(orderId);
+                for (int id : list) {
+                    this.blockDetailDao.updateStatusById(3, id);
+                }
+            } else {
+                this.blockOrderDao.undateStatus(orderId, 1);
+                refund.setStatus(3);
+                this.refundDao.updateByPrimaryKeySelective(refund);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        return 1;
+    }
+
     private String convertStatus(String status) {
         switch (status.charAt(0)) {
             case '0':
@@ -219,7 +273,7 @@ public class BlockOrderServiceImpl implements BlockOrderService {
             case '4':
                 return "已退款";
             case '5':
-                return "已删除";
+                return "用户已删除";
             default:
                 return "交易完成";
         }

@@ -27,4 +27,7 @@
     <update id="updatePayPass">
         UPDATE  user SET pay_password = #{payPass} WHERE user_phone = #{userPhone}
     </update>
+    <select id="findByUserId" resultType="User">
+        select * from user where id = #{id}
+    </select>
 </mapper>

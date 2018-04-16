@@ -41,9 +41,11 @@
         <el-table-column prop="statusValue" label="状态" width="80px" align="center"></el-table-column>
         <el-table-column prop="grade" label="评分" width="80px" align="center"></el-table-column>
         <el-table-column prop="comment" label="评价" width="180px" align="center"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="180px" align="center">
           <template slot-scope="scope">
-            <el-button type="text" size="mini" @click="other(scope.$index)">其它</el-button>
+            <el-button type="text" size="mini" @click="detail(scope.$index)">详情</el-button>
+            <el-button type="text" size="mini" @click="refund(scope.$index)">退款</el-button>
+            <el-button type="text" size="mini" @click="del(scope.$index)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -59,6 +61,9 @@
         :total="totalRow">
       </el-pagination>
     </div>
+    <div>
+      <ReFund ref="refund" v-on:refresh="beginSearch"></ReFund>
+    </div>
   </div>
 </template>
 <script>
@@ -70,10 +75,11 @@
     {key: 2, value: '待评价'},
     {key: 3, value: '退款中'},
     {key: 4, value: '已退款'},
-    {key: 5, value: '已删除'}
+    {key: 5, value: '用户已删除'}
   ]
-
+  import ReFund from './refund.vue'
   export default {
+    components: {ReFund},
     name: 'order',
     data() {
       return {
@@ -109,8 +115,33 @@
       handleCurrentChange: function () {
         this.loadData()
       },
-      other: function (index) {
-        alert(index)
+      refund: function (index) {
+        let code = this.dataList[index].status
+        if (code == 3) {
+          let id = this.dataList[index].orderId
+          this.$refs.refund.open(id)
+        } else {
+          this.$message.warning("该状态下不能进行此操作")
+        }
+      },
+      del: function (index) {
+        let code = this.dataList[index].status
+        if (code == 5) {
+          this.$sys.ajax.post('/block/order/delOrderWeb.do', {orderId: this.dataList[index].orderId}, function (rt, _self) {
+            if (rt.data == 1) {
+              _self.$message.warning("删除成功")
+              _self.beginSearch()
+            } else {
+              _self.$message.warning("删除失败")
+            }
+          }, this)
+        } else {
+          this.$message.warning("该状态下不能进行此操作")
+        }
+      },
+      detail: function (index) {
+        //this.$router.push({path: "/fm/simple_detail", query: {orderId: this.dataList[index].orderId}})
+        window.open("/#/fm/simple_detail?orderId=" + this.dataList[index].orderId);
       }
     },
     created() {

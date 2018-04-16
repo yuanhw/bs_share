@@ -86,4 +86,29 @@ public class BlockOrderController {
                                @RequestParam int rating, @RequestParam String comment) {
         return new ResponseSuccess(blockOrderService.orderComment(orderId, rating, comment)).toString();
     }
+
+    @RequestMapping("/delOrderWeb")
+    public String delOrderWeb(@RequestParam String orderId) {
+        return new ResponseSuccess(this.blockOrderService.delOrderWeb(orderId)).toString();
+    }
+
+    @RequestMapping("/isCanRefund")
+    public String isCanRefund(@RequestParam String orderId) {
+        return new ResponseSuccess(this.blockOrderService.isCanRefund(orderId)).toString();
+    }
+
+    @RequestMapping("/loadDetailSimple")
+    public String loadDetailSimple(@RequestParam String orderId) {
+        return new ResponseSuccess(this.blockOrderService.loadSimpleDetail(orderId)).toString();
+    }
+
+    @RequestMapping("/getRefund")
+    public String getRefund(@RequestParam String orderId) {
+        return new ResponseSuccess(blockOrderService.getRefund(orderId)).toString();
+    }
+
+    @RequestMapping("/processRefund")
+    public String processRefund(@RequestParam String orderId, @RequestParam int status) {
+        return new ResponseSuccess(blockOrderService.processRefund(orderId, status)).toString();
+    }
 }

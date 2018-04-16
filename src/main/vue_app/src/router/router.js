@@ -24,6 +24,8 @@ const block_create = resolve => require(['@/modules/farm/farm_manage/block/block
 const block_detail = resolve => require(['@/modules/farm/farm_manage/block/block_detail.vue'], resolve)
 //订单管理
 const block_order = resolve => require(['@/modules/farm/order/block/order.vue'], resolve)
+//单个订单详情
+const simple_order = resolve => require(['@/modules/farm/order/block/simple_order.vue'], resolve)
 
 /* 商家后台首页*/
 const fm_index = resolve =>require(['@/modules/farm/index.vue'], resolve)
@@ -107,6 +109,10 @@ const router = new VueRouter({
           component: block_order
         }
       ]
+    },
+    {
+      path: '/fm/simple_detail',
+      component: simple_order
     }
   ],
   linkActiveClass: 'active'

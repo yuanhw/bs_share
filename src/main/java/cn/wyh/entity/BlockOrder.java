@@ -150,7 +150,7 @@ public class BlockOrder implements Serializable {
     }
 
     public String convertStatus() {
-        if (this.getNoValidDate().getTime() - new Date().getTime() < 0) {
+        if ((this.getNoValidDate().getTime() - new Date().getTime() < 0) && this.status == 1) {
             return "待核销";
         }
         switch (status) {
@@ -165,7 +165,7 @@ public class BlockOrder implements Serializable {
             case 4:
                 return "已退款";
             case 5:
-                return "已删除";
+                return "用户已删除";
             default:
                 return "交易完成";
         }

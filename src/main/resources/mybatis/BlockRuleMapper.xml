@@ -40,13 +40,13 @@
         (
         farm_id, batch_no, area, spec, unit_price,
         `number`, `type`, description, lease_unit, max_lease,
-        create_time, validity_begin, validity_end, update_time
+        create_time, validity_begin, validity_end, update_time, proxy
         )
         values
         (
         #{farmId}, #{batchNo}, #{area}, #{spec}, #{unitPrice}, #{number},
         #{type}, #{description}, #{leaseUnit}, #{maxLease},
-        #{createTime}, #{validityBegin}, #{validityEnd}, #{updateTime}
+        #{createTime}, #{validityBegin}, #{validityEnd}, #{updateTime}, #{proxy}
         )
     </insert>
     <delete id="deleteBlockRule" parameterType="String">
