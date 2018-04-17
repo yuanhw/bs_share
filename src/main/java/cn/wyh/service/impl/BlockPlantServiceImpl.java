@@ -112,6 +112,7 @@ public class BlockPlantServiceImpl implements BlockPlantService {
             img.setFilePath(str);
             img.setTillageId(id);
             img.setCreateTime(new Date());
+            tillageImgListMapper.insertSelective(img);
         }
         BlockPlant obj = new BlockPlant();
         obj.setId(dto.getPlantId());
