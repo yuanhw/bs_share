@@ -6,10 +6,12 @@
       <el-input v-model="orderId" size="small" style="width:180px" :disabled="true"></el-input>
     </p>
     <p>
-      <el-table :data="dataList" width="100%;" stripe style="font-size: 12px;" border>
+    <div style="width: 302px">
+      <el-table :data="dataList" width="100%" stripe style="font-size: 12px;" border>
         <el-table-column prop="bdetailId" label="地块编号" width="120px" align="center"></el-table-column>
         <el-table-column prop="createTime" label="创建日期" width="180px" align="center"></el-table-column>
       </el-table>
+    </div>
     </p>
   </div>
 </template>

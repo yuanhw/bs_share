@@ -163,4 +163,92 @@
         where c.till_id != 0 and c.user_id = #{userId} and a.`status` = #{status}
         order by a.create_time desc
     </select>
+
+    <select id="selectPlantForWeb"
+            parameterType="cn.wyh.dto.BlockPlantSearch"
+            resultType="cn.wyh.dto.BlockPlantWebDto">
+        select a.id as plantId, a.block_id as blockId, b.title as greenTitle, b.img as greenImg, b.life as greenLife,
+        a.`status`, a.operator, a.phone, a.create_time, a.update_time
+        from block_plant as a
+        join green as b on a.green_id = b.id
+        where block_id in (
+        select b_detail_id from block_order_item where b_order_id in
+        (select order_id from block_order where farm_manager_id = #{farmManagerId})
+        )
+        <if test="status != 0">
+            and a.status = #{status}
+        </if>
+        <if test="blockId != null">
+            and a.block_id = #{blockId}
+        </if>
+        limit #{startIndex}, 5
+    </select>
+
+    <select id="getPlantForWebTotal"
+            parameterType="cn.wyh.dto.BlockPlantSearch"
+            resultType="int">
+        select count(*) as num from block_plant
+        where block_id in (
+        select b_detail_id from block_order_item where b_order_id in
+        (select order_id from block_order where farm_manager_id = #{farmManagerId})
+        )
+        <if test="status != 0">
+            and status = #{status}
+        </if>
+        <if test="blockId != null">
+            and block_id = #{blockId}
+        </if>
+    </select>
+
+    <update id="updateProcess" parameterType="cn.wyh.dto.BlockPlantDto">
+        update block_plant set operator = #{operator}, phone = #{phone}, `status` = 2, update_time = now()
+        where id = #{plantId}
+    </update>
+
+    <select id="selectStatus" parameterType="cn.wyh.dto.BlockPlantSearch" resultType="cn.wyh.dto.PlantStatusWebDto">
+        select
+        a.id as plantId,
+        a.block_id as blockId,
+        b.title as greenTitle,
+        b.img as greenImg,
+        c.current_img as currentImgId,
+        c.current_video as currentVideo,
+        c.create_time as lastTime,
+        c.grow_status as greenStatus,
+        c.last_operation as greenOperate
+        from block_plant as a
+        left join tillage as c on a.tillage_id = c.id
+        join green as b on a.green_id = b.id
+        where block_id in (
+        select b_detail_id from block_order_item where b_order_id in
+        (select order_id from block_order where farm_manager_id = #{farmManagerId})
+        )
+        <if test="blockId != null">
+            and a.block_id = #{blockId}
+        </if>
+        <if test="status == 2">
+            and a.tillage_id is not null
+        </if>
+        <if test="status == 1">
+            and a.tillage_id is null
+        </if>
+        and a.status = 2
+        limit #{startIndex}, 5
+    </select>
+    <select id="getTotal2" parameterType="cn.wyh.dto.BlockPlantSearch" resultType="int">
+        select count(*) as num from block_plant
+        where block_id in (
+        select b_detail_id from block_order_item where b_order_id in
+        (select order_id from block_order where farm_manager_id = #{farmManagerId})
+        ) and status = 2
+        <if test="blockId != null">
+            and block_id = #{blockId}
+        </if>
+        <if test="status == 2">
+            and tillage_id is not null
+        </if>
+        <if test="status == 1">
+            and tillage_id is null
+        </if>
+    </select>
 </mapper>

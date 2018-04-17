@@ -28,7 +28,7 @@
                              targetPackage="cn.wyh.dao" targetProject="src/main/java"></javaClientGenerator>
 
         <!-- 要生成哪些表 -->
-        <table tableName="block_plant"
+        <table tableName="tillage_img_list"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

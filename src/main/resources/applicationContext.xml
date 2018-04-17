@@ -39,4 +39,6 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="cn.wyh.dao"/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
 </beans>

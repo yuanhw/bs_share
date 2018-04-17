@@ -1,7 +1,6 @@
 package cn.wyh.dao;
 
-import cn.wyh.dto.BlockPlantDto;
-import cn.wyh.dto.CurrentStatus;
+import cn.wyh.dto.*;
 import cn.wyh.entity.BlockPlant;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,4 +24,14 @@ public interface BlockPlantDao {
     CurrentStatus selectCurrentStatusById(@Param("id") int id);
 
     List<BlockPlantDto> selectPlantStatus(@Param("userId") int userId, @Param("status") int status);
+
+    List<BlockPlantWebDto> selectPlantForWeb(BlockPlantSearch search);
+
+    int getPlantForWebTotal(BlockPlantSearch search);
+
+    int updateProcess(BlockPlantDto dto);
+
+    List<PlantStatusWebDto> selectStatus(BlockPlantSearch search);
+
+    int getTotal2(BlockPlantSearch search);
 }

@@ -23,21 +23,21 @@
             <template slot="title"><i class="el-icon-tickets"></i><span style="font-weight: bold">订单管理</span></template>
             <el-menu-item index="block_order" class="subItem">地块订单</el-menu-item>
             <el-menu-item index="fm_welcome" class="subItem">地块订单详情</el-menu-item>
-            <el-menu-item index="fm_welcome" class="subItem">种植订单</el-menu-item>
+            <el-menu-item index="plant_order" class="subItem">种植订单</el-menu-item>
           </el-submenu>
           <el-submenu index="4">
             <template slot="title"><i class="el-icon-more-outline"></i><span style="font-weight: bold">地块状态</span></template>
-            <el-menu-item index="red_packet_create" class="subItem">状态查看</el-menu-item>
-            <el-menu-item index="red_packet_create" class="subItem">更新状态</el-menu-item>
+            <el-menu-item index="plant_status_show" class="subItem">状态更新</el-menu-item>
+            <el-menu-item index="fm_welcome" class="subItem">历史记录</el-menu-item>
           </el-submenu>
           <el-submenu index="5">
             <template slot="title"><i class="el-icon-plus"></i><span style="font-weight: bold">交易记录</span></template>
-            <el-menu-item index="red_packet_create" class="subItem">交易详情</el-menu-item>
+            <el-menu-item index="fm_welcome" class="subItem">交易详情</el-menu-item>
           </el-submenu>
           <el-submenu index="6">
             <template slot="title"><i class="el-icon-loading"></i><span style="font-weight: bold">用户沟通</span></template>
-            <el-menu-item index="red_packet_create" class="subItem">聊天列表</el-menu-item>
-            <el-menu-item index="red_packet_create" class="subItem">聊天详情</el-menu-item>
+            <el-menu-item index="fm_welcome" class="subItem">聊天列表</el-menu-item>
+            <el-menu-item index="fm_welcome" class="subItem">聊天详情</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>

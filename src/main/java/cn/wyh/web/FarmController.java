@@ -86,7 +86,6 @@ public class FarmController {
     public void upLoadImg(@RequestParam("id") Integer id, @RequestParam("imgFile") MultipartFile imgFile) {
         try {
             if (!imgFile.isEmpty()) {
-                System.out.println(imgFile.getOriginalFilename() + " @ " + id);
                 File baseUri = new File(Global.baseUri + "farmImg");
                 if (!baseUri.exists()) {
                     baseUri.mkdir();
