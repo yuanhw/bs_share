@@ -3,6 +3,7 @@ package cn.wyh.service.impl;
 import cn.wyh.dao.BlockDetailDao;
 import cn.wyh.dao.BlockPlantDao;
 import cn.wyh.dao.GreenDao;
+import cn.wyh.dto.BlockPlantDto;
 import cn.wyh.dto.CurrentStatus;
 import cn.wyh.entity.BlockPlant;
 import cn.wyh.entity.Green;
@@ -60,5 +61,10 @@ public class BlockPlantServiceImpl implements BlockPlantService {
 
         }
         return current;
+    }
+
+    @Override
+    public List<BlockPlantDto> loadBlockPlantStatus(int userId, int status) {
+        return blockPlantDao.selectPlantStatus(userId, status);
     }
 }

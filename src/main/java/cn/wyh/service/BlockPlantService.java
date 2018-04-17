@@ -1,5 +1,6 @@
 package cn.wyh.service;
 
+import cn.wyh.dto.BlockPlantDto;
 import cn.wyh.dto.CurrentStatus;
 import cn.wyh.entity.Green;
 
@@ -14,4 +15,6 @@ public interface BlockPlantService {
     int addPlantOrder(int blockId, int greenId);
 
     CurrentStatus currentPlantStatus(int blockId);
+
+    List<BlockPlantDto> loadBlockPlantStatus(int userId, int status);
 }

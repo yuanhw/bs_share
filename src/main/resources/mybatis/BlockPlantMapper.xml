@@ -153,4 +153,14 @@
         join green as b on a.green_id = b.id
         where a.id = #{id}
     </select>
+
+    <select id="selectPlantStatus" resultType="cn.wyh.dto.BlockPlantDto">
+        select a.id as plantId, a.block_id as blockId, b.title as greenTitle, b.img as greenImg, a.create_time,
+        a.update_time, a.operator, a.phone
+        from block_plant as a
+        join green as b on a.green_id = b.id
+        join block_detail as c on a.block_id = c.id
+        where c.till_id != 0 and c.user_id = #{userId} and a.`status` = #{status}
+        order by a.create_time desc
+    </select>
 </mapper>

@@ -30,4 +30,9 @@ public class BlockPlantController {
     public String currentPlantStatus(@RequestParam Integer blockId) {
         return new ResponseSuccess(blockPlantService.currentPlantStatus(blockId)).toString();
     }
+
+    @RequestMapping("/app/loadPlantStatusList")
+    public String loadPlantStatusList(@RequestParam Integer userId, @RequestParam Integer status) {
+        return new ResponseSuccess(blockPlantService.loadBlockPlantStatus(userId, status)).toString();
+    }
 }
