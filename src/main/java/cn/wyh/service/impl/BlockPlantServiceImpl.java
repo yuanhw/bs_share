@@ -62,7 +62,14 @@ public class BlockPlantServiceImpl implements BlockPlantService {
             current.setStatus("暂无");
             current.setOperate("暂无");
         } else {
-
+            Tillage obj = tillageMapper.selectByPrimaryKey(current.getTillageId());
+            if (obj != null) {
+                current.setStatus(obj.getGrowStatus());
+                current.setOperate(obj.getLastOperation());
+                if (current.getDay() != null && current.getDay() < 0) {
+                    current.setDay(0);
+                }
+            }
         }
         return current;
     }

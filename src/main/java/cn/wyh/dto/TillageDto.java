@@ -1,6 +1,7 @@
 package cn.wyh.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,6 +13,7 @@ public class TillageDto implements Serializable {
     String operate;
     List<String> imgList;
     private String video;
+    private Date createTime;
 
     public int getPlantId() {
         return plantId;
@@ -51,5 +53,13 @@ public class TillageDto implements Serializable {
 
     public void setVideo(String video) {
         this.video = video;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
