@@ -142,4 +142,11 @@ public class BlockPlantServiceImpl implements BlockPlantService {
         return list;
     }
 
+    @Override
+    public List<String> loadTillageImgList(int plantId) {
+        BlockPlant obj = blockPlantDao.selectByPrimaryKey(plantId);
+        int id = obj.getTillageId();
+        return tillageImgListMapper.selectImgListByTillageId(id);
+    }
+
 }

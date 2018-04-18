@@ -30,4 +30,6 @@ public interface BlockPlantService {
     int addTillageInfo(TillageDto dto);
 
     List<TillageDto> loadTillageList(int plantId);
+
+    List<String> loadTillageImgList(int plantId);
 }

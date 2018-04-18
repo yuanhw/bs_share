@@ -103,4 +103,9 @@ public class BlockPlantController {
     public String loadTillageRecord(@RequestParam Integer plantId) {
         return new ResponseSuccess(blockPlantService.loadTillageList(plantId)).toString();
     }
+
+    @RequestMapping("/app/loadTillageImgList.do")
+    public String loadTillageImgList(@RequestParam Integer plantId) {
+        return new ResponseSuccess(blockPlantService.loadTillageImgList(plantId)).toString();
+    }
 }
