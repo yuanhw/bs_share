@@ -13,6 +13,7 @@ public class CurrentStatus implements Serializable {
     private String status;
     private Integer day;
     private String operate;
+    private int life;
 
     public Integer getPlantId() {
         return plantId;
@@ -68,5 +69,13 @@ public class CurrentStatus implements Serializable {
 
     public void setOperate(String operate) {
         this.operate = operate;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
     }
 }

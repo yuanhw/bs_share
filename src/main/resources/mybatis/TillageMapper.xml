@@ -127,4 +127,13 @@
       sign = #{sign,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <select id="selectListByPlantId" resultType="cn.wyh.dto.TillageDto">
+        select id as tillageId, grow_status as status, last_operation as operate,
+        current_video as video, create_time from tillage where plant_id = #{plantId}
+    </select>
+
+    <select id="getTotalByPlantId" resultType="int">
+         select count(*) as num from tillage where plant_id = #{plantId}
+    </select>
 </mapper>

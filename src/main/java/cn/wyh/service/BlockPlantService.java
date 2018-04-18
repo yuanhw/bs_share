@@ -28,4 +28,6 @@ public interface BlockPlantService {
     JSONObject loadStatusForWeb(BlockPlantSearch search);
 
     int addTillageInfo(TillageDto dto);
+
+    List<TillageDto> loadTillageList(int plantId);
 }

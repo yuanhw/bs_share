@@ -8,6 +8,7 @@ import java.util.List;
  * Created by WYH on 2018/4/17.
  */
 public class TillageDto implements Serializable {
+    private int tillageId;
     private int plantId;
     private String status;
     String operate;
@@ -61,5 +62,13 @@ public class TillageDto implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public int getTillageId() {
+        return tillageId;
+    }
+
+    public void setTillageId(int tillageId) {
+        this.tillageId = tillageId;
     }
 }

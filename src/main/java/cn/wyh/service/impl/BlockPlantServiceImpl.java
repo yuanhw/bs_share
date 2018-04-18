@@ -121,11 +121,25 @@ public class BlockPlantServiceImpl implements BlockPlantService {
             img.setCreateTime(new Date());
             tillageImgListMapper.insertSelective(img);
         }
+        int i = tillageMapper.getTotalByPlantId(dto.getPlantId());
         BlockPlant obj = new BlockPlant();
         obj.setId(dto.getPlantId());
         obj.setTillageId(id);
+        if (i == 0) {
+            obj.setStartTime(new Date());
+        }
         blockPlantDao.updateByPrimaryKeySelective(obj);
         return 1;
+    }
+
+    @Override
+    public List<TillageDto> loadTillageList(int plantId) {
+        List<TillageDto> list = tillageMapper.selectListByPlantId(plantId);
+        for (TillageDto dto : list) {
+            int id = dto.getTillageId();
+            dto.setImgList(tillageImgListMapper.selectImgListByTillageId(id));
+        }
+        return list;
     }
 
 }

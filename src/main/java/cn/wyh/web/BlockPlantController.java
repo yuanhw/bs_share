@@ -98,4 +98,9 @@ public class BlockPlantController {
         TillageDto dto = JSONObject.parseObject(json, TillageDto.class);
         return new ResponseSuccess(blockPlantService.addTillageInfo(dto)).toString();
     }
+
+    @RequestMapping("/app/loadRecordList.do")
+    public String loadTillageRecord(@RequestParam Integer plantId) {
+        return new ResponseSuccess(blockPlantService.loadTillageList(plantId)).toString();
+    }
 }

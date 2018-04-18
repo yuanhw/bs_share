@@ -22,6 +22,8 @@ public class BlockPlant implements Serializable {
 
     private Integer status;
 
+    private Date startTime;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -153,5 +155,13 @@ public class BlockPlant implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 }

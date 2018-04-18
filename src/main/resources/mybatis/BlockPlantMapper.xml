@@ -123,6 +123,9 @@
             <if test="status != null">
                 status = #{status,jdbcType=INTEGER},
             </if>
+            <if test="startTime != null">
+                start_time = #{startTime}
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -147,8 +150,8 @@
     </insert>
 
     <select id="selectCurrentStatusById" resultType="cn.wyh.dto.CurrentStatus">
-        select a.id as plantId, a.tillage_id as tillageId, DATEDIFF(NOW(),a.start_time) as day,
-        b.title as name, b.img as img
+        select a.id as plantId, a.tillage_id as tillageId, (b.life - DATEDIFF(NOW(),a.start_time)) as day,
+        b.title as name, b.img as img, b.life
         from block_plant as a
         join green as b on a.green_id = b.id
         where a.id = #{id}
