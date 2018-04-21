@@ -180,7 +180,7 @@
 
     <select id="selectCaiOrder" resultType="cn.wyh.dto.CaiOneDto">
         select a.id as caiId, a.plant_id as plantId, c.title as `name`, a.create_time, c.img as caiImg,
-        a.operator as operator, a.res_time as updateTime
+        a.operator as operate, a.res_time as updateTime, a.send_time, a.finish_time, a.address, a.phone
         from cai_order as a
         join block_plant as b on a.plant_id = b.id
         join green as c on b.green_id = c.id

@@ -58,6 +58,9 @@ public class CaiOrderWeb extends CaiOrder implements Serializable {
             case 3:
                 this.setStatusValue("已完成");
                 break;
+            case 4:
+                this.setStatusValue("用户已删除");
+                break;
         }
     }
 }

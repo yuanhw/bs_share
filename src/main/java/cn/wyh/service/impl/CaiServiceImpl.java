@@ -91,7 +91,14 @@ public class CaiServiceImpl implements CaiService {
         CaiOrder order = new CaiOrder();
         order.setId(id);
         order.setStatus(status);
-        order.setSendTime(new Date());
+        switch (status) {
+            case 2:
+                order.setSendTime(new Date());
+                break;
+            case 3:
+                order.setFinishTime(new Date());
+                break;
+        }
         caiOrderMapper.updateByPrimaryKeySelective(order);
         return 1;
     }
