@@ -254,4 +254,11 @@
             and tillage_id is null
         </if>
     </select>
+    <select id="getFarmManagerIdByPlantId" resultType="int">
+        select farm_manager_id from block_order as a
+        join block_order_item as b on a.order_id = b.b_order_id
+        join block_detail as c on b.b_detail_id = c.id
+        join block_plant as d on c.till_id = d.id
+        where d.id = #{id}
+    </select>
 </mapper>

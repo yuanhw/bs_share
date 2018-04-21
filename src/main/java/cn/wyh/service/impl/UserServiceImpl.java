@@ -1,10 +1,13 @@
 package cn.wyh.service.impl;
 
+import cn.wyh.dao.AddressMapper;
 import cn.wyh.dao.UserDao;
+import cn.wyh.entity.Address;
 import cn.wyh.entity.User;
 import cn.wyh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -16,6 +19,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private AddressMapper addressMapper;
 
     @Override
     public boolean reg(User user) {
@@ -93,5 +98,30 @@ public class UserServiceImpl implements UserService {
         } finally {
             return tag;
         }
+    }
+
+    @Transactional
+    @Override
+    public int addAddress(Address address) {
+        try {
+            if (address.getSing() == 1) {
+                addressMapper.updateSingByUserId(address.getUserId());
+            }
+            addressMapper.insertSelective(address);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        return 1;
+    }
+
+    @Override
+    public List<Address> loadAddressList(int userId) {
+        return addressMapper.selectByUserId(userId);
+    }
+
+    @Override
+    public int delAddress(int id) {
+        return addressMapper.deleteByPrimaryKey(id);
     }
 }

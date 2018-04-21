@@ -28,7 +28,7 @@
                              targetPackage="cn.wyh.dao" targetProject="src/main/java"></javaClientGenerator>
 
         <!-- 要生成哪些表 -->
-        <table tableName="tillage_img_list"
+        <table tableName="cai_order"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

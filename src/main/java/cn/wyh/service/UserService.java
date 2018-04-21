@@ -1,5 +1,6 @@
 package cn.wyh.service;
 
+import cn.wyh.entity.Address;
 import cn.wyh.entity.User;
 
 import java.util.Date;
@@ -17,4 +18,10 @@ public interface UserService {
     boolean updateImg(String imgPath, String phone);
     boolean updateAccount(double account, String phone);
     boolean updatePayPass(String payPass, String phone);
+
+    int addAddress(Address address);
+
+    List<Address> loadAddressList(int userId);
+
+    int delAddress(int id);
 }

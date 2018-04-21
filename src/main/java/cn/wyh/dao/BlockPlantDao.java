@@ -34,4 +34,6 @@ public interface BlockPlantDao {
     List<PlantStatusWebDto> selectStatus(BlockPlantSearch search);
 
     int getTotal2(BlockPlantSearch search);
+
+    int getFarmManagerIdByPlantId(@Param("id") int id);
 }
