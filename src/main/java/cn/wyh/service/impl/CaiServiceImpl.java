@@ -4,11 +4,12 @@ import cn.wyh.dao.AddressMapper;
 import cn.wyh.dao.BlockPlantDao;
 import cn.wyh.dao.CaiOrderMapper;
 import cn.wyh.dao.UserDao;
-import cn.wyh.dto.BlockPlantDto;
 import cn.wyh.dto.CaiOneDto;
+import cn.wyh.dto.CaiSearchDto;
 import cn.wyh.entity.Address;
 import cn.wyh.entity.CaiOrder;
 import cn.wyh.service.CaiService;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,5 +62,37 @@ public class CaiServiceImpl implements CaiService {
             return 1;
         }
         return 0;
+    }
+
+    @Override
+    public JSONObject loadCaiListForWeb(CaiSearchDto search) {
+        search.setStartIndex((search.getCurrentPage() - 1) * 5);
+        JSONObject obj = new JSONObject();
+        int num = caiOrderMapper.getCaiOrderTotalForWeb(search);
+        obj.put("total", num);
+        obj.put("list", caiOrderMapper.selectCaiOrderWeb(search));
+        return obj;
+    }
+
+    @Override
+    public int processCai(int caiId, String operator, String phone) {
+        CaiOrder order = new CaiOrder();
+        order.setId(caiId);
+        order.setOperator(operator);
+        order.setPhone(phone);
+        order.setResTime(new Date());
+        order.setStatus(1);
+        caiOrderMapper.updateByPrimaryKeySelective(order);
+        return 1;
+    }
+
+    @Override
+    public int updateStatus(int id, int status) {
+        CaiOrder order = new CaiOrder();
+        order.setId(id);
+        order.setStatus(status);
+        order.setSendTime(new Date());
+        caiOrderMapper.updateByPrimaryKeySelective(order);
+        return 1;
     }
 }

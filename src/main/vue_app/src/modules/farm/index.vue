@@ -24,6 +24,7 @@
             <el-menu-item index="block_order" class="subItem">地块订单</el-menu-item>
             <el-menu-item index="fm_welcome" class="subItem">地块订单详情</el-menu-item>
             <el-menu-item index="plant_order" class="subItem">种植订单</el-menu-item>
+            <el-menu-item index="cai_order" class="subItem">采摘订单</el-menu-item>
           </el-submenu>
           <el-submenu index="4">
             <template slot="title"><i class="el-icon-more-outline"></i><span style="font-weight: bold">地块状态</span></template>

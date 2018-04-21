@@ -1,6 +1,8 @@
 package cn.wyh.service;
 
 import cn.wyh.dto.CaiOneDto;
+import cn.wyh.dto.CaiSearchDto;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.List;
 
@@ -15,4 +17,10 @@ public interface CaiService {
     List<CaiOneDto> loadCaiList(int userId, int status);
 
     int isHasDefaultAddress(int userId);
+
+    JSONObject loadCaiListForWeb(CaiSearchDto search);
+
+    int processCai(int caiId, String operator, String phone);
+
+    int updateStatus(int id, int status);
 }

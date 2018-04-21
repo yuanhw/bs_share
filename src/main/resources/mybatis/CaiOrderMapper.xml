@@ -186,4 +186,35 @@
         join green as c on b.green_id = c.id
         where a.user_id = #{userId} and a.status = #{status}
     </select>
+
+    <select id="selectCaiOrderWeb" parameterType="cn.wyh.dto.CaiSearchDto" resultType="cn.wyh.dto.CaiOrderWeb">
+        select a.*, c.img as greenImg, c.title as greenTitle from cai_order as a
+        join block_plant as b on a.plant_id = b.id
+        join green c on b.green_id = c.id
+        where a.farm_id = #{farmManagerId}
+        <if test="status != -1">
+            and a.status = #{status}
+        </if>
+        <if test="plantId != null">
+            and a.plant_id = #{plantId}
+        </if>
+        <if test="caiId != null">
+            and a.id = #{caiId}
+        </if>
+        limit #{startIndex}, 5
+    </select>
+
+    <select id="getCaiOrderTotalForWeb" parameterType="cn.wyh.dto.CaiSearchDto" resultType="int">
+        select count(*) from cai_order
+        where farm_id = #{farmManagerId}
+        <if test="status != -1">
+            and status = #{status}
+        </if>
+        <if test="plantId != null">
+            and plant_id = #{plantId}
+        </if>
+        <if test="caiId != null">
+            and id = #{caiId}
+        </if>
+    </select>
 </mapper>

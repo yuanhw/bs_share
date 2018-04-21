@@ -29,11 +29,11 @@ const block_create = resolve => require(['@/modules/farm/farm_manage/block/block
 const block_detail = resolve => require(['@/modules/farm/farm_manage/block/block_detail.vue'], resolve)
 //订单管理
 const block_order = resolve => require(['@/modules/farm/order/block/order.vue'], resolve)
-//单个订单详情
 const simple_order = resolve => require(['@/modules/farm/order/block/simple_order.vue'], resolve)
 const plant_order = resolve => require(['@/modules/farm/order/plant/plant_order.vue'], resolve)
 const plant_status_show = resolve => require(['@/modules/farm/status/status_show.vue'], resolve)
 const tillage_add = resolve => require(['@/modules/farm/status/tillage_add'], resolve)
+const cai_order = resolve => require(['@/modules/farm/order/caizhai/cai_order'], resolve)
 
 const router = new VueRouter({
   routes: [
@@ -118,6 +118,10 @@ const router = new VueRouter({
         {
           path: '/fm/plant_status_show',
           component: plant_status_show
+        },
+        {
+          path: '/fm/cai_order',
+          component: cai_order
         }
       ]
     },

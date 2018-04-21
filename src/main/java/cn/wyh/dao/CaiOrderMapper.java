@@ -1,6 +1,8 @@
 package cn.wyh.dao;
 
 import cn.wyh.dto.CaiOneDto;
+import cn.wyh.dto.CaiOrderWeb;
+import cn.wyh.dto.CaiSearchDto;
 import cn.wyh.entity.CaiOrder;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +24,8 @@ public interface CaiOrderMapper {
     int getNumByPlantId(@Param("plantId") int plantId);
 
     List<CaiOneDto> selectCaiOrder(@Param("userId") int userId, @Param("status") int status);
+
+    List<CaiOrderWeb> selectCaiOrderWeb(CaiSearchDto dto);
+
+    int getCaiOrderTotalForWeb(CaiSearchDto dto);
 }

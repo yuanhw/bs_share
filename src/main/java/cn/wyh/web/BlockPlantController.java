@@ -99,12 +99,12 @@ public class BlockPlantController {
         return new ResponseSuccess(blockPlantService.addTillageInfo(dto)).toString();
     }
 
-    @RequestMapping("/app/loadRecordList.do")
+    @RequestMapping("/app/loadRecordList")
     public String loadTillageRecord(@RequestParam Integer plantId) {
         return new ResponseSuccess(blockPlantService.loadTillageList(plantId)).toString();
     }
 
-    @RequestMapping("/app/loadTillageImgList.do")
+    @RequestMapping("/app/loadTillageImgList")
     public String loadTillageImgList(@RequestParam Integer plantId) {
         return new ResponseSuccess(blockPlantService.loadTillageImgList(plantId)).toString();
     }
