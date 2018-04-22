@@ -28,7 +28,7 @@
                              targetPackage="cn.wyh.dao" targetProject="src/main/java"></javaClientGenerator>
 
         <!-- 要生成哪些表 -->
-        <table tableName="cai_order"
+        <table tableName="info"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
