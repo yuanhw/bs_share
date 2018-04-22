@@ -87,7 +87,8 @@
     {key: 0, value: "刚创建"},
     {key: 1, value: '已认购'},
     {key: 2, value: '已核销'},
-    {key: 3, value: '所有'}
+    {key: 3, value: '作废'},
+    {key: -1, value: '所有'}
   ]
 
   var farmManagerId = null

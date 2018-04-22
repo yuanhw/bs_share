@@ -2,11 +2,9 @@ package cn.wyh.service.impl;
 
 import cn.wyh.dao.*;
 import cn.wyh.dto.*;
-import cn.wyh.entity.BlockPlant;
-import cn.wyh.entity.Green;
-import cn.wyh.entity.Tillage;
-import cn.wyh.entity.TillageImgList;
+import cn.wyh.entity.*;
 import cn.wyh.service.BlockPlantService;
+import cn.wyh.utils.InfoPushUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +28,12 @@ public class BlockPlantServiceImpl implements BlockPlantService {
     private TillageMapper tillageMapper;
     @Autowired
     private TillageImgListMapper tillageImgListMapper;
+    @Autowired
+    private FarmDao farmDao;
+    @Autowired
+    private InfoMapper infoMapper;
+    @Autowired
+    private UserTokenMapper userTokenMapper;
 
     @Override
     public List<Green> loadGreenList() {
@@ -47,6 +51,20 @@ public class BlockPlantServiceImpl implements BlockPlantService {
             plant.setStatus(1);
             blockPlantDao.insertBackId(plant);
             blockDetailDao.updateTillCodeById(blockId, plant.getId());
+            //
+            int userId = blockDetailDao.getDetailById(blockId).getUserId();
+            int fmId = blockDetailDao.selectFarmManagerIdByBlockId(blockId);
+            String farmName = farmDao.selectFarmByFmManagerId(fmId).getFmTitle();
+            Info info = new Info();
+            info.setCreateTime(new Date());
+            info.setTitle(farmName);
+            info.setUserId(userId);
+            info.setFmId(fmId);
+            info.setContext("种植指令发送成功~");
+            infoMapper.insertSelective(info);
+            String token = userTokenMapper.selectUserTokenByUserId(userId).getDeviceToken();
+            InfoPushUtil.Message message = new InfoPushUtil.Message("共享农田", "种植指令下达成功，12小时内将被执行~", token);
+            InfoPushUtil.sendMessage(message);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
@@ -91,6 +109,20 @@ public class BlockPlantServiceImpl implements BlockPlantService {
     @Override
     public int processPlant(BlockPlantDto dto) {
         blockPlantDao.updateProcess(dto);
+        int blockId = blockPlantDao.selectByPrimaryKey(dto.getPlantId()).getBlockId();
+        int userId = blockDetailDao.getDetailById(blockId).getUserId();
+        int fmId = blockDetailDao.selectFarmManagerIdByBlockId(blockId);
+        String farmName = farmDao.selectFarmByFmManagerId(fmId).getFmTitle();
+        Info info = new Info();
+        info.setCreateTime(new Date());
+        info.setTitle(farmName);
+        info.setUserId(userId);
+        info.setFmId(fmId);
+        info.setContext("种植指令已受理~");
+        infoMapper.insertSelective(info);
+        String token = userTokenMapper.selectUserTokenByUserId(userId).getDeviceToken();
+        InfoPushUtil.Message message = new InfoPushUtil.Message("共享农田", "种植指令已受理~", token);
+        InfoPushUtil.sendMessage(message);
         return 1;
     }
 
@@ -129,6 +161,21 @@ public class BlockPlantServiceImpl implements BlockPlantService {
             obj.setStartTime(new Date());
         }
         blockPlantDao.updateByPrimaryKeySelective(obj);
+        //
+        int blockId = blockPlantDao.selectByPrimaryKey(dto.getPlantId()).getBlockId();
+        int userId = blockDetailDao.getDetailById(blockId).getUserId();
+        int fmId = blockDetailDao.selectFarmManagerIdByBlockId(blockId);
+        String farmName = farmDao.selectFarmByFmManagerId(fmId).getFmTitle();
+        Info info = new Info();
+        info.setCreateTime(new Date());
+        info.setTitle(farmName);
+        info.setUserId(userId);
+        info.setFmId(fmId);
+        info.setContext("地块状态更新~");
+        infoMapper.insertSelective(info);
+        String token = userTokenMapper.selectUserTokenByUserId(userId).getDeviceToken();
+        InfoPushUtil.Message message = new InfoPushUtil.Message("共享农田", "地块状态更新~", token);
+        InfoPushUtil.sendMessage(message);
         return 1;
     }
 

@@ -4,6 +4,7 @@ import cn.wyh.dao.*;
 import cn.wyh.dto.*;
 import cn.wyh.entity.*;
 import cn.wyh.service.BlockOrderService;
+import cn.wyh.utils.InfoPushUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,10 @@ public class BlockOrderServiceImpl implements BlockOrderService {
     private BlockOrderItemDao blockOrderItemDao;
     @Autowired
     private RefundDao refundDao;
+    @Autowired
+    private InfoMapper infoMapper;
+    @Autowired
+    private UserTokenMapper userTokenMapper;
 
     @Override
     public ShareOrderDto getShareOrderByBatchNo(String batchNo) {
@@ -95,6 +100,17 @@ public class BlockOrderServiceImpl implements BlockOrderService {
                     this.blockOrderItemDao.addOrderItem(new BlockOrderItem(obj.getOrderId(), id + "", new Date()));
                 }
             }
+            String farmName = farmDao.selectFarmByFmManagerId(fm.getFmId()).getFmTitle();
+            Info info = new Info();
+            info.setCreateTime(new Date());
+            info.setTitle(farmName);
+            info.setUserId(user.getId());
+            info.setFmId(fm.getFmId());
+            info.setContext("地块订单下达成功~");
+            infoMapper.insertSelective(info);
+            String token = userTokenMapper.selectUserTokenByUserId(user.getId()).getDeviceToken();
+            InfoPushUtil.Message message = new InfoPushUtil.Message("共享农田", "地块订单下达成功~", token);
+            InfoPushUtil.sendMessage(message);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
@@ -235,10 +251,12 @@ public class BlockOrderServiceImpl implements BlockOrderService {
     @Override
     public int processRefund(String orderId, int status) {
         try {
+            Info info = new Info();
+            String context;
             Refund refund = this.refundDao.selectRefundByOrderId(orderId);
+            FarmManager fm = this.farmManagerDao.findById(refund.getFarmManagerId());
+            User user = this.userDao.findByUserId(refund.getUserId());
             if (status == 1) {
-                FarmManager fm = this.farmManagerDao.findById(refund.getFarmManagerId());
-                User user = this.userDao.findByUserId(refund.getUserId());
                 this.farmManagerDao.updateFMAccount(fm.getAccount() - refund.getRefundAmt(), fm.getPhone());
                 this.userDao.updateAccount(user.getAccount() + refund.getRefundAmt(), user.getUserPhone());
                 this.blockOrderDao.undateStatus(orderId, 4);
@@ -248,11 +266,23 @@ public class BlockOrderServiceImpl implements BlockOrderService {
                 for (int id : list) {
                     this.blockDetailDao.updateStatusById(3, id);
                 }
+                context = "地块订单退款成功~";
             } else {
                 this.blockOrderDao.undateStatus(orderId, 1);
                 refund.setStatus(3);
                 this.refundDao.updateByPrimaryKeySelective(refund);
+                context = "地块订单退款商家拒绝~";
             }
+            String farmName = farmDao.selectFarmByFmManagerId(fm.getFmId()).getFmTitle();
+            info.setCreateTime(new Date());
+            info.setTitle(farmName);
+            info.setUserId(user.getId());
+            info.setFmId(fm.getFmId());
+            info.setContext(context);
+            infoMapper.insertSelective(info);
+            String token = userTokenMapper.selectUserTokenByUserId(user.getId()).getDeviceToken();
+            InfoPushUtil.Message message = new InfoPushUtil.Message("共享农田", context, token);
+            InfoPushUtil.sendMessage(message);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();

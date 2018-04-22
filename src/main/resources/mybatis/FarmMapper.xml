@@ -114,4 +114,8 @@
         update farm set consumer_num = consumer_num + 1
         where fm_id = #{fmId}
     </update>
+
+    <select id="selectFarmByFmManagerId" resultType="Farm">
+        select * from farm where fm_id = #{id}
+    </select>
 </mapper>

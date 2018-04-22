@@ -19,6 +19,7 @@ const pm_user = resolve => require(['@/modules/platform/user/user.vue'], resolve
 
 /* 商家后台首页*/
 const fm_index = resolve => require(['@/modules/farm/index.vue'], resolve)
+const fm_index_no = resolve => require(['@/modules/farm/index_no.vue'], resolve)
 const fm_reg = resolve => require(['@/modules/farm/reg.vue'], resolve)
 const fm_info = resolve => require(['@/modules/farm/person/fmInfo.vue'], resolve)
 //农场生成
@@ -132,6 +133,10 @@ const router = new VueRouter({
     {
       path: '/fm/tillage_add',
       component: tillage_add
+    },
+    {
+      path: '/fm/index_no',
+      component: fm_index_no
     }
   ],
   linkActiveClass: 'active'

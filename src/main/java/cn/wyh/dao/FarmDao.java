@@ -26,4 +26,6 @@ public interface FarmDao {
     ShareOrderDto selectFarmByBatch(String batchNo);
 
     int updateConsumerNum(@Param("fmId") int fmId);
+
+    Farm selectFarmByFmManagerId(@Param("id") int farmManagerId);
 }

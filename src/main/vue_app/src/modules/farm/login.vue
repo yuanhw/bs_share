@@ -45,7 +45,11 @@
                 return;
               }
               switch (data.rt.checkStatus) {
-                case 0: _self.$message("账号审核中"); break;
+                case 0:
+                  sessionStorage.setItem("fmManager", JSON.stringify(data.rt));
+                  _self.$router.push("/fm/index_no")
+                  //_self.$message("账号审核中");
+                  break;
                 case 1:
                   sessionStorage.setItem("fmManager", JSON.stringify(data.rt));
                   _self.$router.push('/fm/index');

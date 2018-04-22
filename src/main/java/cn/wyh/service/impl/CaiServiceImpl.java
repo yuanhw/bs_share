@@ -1,14 +1,13 @@
 package cn.wyh.service.impl;
 
-import cn.wyh.dao.AddressMapper;
-import cn.wyh.dao.BlockPlantDao;
-import cn.wyh.dao.CaiOrderMapper;
-import cn.wyh.dao.UserDao;
+import cn.wyh.dao.*;
 import cn.wyh.dto.CaiOneDto;
 import cn.wyh.dto.CaiSearchDto;
 import cn.wyh.entity.Address;
 import cn.wyh.entity.CaiOrder;
+import cn.wyh.entity.Info;
 import cn.wyh.service.CaiService;
+import cn.wyh.utils.InfoPushUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +21,20 @@ import java.util.List;
 @Service
 public class CaiServiceImpl implements CaiService {
     @Autowired
-    private UserDao userDao;
-    @Autowired
     private CaiOrderMapper caiOrderMapper;
     @Autowired
     private AddressMapper addressMapper;
     @Autowired
     private BlockPlantDao blockPlantDao;
+    @Autowired
+    private BlockDetailDao blockDetailDao;
+    @Autowired
+    private FarmDao farmDao;
+    @Autowired
+    private InfoMapper infoMapper;
+    @Autowired
+    private UserTokenMapper userTokenMapper;
+
 
     @Override
     public int createCaiOrder(int plantId, int userId) {
@@ -42,6 +48,19 @@ public class CaiServiceImpl implements CaiService {
         String address = addressMapper.getDefaultAddressByUserId(userId).getAddress();
         caiOrder.setAddress(address);
         caiOrderMapper.insertSelective(caiOrder);
+        int blockId = blockPlantDao.selectByPrimaryKey(plantId).getBlockId();
+        int fmId = blockDetailDao.selectFarmManagerIdByBlockId(blockId);
+        String farmName = farmDao.selectFarmByFmManagerId(fmId).getFmTitle();
+        Info info = new Info();
+        info.setCreateTime(new Date());
+        info.setTitle(farmName);
+        info.setUserId(userId);
+        info.setFmId(fmId);
+        info.setContext("采摘指令下达成功~");
+        infoMapper.insertSelective(info);
+        String token = userTokenMapper.selectUserTokenByUserId(userId).getDeviceToken();
+        InfoPushUtil.Message message = new InfoPushUtil.Message("共享农田", "采摘指令下达成功~", token);
+        InfoPushUtil.sendMessage(message);
         return 1;
     }
 
@@ -83,6 +102,18 @@ public class CaiServiceImpl implements CaiService {
         order.setResTime(new Date());
         order.setStatus(1);
         caiOrderMapper.updateByPrimaryKeySelective(order);
+        CaiOrder order1 = caiOrderMapper.selectByPrimaryKey(caiId);
+        Info info = new Info();
+        info.setCreateTime(new Date());
+        String farmName = farmDao.selectFarmByFmManagerId(order1.getFarmId()).getFmTitle();
+        info.setTitle(farmName);
+        info.setUserId(order1.getUserId());
+        info.setFmId(order1.getFarmId());
+        info.setContext("采摘指令已受理~");
+        infoMapper.insertSelective(info);
+        String token = userTokenMapper.selectUserTokenByUserId(order1.getUserId()).getDeviceToken();
+        InfoPushUtil.Message message = new InfoPushUtil.Message("共享农田", "采摘指令已受理~", token);
+        InfoPushUtil.sendMessage(message);
         return 1;
     }
 
@@ -91,15 +122,30 @@ public class CaiServiceImpl implements CaiService {
         CaiOrder order = new CaiOrder();
         order.setId(id);
         order.setStatus(status);
+        String str = "";
         switch (status) {
             case 2:
                 order.setSendTime(new Date());
+                str = "采摘编号：" + id + " 已发货";
                 break;
             case 3:
                 order.setFinishTime(new Date());
+                str = "采摘编号：" + id + " 已确认收货";
                 break;
         }
         caiOrderMapper.updateByPrimaryKeySelective(order);
+        CaiOrder order1 = caiOrderMapper.selectByPrimaryKey(id);
+        Info info = new Info();
+        info.setCreateTime(new Date());
+        String farmName = farmDao.selectFarmByFmManagerId(order1.getFarmId()).getFmTitle();
+        info.setTitle(farmName);
+        info.setUserId(order1.getUserId());
+        info.setFmId(order1.getFarmId());
+        info.setContext(str);
+        infoMapper.insertSelective(info);
+        String token = userTokenMapper.selectUserTokenByUserId(order1.getUserId()).getDeviceToken();
+        InfoPushUtil.Message message = new InfoPushUtil.Message("共享农田", str, token);
+        InfoPushUtil.sendMessage(message);
         return 1;
     }
 }

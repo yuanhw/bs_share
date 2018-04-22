@@ -35,4 +35,6 @@ public interface BlockDetailDao {
     BlockDetail getDetailById(@Param("id") int id);
 
     int updateTillCodeById(@Param("id") int id, @Param("till") int till);
+
+    int selectFarmManagerIdByBlockId(@Param("id") int id);
 }

@@ -20,7 +20,7 @@
             <if test="id != null">
                 and id = #{id}
             </if>
-            <if test="status != 3">
+            <if test="status > 0">
                 and status = #{status}
             </if>
             <if test="tillId != null">
@@ -48,7 +48,7 @@
             <if test="id != null">
                 and id = #{id}
             </if>
-            <if test="status != 3">
+            <if test="status > 0">
                 and status = #{status}
             </if>
             <if test="tillId != null">
@@ -105,4 +105,11 @@
     <update id="updateTillCodeById">
         update block_detail set till_id = #{till} where id = #{id}
     </update>
+
+    <select id="selectFarmManagerIdByBlockId" resultType="int">
+        select a.farm_manager_id from block_order as a
+        join block_order_item as b on a.order_id = b.b_order_id
+        join block_detail as c on b.b_detail_id = c.id
+        where c.id = #{id}
+    </select>
 </mapper>
