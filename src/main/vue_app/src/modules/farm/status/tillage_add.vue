@@ -75,7 +75,8 @@
   const options1 = [
     {key: 1, value: "良好"},
     {key: 2, value: "部分成熟"},
-    {key: 3, value: "全部成熟"}
+    {key: 3, value: "全部成熟"},
+    {key: 4, value: "完成"}
   ]
   const options2 = [
     {key: 1, value: "播种"},
