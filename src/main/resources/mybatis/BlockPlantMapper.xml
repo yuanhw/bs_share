@@ -150,7 +150,7 @@
     </insert>
 
     <select id="selectCurrentStatusById" resultType="cn.wyh.dto.CurrentStatus">
-        select a.id as plantId, a.tillage_id as tillageId, (b.life - DATEDIFF(NOW(),a.start_time)) as day,
+        select a.id as plantId, a.tillage_id as tillageId, (b.life - DATEDIFF(NOW(),a.start_time)) as `day`,
         b.title as name, b.img as img, b.life
         from block_plant as a
         join green as b on a.green_id = b.id

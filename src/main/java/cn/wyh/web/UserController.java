@@ -44,6 +44,7 @@ public class UserController {
         String msg = "注册成功";
         user.setRegTime(new Date());
         user.setTouImgPath(Global.DEFAULT_IMGPATH);
+        user.setPayPassword("E10ADC3949BA59ABBE56E057F20F883E");
         if (!this.userService.reg(user)) {
             status = 0;
             msg = "注册失败";

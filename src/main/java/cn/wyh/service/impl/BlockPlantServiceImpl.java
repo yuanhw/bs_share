@@ -157,7 +157,7 @@ public class BlockPlantServiceImpl implements BlockPlantService {
         BlockPlant obj = new BlockPlant();
         obj.setId(dto.getPlantId());
         obj.setTillageId(id);
-        if (i == 0) {
+        if (i == 1) {
             obj.setStartTime(new Date());
         }
         blockPlantDao.updateByPrimaryKeySelective(obj);
