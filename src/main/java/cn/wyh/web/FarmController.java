@@ -86,7 +86,6 @@ public class FarmController {
     public void upLoadImg(@RequestParam("id") Integer id, @RequestParam("imgFile") MultipartFile imgFile) {
         try {
             if (!imgFile.isEmpty()) {
-                System.out.println(imgFile.getOriginalFilename() + " @ " + id);
                 File baseUri = new File(Global.baseUri + "farmImg");
                 if (!baseUri.exists()) {
                     baseUri.mkdir();
@@ -129,5 +128,17 @@ public class FarmController {
         List<Farm> list = this.farmService.selectFarmListByCond(sid, status);
         ResponseSuccess response = new ResponseSuccess(list);
         return response.toString();
+    }
+
+    @RequestMapping("/loadSFarmByCity")
+    public String loadSimpleFarmByCity(@RequestParam String city) {
+        ResponseSuccess res = new ResponseSuccess(this.farmService.selectFarmByCity(city));
+        return res.toString();
+    }
+
+    @RequestMapping("/loadSFarm2")
+    public String loadSimpleFarm2(@RequestParam String city, @RequestParam String query) {
+        ResponseSuccess res = new ResponseSuccess(this.farmService.selectFarm2(city, query));
+        return res.toString();
     }
 }

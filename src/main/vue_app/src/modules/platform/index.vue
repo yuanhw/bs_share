@@ -2,8 +2,8 @@
     <el-container style="border: 1px solid #eee;" >
       <el-header style="" class="el-header">
         <div>
-          <span style="font-size: 24px;margin-left: 200px;margin-right: 760px;">共享农田App后台管理系统</span>
-          <el-button type="text" style="font-weight: bold" @click="handleCommand">退出</el-button>
+          <span style="font-size: 24px;margin-left: 200px;margin-right: 760px;">App后台管理平台</span>
+          <el-button type="text" style="font-weight: bold; color: #333333" @click="handleCommand">退出</el-button>
         </div>
       </el-header>
       <el-container style="height: 550px;">
@@ -23,13 +23,11 @@
               <el-menu-item index="seller_farm" class="subItem">农场管理</el-menu-item>
             </el-submenu>
             <el-submenu index="4">
-              <template slot="title"><i class="el-icon-tickets"></i><span style="font-weight: bold">订单信息</span></template>
+              <template slot="title"><i class="el-icon-tickets"></i><span style="font-weight: bold">交易信息</span>
+              </template>
 
             </el-submenu>
             <el-submenu index="5">
-            <template slot="title"><i class="el-icon-plus"></i><span style="font-weight: bold">交易信息</span></template>
-          </el-submenu>
-            <el-submenu index="6">
               <template slot="title"><i class="el-icon-setting"></i><span style="font-weight: bold">App设置</span></template>
             </el-submenu>
           </el-menu>

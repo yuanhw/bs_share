@@ -51,6 +51,7 @@
         <el-table-column prop="area" label="面积" width="80px" align="center"></el-table-column>
         <el-table-column prop="spec" label="规格" width="80px" align="center"></el-table-column>
         <el-table-column prop="unitPrice" label="租期单价" width="80px" align="center"></el-table-column>
+        <el-table-column prop="proxy" label="代种单价" width="80px" align="center"></el-table-column>
         <el-table-column prop="number" label="数量" width="80px" align="center"></el-table-column>
         <el-table-column prop="type" label="类型" width="80px" align="center"></el-table-column>
         <el-table-column prop="description" label="说明" width="120px" align="center"></el-table-column>
@@ -58,8 +59,8 @@
         <el-table-column prop="maxLease" label="最长租期" width="120px" align="center"></el-table-column>
         <el-table-column prop="validityBegin" label="有效期开始日期" width="120px" align="center"></el-table-column>
         <el-table-column prop="validityEnd" label="有效期结束日期" width="120px" align="center"></el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="90px" align="center"></el-table-column>
-        <el-table-column prop="updateTime" label="更新时间" width="90px" align="center"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间" width="120px" align="center"></el-table-column>
+        <el-table-column prop="updateTime" label="更新时间" width="120px" align="center"></el-table-column>
         <el-table-column label="操作" fixed="right" width="170px" align="center">
           <template slot-scope="scope">
             <el-button type="text" size="mini" @click="delete_check(scope.$index)">删除</el-button>
@@ -125,9 +126,25 @@
           }
           //console.log(this.search)
           this.$sys.ajax.post('/block/loadBlockRuleList.do', this.search, function (rt, _self) {
-            _self.block_list = rt.data.list
+            let data = rt.data.list
+            data.forEach(function (e) {
+              e.validityBegin = _self.$sys.dateTimeFormat(e.validityBegin, false)
+              e.createTime = _self.$sys.dateTimeFormat(e.createTime, true)
+              e.validityEnd = _self.$sys.dateTimeFormat(e.validityEnd, false)
+              if (e.type == 0) {
+                e.type = "仅自种"
+              } else {
+                e.type = "可代种"
+              }
+              if (e.updateTime) {
+                e.updateTime = _self.$sys.dateTimeFormat(e.updateTime, false)
+              }
+            })
+            //console.log(data)
+            _self.block_list = data
             _self.totalRow = rt.data.total
             //console.log(rt)
+
           }, this)
         } else {
           alert("验证失败")
@@ -152,12 +169,11 @@
         //alert(this.block_list[index].batchNo)
         this.$sys.ajax.post('/block/canDelBlackRule.do', {batchNo: this.block_list[index].batchNo}, function (rt, _self) {
           if (rt.data == 0) {
-            alert('del')
             var url = '/block/deleteBlack.do'
-            this.$sys.ajax.post(url, {batchNo: _self.block_list[index].batchNo}, function (rt, _self) {
+            _self.$sys.ajax.post(url, {batchNo: _self.block_list[index].batchNo}, function (rt, _self) {
               _self.addRefresh()
               _self.$message.info('已删除')
-            })
+            }, _self)
           } else {
             _self.$message.warning('此信息不能删除，已有人认购')
           }
@@ -171,7 +187,21 @@
       handleCurrentChange: function () {
         //alert('下一页')
         this.$sys.ajax.post('/block/loadBlockRuleList.do', this.search, function (rt, _self) {
-          _self.block_list = rt.data.list
+          let data = rt.data.list
+          data.forEach(function (e) {
+            e.validityBegin = _self.$sys.dateTimeFormat(e.validityBegin, false)
+            e.createTime = _self.$sys.dateTimeFormat(e.createTime, true)
+            e.validityEnd = _self.$sys.dateTimeFormat(e.validityEnd, false)
+            if (e.updateTime) {
+              e.updateTime = _self.$sys.dateTimeFormat(e.updateTime, false)
+            }
+            if (e.type == 0) {
+              e.type = "仅自种"
+            } else {
+              e.type = "可代种"
+            }
+          })
+          _self.block_list = data
           _self.totalRow = rt.data.total
           //console.log(rt)
         }, this)
@@ -181,7 +211,21 @@
         //alert('刷新')
         this.search.currentPage = 1
         this.$sys.ajax.post('/block/loadBlockRuleList.do', this.search, function (rt, _self) {
-          _self.block_list = rt.data.list
+          let data = rt.data.list
+          data.forEach(function (e) {
+            e.validityBegin = _self.$sys.dateTimeFormat(e.validityBegin, false)
+            e.createTime = _self.$sys.dateTimeFormat(e.createTime, true)
+            e.validityEnd = _self.$sys.dateTimeFormat(e.validityEnd, false)
+            if (e.updateTime) {
+              e.updateTime = _self.$sys.dateTimeFormat(e.updateTime, false)
+            }
+            if (e.type == 0) {
+              e.type = "仅自种"
+            } else {
+              e.type = "可代种"
+            }
+          })
+          _self.block_list = data
           _self.totalRow = rt.data.total
           //console.log(rt)
         }, this)

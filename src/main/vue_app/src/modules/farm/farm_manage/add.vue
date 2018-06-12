@@ -62,6 +62,10 @@
            </el-option>
          </el-select>
        </p>
+       <p>
+         <label>每亩年价格（元）</label>
+         <el-input v-model="farmInfo.unitPrice" size="small"/>
+       </p>
      </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -98,6 +102,7 @@
               fmIntroduce: '',
               businessBegin: '',
               spec: '',
+              unitPrice: null,
               value: []
             }
           }
@@ -126,7 +131,7 @@
             let url = '/farm/addFarmBase.do'
             this.$sys.ajax.post(url, this.farmInfo, function (data, _self) {
               if (data.status == 1) {
-                _self.$emit('refresh')
+                //_self.$emit('refresh')
                 _self.dialogVisible = false
                 _self.$emit('refresh')
               } else {

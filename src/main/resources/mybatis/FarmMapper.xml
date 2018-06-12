@@ -22,7 +22,8 @@
         key_vegetable,
         fm_introduce,
         business_begin,
-        create_time
+        create_time,
+        unit_price
         ) values (
         #{farm.fmId},
         #{farm.fmTitle},
@@ -37,7 +38,8 @@
         #{farm.keyVegetable},
         #{farm.fmIntroduce},
         #{farm.businessBegin},
-        #{farm.createTime}
+        #{farm.createTime},
+        #{farm.unitPrice}
         )
     </insert>
     <update id="updateFarmInfo">
@@ -49,7 +51,8 @@
         key_vegetable = #{farm.keyVegetable},
         fm_introduce = #{farm.fmIntroduce},
         business_begin = #{farm.businessBegin},
-        spec = #{farm.spec}
+        spec = #{farm.spec},
+        unit_price = #{farm.unitPrice}
         where id = #{farm.id}
     </update>
     <update id="updateStatus">
@@ -74,5 +77,45 @@
         <if test="sid != null and sid != ''">
             and fm_id = #{sid}
         </if>
+    </select>
+
+    <select id="selectSFarmListByCity" resultType="cn.wyh.dto.LateLySimplyFarm" parameterType="String">
+        select id, fm_id, fm_title, consumer_num,
+        '0' as distance,
+        fm_img,
+        spec,
+        unit_price
+        from farm
+        where check_status = 3
+        <if test="city != '不限'">
+            and city = #{city}
+        </if>
+        order by unit_price desc
+    </select>
+    <select id="selectSFarmList2" resultType="cn.wyh.dto.LateLySimplyFarm" parameterType="String">
+        select id, fm_id, fm_title, consumer_num,
+        '0' as distance,
+        fm_img,
+        spec,
+        unit_price
+        from farm
+        where check_status = 3
+        and fm_title like concat('%', #{query}, '%')
+        <if test="city != '不限'">
+            and city = #{city}
+        </if>
+        order by unit_price desc
+    </select>
+    <select id="selectFarmByBatch" parameterType="String" resultType="cn.wyh.dto.ShareOrderDto">
+        select fm_title as farm_name, CONCAT(province,city,detailed_address) as farm_address from farm
+        where id = (select farm_id from block_rule where batch_no = #{batchNo})
+    </select>
+    <update id="updateConsumerNum">
+        update farm set consumer_num = consumer_num + 1
+        where fm_id = #{fmId}
+    </update>
+
+    <select id="selectFarmByFmManagerId" resultType="Farm">
+        select * from farm where fm_id = #{id}
     </select>
 </mapper>

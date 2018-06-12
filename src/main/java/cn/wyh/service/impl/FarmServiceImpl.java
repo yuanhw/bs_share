@@ -70,4 +70,14 @@ public class FarmServiceImpl implements FarmService {
     public List<Farm> selectFarmListByCond(String sid, Integer status) {
         return this.farmDao.selectFarmListByCond(sid, status);
     }
+
+    @Override
+    public List<LateLySimplyFarm> selectFarmByCity(String city) {
+        return this.farmDao.selectSFarmListByCity(city);
+    }
+
+    @Override
+    public List<LateLySimplyFarm> selectFarm2(String city, String query) {
+        return this.farmDao.selectSFarmList2(city, query);
+    }
 }

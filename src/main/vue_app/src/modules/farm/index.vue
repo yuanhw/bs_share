@@ -1,12 +1,12 @@
 <template>
   <el-container style="border: 1px solid #eee;">
-    <el-header style="text-align: right; font-size: 12px" class="el-header">
+    <el-header style="text-align: right; font-size: 12px; background-color: rgb(55, 61, 65)" class="el-header">
       <div>
-        <span style="font-size: 24px;margin-left: 200px;margin-right: 760px;">共享农田商家管理平台</span>
-        <el-button type="text" style="font-weight: bold" @click="handleCommand">退出</el-button>
+        <span style="font-size: 24px;margin-left: 200px;margin-right: 760px;color: white">共享农田商家管理平台</span>
+        <el-button type="text" style="font-weight: bold; color: #dea726" @click="handleCommand">退出</el-button>
       </div>
     </el-header>
-    <el-container style="height: 550px;">
+    <el-container style="height: 550px">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)" class="el-aside">
         <el-menu  unique-opened router>
           <el-submenu index="1">
@@ -21,23 +21,19 @@
           </el-submenu>
           <el-submenu index="3">
             <template slot="title"><i class="el-icon-tickets"></i><span style="font-weight: bold">订单管理</span></template>
-            <el-menu-item index="red_packet_create" class="subItem">地块订单</el-menu-item>
-            <el-menu-item index="red_packet_create" class="subItem">种植订单</el-menu-item>
-            <el-menu-item index="red_packet_create" class="subItem">配送订单</el-menu-item>
+            <el-menu-item index="block_order" class="subItem">地块订单</el-menu-item>
+            <el-menu-item index="fm_welcome" class="subItem">地块订单详情</el-menu-item>
+            <el-menu-item index="plant_order" class="subItem">种植订单</el-menu-item>
+            <el-menu-item index="cai_order" class="subItem">采摘订单</el-menu-item>
           </el-submenu>
           <el-submenu index="4">
             <template slot="title"><i class="el-icon-more-outline"></i><span style="font-weight: bold">地块状态</span></template>
-            <el-menu-item index="red_packet_create" class="subItem">状态查看</el-menu-item>
-            <el-menu-item index="red_packet_create" class="subItem">更新状态</el-menu-item>
+            <el-menu-item index="plant_status_show" class="subItem">状态更新</el-menu-item>
+            <el-menu-item index="fm_welcome" class="subItem">历史记录</el-menu-item>
           </el-submenu>
           <el-submenu index="5">
             <template slot="title"><i class="el-icon-plus"></i><span style="font-weight: bold">交易记录</span></template>
-            <el-menu-item index="red_packet_create" class="subItem">交易详情</el-menu-item>
-          </el-submenu>
-          <el-submenu index="6">
-            <template slot="title"><i class="el-icon-loading"></i><span style="font-weight: bold">用户沟通</span></template>
-            <el-menu-item index="red_packet_create" class="subItem">聊天列表</el-menu-item>
-            <el-menu-item index="red_packet_create" class="subItem">聊天详情</el-menu-item>
+            <el-menu-item index="fm_welcome" class="subItem">交易详情</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>

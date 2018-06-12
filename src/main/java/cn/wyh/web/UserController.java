@@ -1,11 +1,14 @@
 package cn.wyh.web;
 
 import cn.wyh.common.Global;
+import cn.wyh.common.response.ResponseSuccess;
+import cn.wyh.entity.Address;
 import cn.wyh.entity.User;
 import cn.wyh.service.UserService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +44,7 @@ public class UserController {
         String msg = "注册成功";
         user.setRegTime(new Date());
         user.setTouImgPath(Global.DEFAULT_IMGPATH);
+        user.setPayPassword("E10ADC3949BA59ABBE56E057F20F883E");
         if (!this.userService.reg(user)) {
             status = 0;
             msg = "注册失败";
@@ -120,5 +124,20 @@ public class UserController {
             e.printStackTrace();
         }
         return jsonObject.toJSONString();
+    }
+
+    @RequestMapping("/app/addAddress")
+    public String addAddress(@ModelAttribute Address address) {
+        return new ResponseSuccess(userService.addAddress(address)).toString();
+    }
+
+    @RequestMapping("/app/loadAddressList")
+    public String loadAddressList(@RequestParam Integer userId) {
+        return new ResponseSuccess(userService.loadAddressList(userId)).toString();
+    }
+
+    @RequestMapping("/app/delAddress")
+    public String delAddress(@RequestParam Integer id) {
+        return new ResponseSuccess(userService.delAddress(id)).toString();
     }
 }

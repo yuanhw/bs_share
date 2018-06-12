@@ -16,17 +16,25 @@ const pm_seller_examine = resolve => require(['@/modules/platform/seller/seller_
 const pm_seller_farm = resolve => require(['@/modules/platform/seller/seller_farm.vue'], resolve)
 //用户信息
 const pm_user = resolve => require(['@/modules/platform/user/user.vue'], resolve)
+
+/* 商家后台首页*/
+const fm_index = resolve => require(['@/modules/farm/index.vue'], resolve)
+const fm_index_no = resolve => require(['@/modules/farm/index_no.vue'], resolve)
+const fm_reg = resolve => require(['@/modules/farm/reg.vue'], resolve)
+const fm_info = resolve => require(['@/modules/farm/person/fmInfo.vue'], resolve)
 //农场生成
 const fm_create = resolve => require(['@/modules/farm/farm_manage/create.vue'], resolve)
 //地块生成
 const block_create = resolve => require(['@/modules/farm/farm_manage/block/block_create.vue'], resolve)
 //地块详情
 const block_detail = resolve => require(['@/modules/farm/farm_manage/block/block_detail.vue'], resolve)
-
-/* 商家后台首页*/
-const fm_index = resolve =>require(['@/modules/farm/index.vue'], resolve)
-const fm_reg = resolve =>require(['@/modules/farm/reg.vue'], resolve)
-const fm_info = resolve =>require(['@/modules/farm/person/fmInfo.vue'], resolve)
+//订单管理
+const block_order = resolve => require(['@/modules/farm/order/block/order.vue'], resolve)
+const simple_order = resolve => require(['@/modules/farm/order/block/simple_order.vue'], resolve)
+const plant_order = resolve => require(['@/modules/farm/order/plant/plant_order.vue'], resolve)
+const plant_status_show = resolve => require(['@/modules/farm/status/status_show.vue'], resolve)
+const tillage_add = resolve => require(['@/modules/farm/status/tillage_add'], resolve)
+const cai_order = resolve => require(['@/modules/farm/order/caizhai/cai_order'], resolve)
 
 const router = new VueRouter({
   routes: [
@@ -99,8 +107,36 @@ const router = new VueRouter({
         {
           path: '/fm/block_detail',
           component: block_detail
+        },
+        {
+          path: '/fm/block_order',
+          component: block_order
+        },
+        {
+          path: '/fm/plant_order',
+          component: plant_order
+        },
+        {
+          path: '/fm/plant_status_show',
+          component: plant_status_show
+        },
+        {
+          path: '/fm/cai_order',
+          component: cai_order
         }
       ]
+    },
+    {
+      path: '/fm/simple_detail',
+      component: simple_order
+    },
+    {
+      path: '/fm/tillage_add',
+      component: tillage_add
+    },
+    {
+      path: '/fm/index_no',
+      component: fm_index_no
     }
   ],
   linkActiveClass: 'active'

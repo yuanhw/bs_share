@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wyh.dao.BlockOrderItemDao">
+    <insert id="addOrderItem" parameterType="cn.wyh.entity.BlockOrderItem">
+      insert into block_order_item values (
+        #{borderId},
+        #{bdetailId},
+        #{createTime}
+      )
+    </insert>
+
+    <select id="selectList" resultType="cn.wyh.entity.BlockOrderItem">
+        select b_order_id as borderId, b_detail_id as bdetailId, create_time as createTime
+        from block_order_item where b_order_id = #{orderId}
+    </select>
+</mapper>

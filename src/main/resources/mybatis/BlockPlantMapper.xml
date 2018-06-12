@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.wyh.dao.BlockPlantDao">
+    <resultMap id="BaseResultMap" type="cn.wyh.entity.BlockPlant">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="block_id" property="blockId" jdbcType="INTEGER"/>
+        <result column="green_id" property="greenId" jdbcType="INTEGER"/>
+        <result column="tillage_id" property="tillageId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, block_id, green_id, tillage_id, create_time, update_time, phone, operator, status
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from block_plant
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from block_plant
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.wyh.entity.BlockPlant">
+        insert into block_plant (id, block_id, green_id,
+        tillage_id, create_time, update_time,
+        phone, operator, status
+        )
+        values (#{id,jdbcType=INTEGER}, #{blockId,jdbcType=INTEGER}, #{greenId,jdbcType=INTEGER},
+        #{tillageId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{phone,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.wyh.entity.BlockPlant">
+        insert into block_plant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="blockId != null">
+                block_id,
+            </if>
+            <if test="greenId != null">
+                green_id,
+            </if>
+            <if test="tillageId != null">
+                tillage_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="blockId != null">
+                #{blockId,jdbcType=INTEGER},
+            </if>
+            <if test="greenId != null">
+                #{greenId,jdbcType=INTEGER},
+            </if>
+            <if test="tillageId != null">
+                #{tillageId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.wyh.entity.BlockPlant">
+        update block_plant
+        <set>
+            <if test="blockId != null">
+                block_id = #{blockId,jdbcType=INTEGER},
+            </if>
+            <if test="greenId != null">
+                green_id = #{greenId,jdbcType=INTEGER},
+            </if>
+            <if test="tillageId != null">
+                tillage_id = #{tillageId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime}
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.wyh.entity.BlockPlant">
+        update block_plant
+        set block_id = #{blockId,jdbcType=INTEGER},
+        green_id = #{greenId,jdbcType=INTEGER},
+        tillage_id = #{tillageId,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        phone = #{phone,jdbcType=VARCHAR},
+        operator = #{operator,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insertBackId" parameterType="BlockPlant" useGeneratedKeys="true" keyProperty="id">
+        insert into block_plant (block_id, green_id, create_time,status)
+        values (#{blockId,jdbcType=INTEGER}, #{greenId,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <select id="selectCurrentStatusById" resultType="cn.wyh.dto.CurrentStatus">
+        select a.id as plantId, a.tillage_id as tillageId, (b.life - DATEDIFF(NOW(),a.start_time)) as `day`,
+        b.title as name, b.img as img, b.life
+        from block_plant as a
+        join green as b on a.green_id = b.id
+        where a.id = #{id}
+    </select>
+
+    <select id="selectPlantStatus" resultType="cn.wyh.dto.BlockPlantDto">
+        select a.id as plantId, a.block_id as blockId, b.title as greenTitle, b.img as greenImg, a.create_time,
+        a.update_time, a.operator, a.phone
+        from block_plant as a
+        join green as b on a.green_id = b.id
+        join block_detail as c on a.block_id = c.id
+        where c.till_id != 0 and c.user_id = #{userId} and a.`status` = #{status}
+        order by a.create_time desc
+    </select>
+
+    <select id="selectPlantForWeb"
+            parameterType="cn.wyh.dto.BlockPlantSearch"
+            resultType="cn.wyh.dto.BlockPlantWebDto">
+        select a.id as plantId, a.block_id as blockId, b.title as greenTitle, b.img as greenImg, b.life as greenLife,
+        a.`status`, a.operator, a.phone, a.create_time, a.update_time
+        from block_plant as a
+        join green as b on a.green_id = b.id
+        where block_id in (
+        select b_detail_id from block_order_item where b_order_id in
+        (select order_id from block_order where farm_manager_id = #{farmManagerId})
+        )
+        <if test="status != 0">
+            and a.status = #{status}
+        </if>
+        <if test="blockId != null">
+            and a.block_id = #{blockId}
+        </if>
+        limit #{startIndex}, 5
+    </select>
+
+    <select id="getPlantForWebTotal"
+            parameterType="cn.wyh.dto.BlockPlantSearch"
+            resultType="int">
+        select count(*) as num from block_plant
+        where block_id in (
+        select b_detail_id from block_order_item where b_order_id in
+        (select order_id from block_order where farm_manager_id = #{farmManagerId})
+        )
+        <if test="status != 0">
+            and status = #{status}
+        </if>
+        <if test="blockId != null">
+            and block_id = #{blockId}
+        </if>
+    </select>
+
+    <update id="updateProcess" parameterType="cn.wyh.dto.BlockPlantDto">
+        update block_plant set operator = #{operator}, phone = #{phone}, `status` = 2, update_time = now()
+        where id = #{plantId}
+    </update>
+
+    <select id="selectStatus" parameterType="cn.wyh.dto.BlockPlantSearch" resultType="cn.wyh.dto.PlantStatusWebDto">
+        select
+        a.id as plantId,
+        a.block_id as blockId,
+        b.title as greenTitle,
+        b.img as greenImg,
+        c.current_img as currentImgId,
+        c.current_video as currentVideo,
+        c.create_time as lastTime,
+        c.grow_status as greenStatus,
+        c.last_operation as greenOperate
+        from block_plant as a
+        left join tillage as c on a.tillage_id = c.id
+        join green as b on a.green_id = b.id
+        where block_id in (
+        select b_detail_id from block_order_item where b_order_id in
+        (select order_id from block_order where farm_manager_id = #{farmManagerId})
+        )
+        <if test="blockId != null">
+            and a.block_id = #{blockId}
+        </if>
+        <if test="status == 2">
+            and a.tillage_id is not null
+        </if>
+        <if test="status == 1">
+            and a.tillage_id is null
+        </if>
+        and a.status = 2
+        limit #{startIndex}, 5
+    </select>
+    <select id="getTotal2" parameterType="cn.wyh.dto.BlockPlantSearch" resultType="int">
+        select count(*) as num from block_plant
+        where block_id in (
+        select b_detail_id from block_order_item where b_order_id in
+        (select order_id from block_order where farm_manager_id = #{farmManagerId})
+        ) and status = 2
+        <if test="blockId != null">
+            and block_id = #{blockId}
+        </if>
+        <if test="status == 2">
+            and tillage_id is not null
+        </if>
+        <if test="status == 1">
+            and tillage_id is null
+        </if>
+    </select>
+    <select id="getFarmManagerIdByPlantId" resultType="int">
+        select farm_manager_id from block_order as a
+        join block_order_item as b on a.order_id = b.b_order_id
+        join block_detail as c on b.b_detail_id = c.id
+        join block_plant as d on c.till_id = d.id
+        where d.id = #{id} limit 1
+    </select>
+</mapper>

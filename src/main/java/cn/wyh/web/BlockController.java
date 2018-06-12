@@ -3,6 +3,7 @@ package cn.wyh.web;
 import cn.wyh.common.response.ResponseSuccess;
 import cn.wyh.dto.BlockDetailSearch;
 import cn.wyh.dto.BlockListResponseDto;
+import cn.wyh.dto.BlockRuleShowList;
 import cn.wyh.dto.BlockSearch;
 import cn.wyh.entity.BlockRule;
 import cn.wyh.entity.Farm;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by WYH on 2018/3/8.
@@ -71,5 +73,24 @@ public class BlockController {
     public String loadBlockDetailList(@ModelAttribute BlockDetailSearch blockDetailSearch) {
         ResponseSuccess resp = new ResponseSuccess(this.blockService.loadBlockDetail(blockDetailSearch));
         return resp.toString();
+    }
+
+    @RequestMapping("/loadRuleList")
+    public String loadBlockRuleShowList(@RequestParam String id) {
+        List<BlockRuleShowList> data = this.blockRuleService.loadRuleList(id);
+        ResponseSuccess resp = new ResponseSuccess(data);
+        return resp.toString();
+    }
+
+    @RequestMapping("/getSpinnerP")
+    public String getSpinnerP(@RequestParam String id) {
+        Map<String, List<String>> data = this.blockRuleService.getSpinnerP(id);
+        ResponseSuccess resp = new ResponseSuccess(data);
+        return resp.toString();
+    }
+
+    @RequestMapping("/getNumCan")
+    public String getNumCan(@RequestParam String batchNo) {
+        return (new ResponseSuccess(this.blockRuleService.getNumCan(batchNo))).toString();
     }
 }

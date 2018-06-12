@@ -12,7 +12,6 @@
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd ">
 
-
     <context:component-scan base-package="cn.wyh.service.impl"/>
 
     <bean id="dataSource"
@@ -37,9 +36,9 @@
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
           p:dataSource-ref="dataSource"/>
 
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="cn.wyh.dao"
-         p:sqlSessionFactory-ref="sqlSessionFactory"/>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="cn.wyh.dao"/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
 
 </beans>

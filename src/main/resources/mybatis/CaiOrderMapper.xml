@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.wyh.dao.CaiOrderMapper">
+    <resultMap id="BaseResultMap" type="cn.wyh.entity.CaiOrder">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="farm_id" property="farmId" jdbcType="INTEGER"/>
+        <result column="plant_id" property="plantId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="res_time" property="resTime" jdbcType="TIMESTAMP"/>
+        <result column="send_time" property="sendTime" jdbcType="TIMESTAMP"/>
+        <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, farm_id, plant_id, create_time, res_time, send_time, finish_time, status,
+        operator, phone, address
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cai_order
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from cai_order
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.wyh.entity.CaiOrder">
+        insert into cai_order (id, user_id, farm_id,
+        plant_id, create_time, res_time,
+        send_time, finish_time, status,
+        operator, phone, address
+        )
+        values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{farmId,jdbcType=INTEGER},
+        #{plantId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{resTime,jdbcType=TIMESTAMP},
+        #{sendTime,jdbcType=TIMESTAMP}, #{finishTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
+        #{operator,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.wyh.entity.CaiOrder">
+        insert into cai_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="farmId != null">
+                farm_id,
+            </if>
+            <if test="plantId != null">
+                plant_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="resTime != null">
+                res_time,
+            </if>
+            <if test="sendTime != null">
+                send_time,
+            </if>
+            <if test="finishTime != null">
+                finish_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="farmId != null">
+                #{farmId,jdbcType=INTEGER},
+            </if>
+            <if test="plantId != null">
+                #{plantId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resTime != null">
+                #{resTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sendTime != null">
+                #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.wyh.entity.CaiOrder">
+        update cai_order
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="farmId != null">
+                farm_id = #{farmId,jdbcType=INTEGER},
+            </if>
+            <if test="plantId != null">
+                plant_id = #{plantId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resTime != null">
+                res_time = #{resTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sendTime != null">
+                send_time = #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                finish_time = #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.wyh.entity.CaiOrder">
+        update cai_order
+        set user_id = #{userId,jdbcType=INTEGER},
+        farm_id = #{farmId,jdbcType=INTEGER},
+        plant_id = #{plantId,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        res_time = #{resTime,jdbcType=TIMESTAMP},
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+        finish_time = #{finishTime,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=INTEGER},
+        operator = #{operator,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="getNumByPlantId" resultType="int">
+        select count(*) from cai_order where `status` = 0 and plant_id = #{plantId}
+    </select>
+
+    <select id="selectCaiOrder" resultType="cn.wyh.dto.CaiOneDto">
+        select a.id as caiId, a.plant_id as plantId, c.title as `name`, a.create_time, c.img as caiImg,
+        a.operator as operate, a.res_time as updateTime, a.send_time, a.finish_time, a.address, a.phone
+        from cai_order as a
+        join block_plant as b on a.plant_id = b.id
+        join green as c on b.green_id = c.id
+        where a.user_id = #{userId} and a.status = #{status}
+    </select>
+
+    <select id="selectCaiOrderWeb" parameterType="cn.wyh.dto.CaiSearchDto" resultType="cn.wyh.dto.CaiOrderWeb">
+        select a.*, c.img as greenImg, c.title as greenTitle from cai_order as a
+        join block_plant as b on a.plant_id = b.id
+        join green c on b.green_id = c.id
+        where a.farm_id = #{farmManagerId}
+        <if test="status != -1">
+            and a.status = #{status}
+        </if>
+        <if test="plantId != null">
+            and a.plant_id = #{plantId}
+        </if>
+        <if test="caiId != null">
+            and a.id = #{caiId}
+        </if>
+        limit #{startIndex}, 5
+    </select>
+
+    <select id="getCaiOrderTotalForWeb" parameterType="cn.wyh.dto.CaiSearchDto" resultType="int">
+        select count(*) from cai_order
+        where farm_id = #{farmManagerId}
+        <if test="status != -1">
+            and status = #{status}
+        </if>
+        <if test="plantId != null">
+            and plant_id = #{plantId}
+        </if>
+        <if test="caiId != null">
+            and id = #{caiId}
+        </if>
+    </select>
+</mapper>

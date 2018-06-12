@@ -15,6 +15,7 @@ public class BlockRule implements Serializable {
     private double unitPrice;
     private int number;
     private int type;
+    private Double proxy;
     private String description;
     private String leaseUnit;
     private String maxLease;
@@ -41,6 +42,28 @@ public class BlockRule implements Serializable {
         this.createTime = createTime;
         this.validityBegin = validityBegin;
         this.validityEnd = validityEnd;
+    }
+
+    public BlockRule(int id, int farmId, String batchNo, String area, String spec,
+                     double unitPrice, int number, int type, double proxy,
+                     String description, String leaseUnit, String maxLease,
+                     Date createTime, Date validityBegin, Date validityEnd, Date updateTime) {
+        this.id = id;
+        this.farmId = farmId;
+        this.batchNo = batchNo;
+        this.area = area;
+        this.spec = spec;
+        this.unitPrice = unitPrice;
+        this.number = number;
+        this.type = type;
+        this.proxy = proxy;
+        this.description = description;
+        this.leaseUnit = leaseUnit;
+        this.maxLease = maxLease;
+        this.createTime = createTime;
+        this.validityBegin = validityBegin;
+        this.validityEnd = validityEnd;
+        this.updateTime = updateTime;
     }
 
     public int getId() {
@@ -163,24 +186,11 @@ public class BlockRule implements Serializable {
         this.updateTime = updateTime;
     }
 
-    @Override
-    public String toString() {
-        return "BlockRule{" +
-                "id=" + id +
-                ", farmId=" + farmId +
-                ", batchNo='" + batchNo + '\'' +
-                ", area='" + area + '\'' +
-                ", spec='" + spec + '\'' +
-                ", unitPrice=" + unitPrice +
-                ", number=" + number +
-                ", type=" + type +
-                ", description='" + description + '\'' +
-                ", leaseUnit='" + leaseUnit + '\'' +
-                ", maxLease='" + maxLease + '\'' +
-                ", createTime=" + createTime +
-                ", validityBegin=" + validityBegin +
-                ", validityEnd=" + validityEnd +
-                ", updateTime=" + updateTime +
-                '}';
+    public Double getProxy() {
+        return proxy;
+    }
+
+    public void setProxy(Double proxy) {
+        this.proxy = proxy;
     }
 }

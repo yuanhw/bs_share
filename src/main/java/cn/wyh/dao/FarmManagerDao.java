@@ -25,4 +25,8 @@ public interface FarmManagerDao {
             @Param("start") int start);
     void deleteByPhone(@Param("phone") String phone);
     void updateFM(UpdateFarmManager farmManager);
+
+    void updateFMAccount(@Param("account") double account, @Param("phone") String phone);
+
+    FarmManager findById(int id);
 }

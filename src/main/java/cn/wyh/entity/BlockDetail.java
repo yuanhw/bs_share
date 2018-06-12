@@ -7,26 +7,26 @@ import java.util.Date;
  * Created by WYH on 2018/3/9.
  */
 public class BlockDetail implements Serializable {
-    private int id;
+    private Integer id;
     private String name;
     private String branchNo;
-    private int userId;
-    private int tillId;
-    private int type;
-    private int updateMark;
+    private Integer userId;
+    private Integer tillId;
+    private Integer type;
+    private Integer updateMark;
     private String lease;
     private Date crateTime;
     private Date updateTime;
-    private int status;
+    private Integer status;
 
     public BlockDetail() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,35 +46,35 @@ public class BlockDetail implements Serializable {
         this.branchNo = branchNo;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getTillId() {
+    public Integer getTillId() {
         return tillId;
     }
 
-    public void setTillId(int tillId) {
+    public void setTillId(Integer tillId) {
         this.tillId = tillId;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public int getUpdateMark() {
+    public Integer getUpdateMark() {
         return updateMark;
     }
 
-    public void setUpdateMark(int updateMark) {
+    public void setUpdateMark(Integer updateMark) {
         this.updateMark = updateMark;
     }
 
@@ -102,28 +102,11 @@ public class BlockDetail implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "BlockDetail{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", branchNo='" + branchNo + '\'' +
-                ", userId=" + userId +
-                ", tillId=" + tillId +
-                ", type=" + type +
-                ", updateMark=" + updateMark +
-                ", lease='" + lease + '\'' +
-                ", crateTime=" + crateTime +
-                ", updateTime=" + updateTime +
-                ", status=" + status +
-                '}';
     }
 }

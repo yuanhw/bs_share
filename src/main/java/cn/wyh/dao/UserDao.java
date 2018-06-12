@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface UserDao {
     User findByPhone(String phone);
+
+    User findByUserId(@Param("id") int id);
     List<User> findAll();
     void addUser(User user);
     void updateLoginTime(@Param("loginTime") Date loginTime, @Param("userPhone") String userPhone);
